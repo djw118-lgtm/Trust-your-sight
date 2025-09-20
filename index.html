@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Your Sight - Vision Testing App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1a202c;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 24px;
+            padding-bottom: 100px; /* Space for fixed nav */
+        }
+
+        .welcome-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin: 12px 0;
+            transition: background 0.2s ease;
+            touch-action: manipulation; /* Better mobile touch */
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            background: #1e40af;
+        }
+
+        .test-section {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .camera-section {
+            background: #f0fdf4;
+            border: 1px solid #22c55e;
+        }
+
+        .nav-test {
+            display: flex;
+            justify-content: space-around;
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            padding: 16px 0;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            text-align: center;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+            touch-action: manipulation;
+            min-width: 60px;
+        }
+
+        .nav-item:hover {
+            background: #f3f4f6;
+        }
+
+        .nav-item:active {
+            background: #e5e7eb;
+        }
+
+        .message-box {
+            background: #dcfce7;
+            border: 1px solid #22c55e;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            display: none;
+        }
+
+        .message-box.error {
+            background: #fef2f2;
+            border: 1px solid #ef4444;
+        }
+
+        .message-box.warning {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+        }
+
+        #status {
+            font-weight: 600;
+            color: #166534;
+        }
+
+        .error-text {
+            color: #dc2626;
+        }
+
+        .warning-text {
+            color: #d97706;
+        }
+
+        /* Camera specific styles */
+        .camera-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: 16px auto;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #cameraVideo {
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        .camera-controls {
+            display: flex;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .camera-controls button {
+            flex: 1;
+            padding: 12px;
+            background: #059669;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .camera-controls button:active {
+            background: #047857;
+        }
+
+        .camera-controls button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Trust Your Sight</h1>
+            <p>Vision Testing & Eye Health</p>
+        </div>
+
+        <div class="content">
+            <div class="welcome-box">
+                <h2>Welcome to Trust Your Sight</h2>
+                <p>A comprehensive vision testing app that helps you monitor your eye health using your device's camera.</p>
+            </div>
+
+            <div class="test-section">
+                <h3>System Check</h3>
+                <p>Verify your device compatibility:</p>
+                <button class="btn" onclick="testJavaScript()">Test JavaScript</button>
+                <div class="message-box" id="jsResult">
+                    <div id="status">JavaScript is working!</div>
+                </div>
+            </div>
+
+            <div class="test-section camera-section">
+                <h3>📹 Camera Setup</h3>
+                <p>Camera access is required for vision testing:</p>
+                <button class="btn" onclick="requestCamera()">Enable Camera</button>
+                
+                <div class="camera-container" id="cameraContainer" style="display: none;">
+                    <video id="cameraVideo" autoplay playsinline muted></video>
+                </div>
+                
+                <div class="camera-controls" id="cameraControls" style="display: none;">
+                    <button onclick="stopCamera()">Stop Camera</button>
+                    <button onclick="switchCamera()">Switch Camera</button>
+                </div>
+                
+                <div class="message-box" id="cameraResult">
+                    <div id="cameraStatus">Click "Enable Camera" to start</div>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>Storage Test</h3>
+                <p>Test data storage for saving test results:</p>
+                <button class="btn" onclick="testStorage()">Test Storage</button>
+                <div class="message-box" id="storageResult">
+                    <div id="storageStatus"></div>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>Navigation Test</h3>
+                <p>Test app navigation:</p>
+                <div class="nav-test">
+                    <div class="nav-item" onclick="testNav('Home')">
+                        🏠<br><small>Home</small>
+                    </div>
+                    <div class="nav-item" onclick="testNav('Test')">
+                        👁️<br><small>Test</small>
+                    </div>
+                    <div class="nav-item" onclick="testNav('History')">
+                        📊<br><small>History</small>
+                    </div>
+                    <div class="nav-item" onclick="testNav('Profile')">
+                        👤<br><small>Profile</small>
+                    </div>
+                </div>
+                <div class="message-box" id="navResult" style="margin-top: 80px;">
+                    <div id="navStatus"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables for camera
+        let currentStream = null;
+        let currentCamera = 'user'; // 'user' for front, 'environment' for back
+        let cameras = [];
+
+        // Test JavaScript functionality
+        function testJavaScript() {
+            console.log('JavaScript test function called');
+            const resultBox = document.getElementById('jsResult');
+            const statusText = document.getElementById('status');
+            
+            if (resultBox && statusText) {
+                resultBox.style.display = 'block';
+                statusText.textContent = 'JavaScript is working! ✅';
+                console.log('JavaScript test passed');
+            } else {
+                alert('JavaScript working but DOM access failed');
+            }
+        }
+
+        // Get available cameras
+        async function getCameras() {
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                cameras = devices.filter(device => device.kind === 'videoinput');
+                console.log('Available cameras:', cameras.length);
+                return cameras;
+            } catch (error) {
+                console.log('Error getting cameras:', error);
+                return [];
+            }
+        }
+
+        // Request camera access
+        async function requestCamera() {
+            console.log('Camera access requested');
+            const resultBox = document.getElementById('cameraResult');
+            const statusText = document.getElementById('cameraStatus');
+            const videoElement = document.getElementById('cameraVideo');
+            const cameraContainer = document.getElementById('cameraContainer');
+            const cameraControls = document.getElementById('cameraControls');
+            
+            if (!resultBox || !statusText || !videoElement) {
+                alert('DOM elements not found');
+                return;
+            }
+
+            resultBox.style.display = 'block';
+            resultBox.className = 'message-box warning';
+            statusText.className = 'warning-text';
+            statusText.textContent = 'Requesting camera access...';
+
+            // Check if camera API is supported
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                resultBox.className = 'message-box error';
+                statusText.className = 'error-text';
+                statusText.textContent = '❌ Camera API not supported on this browser';
+                return;
+            }
+
+            try {
+                // Get available cameras first
+                await getCameras();
+                
+                // Request camera access
+                const constraints = {
+                    video: {
+                        facingMode: currentCamera,
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }
+                };
+
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                
+                // Success!
+                currentStream = stream;
+                videoElement.srcObject = stream;
+                
+                // Show camera feed and controls
+                cameraContainer.style.display = 'block';
+                cameraControls.style.display = 'flex';
+                
+                // Update status
+                resultBox.className = 'message-box';
+                statusText.className = '';
+                statusText.textContent = '✅ Camera access granted! Vision testing ready.';
+                
+                console.log('Camera access successful');
+                
+                // Wait for video to load
+                videoElement.addEventListener('loadedmetadata', () => {
+                    console.log('Camera video loaded:', videoElement.videoWidth + 'x' + videoElement.videoHeight);
+                });
+
+            } catch (error) {
+                console.log('Camera access error:', error);
+                resultBox.className = 'message-box error';
+                statusText.className = 'error-text';
+                
+                if (error.name === 'NotAllowedError') {
+                    statusText.textContent = '❌ Camera access denied. Please allow camera access and try again.';
+                } else if (error.name === 'NotFoundError') {
+                    statusText.textContent = '❌ No camera found on this device.';
+                } else if (error.name === 'NotReadableError') {
+                    statusText.textContent = '❌ Camera is being used by another app.';
+                } else {
+                    statusText.textContent = '❌ Camera error: ' + error.message;
+                }
+            }
+        }
+
+        // Stop camera
+        function stopCamera() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+                currentStream = null;
+                
+                document.getElementById('cameraVideo').srcObject = null;
+                document.getElementById('cameraContainer').style.display = 'none';
+                document.getElementById('cameraControls').style.display = 'none';
+                
+                const statusText = document.getElementById('cameraStatus');
+                statusText.textContent = 'Camera stopped. Click "Enable Camera" to restart.';
+                
+                console.log('Camera stopped');
+            }
+        }
+
+        // Switch between front and back camera
+        async function switchCamera() {
+            if (cameras.length < 2) {
+                alert('Only one camera available on this device');
+                return;
+            }
+            
+            // Stop current camera
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+            
+            // Switch camera mode
+            currentCamera = currentCamera === 'user' ? 'environment' : 'user';
+            
+            // Restart with new camera
+            await requestCamera();
+        }
+
+        // Test local storage
+        function testStorage() {
+            console.log('Storage test function called');
+            const resultBox = document.getElementById('storageResult');
+            const statusText = document.getElementById('storageStatus');
+            
+            if (!resultBox || !statusText) {
+                alert('DOM elements not found');
+                return;
+            }
+
+            resultBox.style.display = 'block';
+
+            try {
+                // Test localStorage
+                localStorage.setItem('trustYourSight_test', JSON.stringify({
+                    timestamp: new Date().toISOString(),
+                    testData: 'sample_vision_test_result'
+                }));
+                const retrieved = localStorage.getItem('trustYourSight_test');
+                localStorage.removeItem('trustYourSight_test');
+                
+                if (retrieved) {
+                    statusText.textContent = '✅ Storage working! Test results can be saved.';
+                } else {
+                    statusText.textContent = '❌ Storage test failed';
+                }
+            } catch (error) {
+                statusText.textContent = '❌ Storage not available: ' + error.message;
+                console.log('Storage error:', error);
+            }
+        }
+
+        // Test navigation
+        function testNav(section) {
+            console.log('Navigation test called for:', section);
+            const resultBox = document.getElementById('navResult');
+            const statusText = document.getElementById('navStatus');
+            
+            if (!resultBox || !statusText) {
+                alert('DOM elements not found');
+                return;
+            }
+
+            resultBox.style.display = 'block';
+            statusText.textContent = `✅ Navigation working! ${section} section accessed.`;
+            
+            // Add haptic feedback if available
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+            
+            // Simulate section-specific behavior
+            switch(section) {
+                case 'Test':
+                    statusText.textContent += ' Ready to start vision testing.';
+                    break;
+                case 'History':
+                    statusText.textContent += ' Previous test results would appear here.';
+                    break;
+                case 'Profile':
+                    statusText.textContent += ' User settings and profile options.';
+                    break;
+                default:
+                    statusText.textContent += ' App home screen.';
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Trust Your Sight app loaded');
+            
+            // Auto-run JavaScript test
+            setTimeout(function() {
+                testJavaScript();
+            }, 1000);
+            
+            // Get available cameras on load
+            getCameras();
+        });
+
+        // Handle page visibility changes (stop camera when app goes to background)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && currentStream) {
+                console.log('App went to background, stopping camera');
+                stopCamera();
+            }
+        });
+
+        // Log any JavaScript errors
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error);
+            alert('JavaScript Error: ' + e.message + ' at line ' + e.lineno);
+        });
+
+        console.log('Trust Your Sight - Vision Testing App - Script loaded');
+    </script>
+</body>
+</html>
