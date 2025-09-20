@@ -436,16 +436,50 @@
         ];
 
         let stream = null;
-        let speechSynthesis = window.speechSynthesis;
+        let speechSynthesis = null;
+
+        // Initialize speech synthesis with error handling
+        try {
+            speechSynthesis = window.speechSynthesis;
+        } catch (error) {
+            console.log('Speech synthesis not available');
+        }
 
         // Audio functions
         function speak(text, rate = 1) {
             if (!audioEnabled) return;
             
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = rate;
-            utterance.volume = 0.8;
-            speechSynthesis.speak(utterance);
+            try {
+                if (speechSynthesis && window.SpeechSynthesisUtterance) {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = rate;
+                    utterance.volume = 0.8;
+                    speechSynthesis.speak(utterance);
+                } else {
+                    // Fallback: show text instruction visually
+                    showTextInstruction(text);
+                }
+            } catch (error) {
+                console.log('Speech synthesis error:', error);
+                showTextInstruction(text);
+            }
+        }
+
+        // Fallback function to show text instructions
+        function showTextInstruction(text) {
+            const instructionEl = document.getElementById('instructionText');
+            if (instructionEl) {
+                instructionEl.textContent = text;
+                instructionEl.style.background = 'rgba(251, 191, 36, 0.2)';
+                instructionEl.style.padding = '8px';
+                instructionEl.style.borderRadius = '4px';
+                
+                setTimeout(() => {
+                    instructionEl.style.background = '';
+                    instructionEl.style.padding = '';
+                    instructionEl.style.borderRadius = '';
+                }, 3000);
+            }
         }
 
         // Scanner initialization
@@ -673,7 +707,12 @@
             audioEnabled = !audioEnabled;
             const btn = event.target;
             btn.textContent = audioEnabled ? '🔊' : '🔇';
-            speak(audioEnabled ? "Audio enabled" : "Audio disabled");
+            
+            try {
+                speak(audioEnabled ? "Audio enabled" : "Audio disabled");
+            } catch (error) {
+                showTextInstruction(audioEnabled ? "Audio enabled" : "Audio disabled");
+            }
         }
 
         function pauseScanning() {
@@ -710,7 +749,7 @@
                 analysisComplete: true
             };
             
-            localStorage.setItem('trustYourSight_lastScan', JSON.stringify(results));
+            // Note: localStorage is not available in Claude.ai artifacts
             alert('Results saved to your account!');
         }
 
@@ -730,3 +769,6 @@
         });
 
         console.log('Trust Your Sight - Retinal Scanner Interface Loaded');
+    </script>
+</body>
+</html>
