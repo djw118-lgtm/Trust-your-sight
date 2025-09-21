@@ -1,1 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Your Sight - Eye Health Education</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1a202c;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 32px 24px;
+            text-align: center;
+        }
+        .content {
+            padding: 24px;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin: 12px 0;
+        }
+        .btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        .disclaimer {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        .account-option {
+            border: 1px solid #e2e8f0;
+            padding: 16px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .account-option.selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+        .checkbox-item {
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-item input {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Trust Your Sight</h1>
+            <p>Eye Health Education & Awareness</p>
+        </div>
+        <div class="content">
+            <!-- Step 1: Age Verification -->
+            <div class="step active" id="step1">
+                <h2>Age Verification</h2>
+                <p>Are you 18 years or older?</p>
+                <button class="btn" onclick="setAge('adult')">Yes, I'm 18+</button>
+                <button class="btn" onclick="setAge('minor')">No, Under 18</button>
+                <div id="minorMessage" style="display: none;">
+                    <div class="disclaimer">
+                        <h4>Parental Consent Required</h4>
+                        <p>Users under 18 must have a parent or guardian complete this process.</p>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Step 2: Account Selection -->
+            <div class="step" id="step2">
+                <h2>Account Type</h2>
+                <div class="account-option" onclick="selectAccount('individual')">
+                    <h3>Individual - $19.99/month</h3>
+                    <p>Basic features, premium scans available separately</p>
+                </div>
+                <div class="account-option" onclick="selectAccount('family')">
+                    <h3>Family - $29.99/month</h3>
+                    <p>Up to 4 members, includes 1 premium scan</p>
+                </div>
+                <div class="account-option" onclick="selectAccount('senior')">
+                    <h3>Senior - $12.99/month</h3>
+                    <p>Age 65+ with ID verification, includes 1 premium scan</p>
+                </div>
+                <button class="btn" id="continueBtn" disabled onclick="nextStep()">Continue</button>
+            </div>
+
+            <!-- Step 3: Disclaimers -->
+            <div class="step" id="step3">
+                <h2>Important Medical Disclaimers</h2>
+                <div class="disclaimer">
+                    <h4>CRITICAL: This app cannot diagnose medical conditions</h4>
+                    <p>This is for educational purposes and general wellness monitoring only. Always consult eye care professionals for medical concerns.</p>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="disclaimerCheck" onchange="updateContinue()">
+                    <label>I understand these limitations</label>
+                </div>
+                <button class="btn" id="disclaimerBtn" disabled onclick="nextStep()">I Understand</button>
+            </div>
+
+            <!-- Step 4: Completion -->
+            <div class="step" id="step4">
+                <h2>Education Complete!</h2>
+                <p>You can now access the Trust Your Sight app features.</p>
+                <button class="btn" onclick="enterApp()">Enter App</button>
+                <button class="btn" onclick="openScanner()">Start Eye Scan</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let selectedAccount = null;
+
+        function setAge(age) {
+            if (age === 'minor') {
+                document.getElementById('minorMessage').style.display = 'block';
+            } else {
+                nextStep();
+            }
+        }
+
+        function selectAccount(type) {
+            selectedAccount = type;
+            const options = document.querySelectorAll('.account-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            event.target.classList.add('selected');
+            document.getElementById('continueBtn').disabled = false;
+        }
+
+        function updateContinue() {
+            const checked = document.getElementById('disclaimerCheck').checked;
+            document.getElementById('disclaimerBtn').disabled = !checked;
+        }
+
+        function nextStep() {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            currentStep++;
+            document.getElementById('step' + currentStep).classList.add('active');
+        }
+
+        function enterApp() {
+            alert('Welcome to Trust Your Sight! Main app features would load here.');
+        }
+
+        function openScanner() {
+            window.location.href = 'Vision.html';
+        }
+    </script>
+</body>
+</html>
