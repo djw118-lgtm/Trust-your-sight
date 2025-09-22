@@ -3,337 +3,245 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trust Your Sight - Scanner Demo</title>
+  <title>Trust Your Sight - Scanner</title>
   <style>
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #000;
-      color: white;
+      color: #fff;
       overflow: hidden;
     }
-    header {
-      background: #111;
-      color: #fbbf24;
-      text-align: center;
-      padding: 10px;
-      font-weight: 600;
-      z-index: 1000;
-      position: relative;
-    }
-    .scanner-container {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-    .camera-view {
-      flex: 1;
-      position: relative;
-      background: #000;
-    }
-    #scannerVideo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-    }
+    .scanner-container { width: 100vw; height: 100vh; position: relative; }
+    #scannerVideo { width: 100%; height: 100%; object-fit: cover; }
+    .overlay { position: absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; }
     .eye-target {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 120px; height: 120px;
-      border: 3px solid #22c55e;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: all 0.3s ease;
+      position: absolute; top:50%; left:50%; width:120px; height:120px;
+      border:3px solid #22c55e; border-radius:50%;
+      transform: translate(-50%,-50%); transition:all 0.3s ease;
     }
-    .eye-target.capturing {
-      border-color: #ef4444;
-      background: rgba(239,68,68,0.2);
+    .eye-target.capturing { border-color:#ef4444; background:rgba(239,68,68,0.2); animation:pulse 0.5s ease-in-out; }
+    .eye-target.captured { border-color:#22c55e; background:rgba(34,197,94,0.2); }
+    @keyframes pulse { 0%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.1);}100%{transform:translate(-50%,-50%) scale(1);} }
+    .instruction-text {
+      position: absolute; top:10px; left:50%; transform:translateX(-50%);
+      background:rgba(0,0,0,0.7); padding:10px 20px; border-radius:20px;
+      font-weight:bold; text-align:center;
     }
-    .direction-arrow {
-      position: absolute;
-      top: 30%; left: 50%;
-      transform: translateX(-50%);
-      font-size: 48px;
-      color: #22c55e;
+    .control-panel {
+      position: absolute; bottom:0; left:0; right:0;
+      background:rgba(0,0,0,0.7); padding:10px;
+      display:flex; justify-content:space-around;
     }
-    .progress-indicator {
-      position: absolute;
-      top: 20px; left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.7);
-      padding: 10px 20px;
-      border-radius: 15px;
-      font-size: 14px;
-      font-weight: 600;
+    .control-btn {
+      background:rgba(255,255,255,0.2); border:none; color:white;
+      padding:10px 15px; border-radius:8px; font-size:16px; cursor:pointer;
     }
     .scan-complete {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.95);
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      display: none;
-      width: 90%;
-      max-width: 500px;
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:rgba(0,0,0,0.9); padding:30px; border-radius:12px;
+      display:none; text-align:center;
     }
-    .scan-complete.show { display: block; }
-    .results-card {
-      background: #1a1a1a;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 10px;
-      text-align: left;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.5s, transform 0.5s;
+    .scan-complete.show { display:block; }
+    .results-btn {
+      margin:10px; background:#22c55e; border:none;
+      padding:10px 20px; border-radius:20px; cursor:pointer; font-weight:bold;
     }
-    .results-card.show {
-      opacity: 1;
-      transform: translateY(0);
+    footer {
+      position:absolute; bottom:0; width:100%; text-align:center;
+      font-size:13px; color:#aaa; background:rgba(0,0,0,0.8); padding:5px;
     }
-    .results-card.green { border-left: 6px solid #22c55e; }
-    .results-card.yellow { border-left: 6px solid #facc15; }
-    .results-card.red { border-left: 6px solid #ef4444; }
-    .results-card h3 { margin: 0 0 8px 0; }
-    .results-card p { margin: 0; font-size: 14px; color: #ccc; }
-    .results-actions {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-    .results-actions button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    .btn-back { background: #22c55e; color: #fff; }
-    .btn-new { background: #3b82f6; color: #fff; }
-    .btn-share { background: #6b7280; color: #fff; }
-    .btn-print { background: #f59e0b; color: #fff; }
-    .btn-story { background: #9333ea; color: #fff; }
-    .brand-tagline {
-      margin-top: 25px;
-      margin-bottom: 10px;
-      font-size: 18px;
-      font-weight: 700;
-      text-align: center;
-    }
-    .brand-tagline .sight { color: #22c55e; }
-    .brand-tagline .future { color: #fbbf24; }
-    .references {
-      margin-top: 15px;
-      font-size: 13px;
-      color: #aaa;
-      text-align: left;
-    }
-    .references a { color: #3b82f6; }
-    .references h4 { margin: 10px 0; color: #fff; }
   </style>
 </head>
 <body>
-  <header>⚠️ Demo Version — No real diagnosis or payment</header>
   <div class="scanner-container">
-    <div class="camera-view">
-      <video id="scannerVideo" autoplay muted playsinline></video>
-      <div class="overlay">
-        <div class="eye-target" id="eyeTarget"></div>
-        <div class="direction-arrow" id="directionArrow">👁️</div>
-      </div>
-      <div class="progress-indicator" id="progressText">Starting scan...</div>
+    <video id="scannerVideo" autoplay muted playsinline></video>
+    <div class="overlay">
+      <div id="eyeTarget" class="eye-target"></div>
+      <div class="instruction-text" id="instructionText">Preparing scan...</div>
     </div>
+
+    <!-- Controls -->
+    <div class="control-panel">
+      <button class="control-btn" onclick="toggleAudio()" id="audioBtn">🔊 Audio On</button>
+      <button class="control-btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
+      <button class="control-btn" onclick="switchCamera()">🔄 Switch Camera</button>
+      <button class="control-btn" onclick="exitScan()">❌ Exit</button>
+    </div>
+
+    <!-- Results -->
     <div class="scan-complete" id="scanComplete">
-      <h2>✅ Scan Complete!</h2>
-      <p id="timestamp"></p>
-      <div id="resultsContainer"></div>
-      <div class="results-actions">
-        <button class="btn-back" onclick="backToStart()">⬅️ Back to Start</button>
-        <button class="btn-new" onclick="restartScan()">🔄 New Scan</button>
-        <button class="btn-share" onclick="shareResults()">📤 Share</button>
-        <button class="btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
-        <button class="btn-story" onclick="shareStory()">🗣️ Share Your Story</button>
-      </div>
-      <div class="brand-tagline">
-        👁️ <span class="sight">Trust Your Sight</span> — <span class="future">Trust Your Future</span>
-      </div>
-      <div class="references">
-        <h4>References & Further Reading</h4>
-        <ul>
-          <li><a href="https://research.google/blog/improving-the-effectiveness-of-diabetic-retinopathy-models/" target="_blank">Google Research: Improving the Effectiveness of Diabetic Retinopathy Models</a></li>
-          <li><a href="https://research.google/blog/detecting-signs-of-disease-from-external-images-of-the-eye/" target="_blank">Google Health: Detecting Signs of Disease from External Images of the Eye</a></li>
-          <li><a href="https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/diabetic-retinopathy" target="_blank">National Eye Institute: Diabetic Retinopathy</a></li>
-        </ul>
-        <p>⚠️ Demo results are not medical grade. Please consult your doctor for a professional diagnosis. In the near future, medical-grade results will be available here on this app.</p>
-      </div>
+      <h2>✅ Demo Results</h2>
+      <div id="resultText"></div>
+      <button class="results-btn" onclick="startOver()">🔄 New Scan</button>
+      <button class="results-btn" onclick="window.print()">🖨 Print / Save PDF</button>
+      <button class="results-btn" onclick="alert('Sharing demo...')">📤 Share</button>
+      <button class="results-btn" onclick="window.location.href='index.html'">🏠 Back to Start</button>
     </div>
   </div>
 
+  <footer>
+    ⚠️ Demo only — not medical grade. Please consult your doctor. Timestamped results are for demonstration purposes.
+  </footer>
+
   <script>
-    let currentEye = 'right';
+    let audioEnabled = true;
+    let isPaused = false;
+    let usingFront = true;
+    let currentStream;
+
+    let currentEye = "right";
     let currentPosition = 0;
-    const totalPositions = 9;
+    let totalPositions = 9;
     let isScanning = false;
+
+    const video = document.getElementById('scannerVideo');
+    const instructionEl = document.getElementById('instructionText');
+    const target = document.getElementById('eyeTarget');
 
     const scanPositions = [
       { instruction: 'Look straight ahead', arrow: '👁️' },
       { instruction: 'Look up', arrow: '⬆️' },
-      { instruction: 'Look up-right', arrow: '↗️' },
+      { instruction: 'Look up and right', arrow: '↗️' },
       { instruction: 'Look right', arrow: '➡️' },
-      { instruction: 'Look down-right', arrow: '↘️' },
+      { instruction: 'Look down and right', arrow: '↘️' },
       { instruction: 'Look down', arrow: '⬇️' },
-      { instruction: 'Look down-left', arrow: '↙️' },
+      { instruction: 'Look down and left', arrow: '↙️' },
       { instruction: 'Look left', arrow: '⬅️' },
-      { instruction: 'Look up-left', arrow: '↖️' }
+      { instruction: 'Look up and left', arrow: '↖️' }
     ];
 
-    function speak(text) {
-      if ('speechSynthesis' in window) {
-        const u = new SpeechSynthesisUtterance(text);
-        u.rate = 0.9;
-        window.speechSynthesis.speak(u);
-      }
-    }
+    const demoResults = [
+      "🟢 Retinal Vessels: Healthy",
+      "🟢 Neurological Patterns: Normal",
+      "🟢 Blood Pressure Indicators: Normal",
+      "🟢 Optic Nerve: No abnormalities",
+      "🟡 Cardiovascular Health: Moderate risk markers",
+      "🟡 Retinal Vessels: Mild irregularities",
+      "🟡 Diabetes Risk: Possible early signs — consult doctor",
+      "🟡 Blood Pressure Indicators: Slightly elevated",
+      "🔴 Retinal Vessels: Leakage detected",
+      "🔴 Cardiovascular Health: High-risk markers",
+      "🔴 Neurological Patterns: Abnormal activity",
+      "🔴 Diabetes Risk: Strong indicators — professional check advised"
+    ];
 
     async function initCamera() {
+      if (currentStream) currentStream.getTracks().forEach(track => track.stop());
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
-          audio: false
-        });
-        document.getElementById('scannerVideo').srcObject = stream;
-        setTimeout(startScanning, 1500);
+        const constraints = { video: { facingMode: usingFront ? "user" : "environment" } };
+        currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+        video.srcObject = currentStream;
       } catch (err) {
-        alert("Camera access required.");
+        console.error("Camera error:", err);
+        instructionEl.textContent = "Camera access required.";
       }
     }
 
-    function startScanning() {
-      if (isScanning) return;
-      isScanning = true;
-      currentEye = 'right';
-      currentPosition = 0;
-      speak("Starting scan. Cover your left eye.");
-      setTimeout(() => performPosition(), 2000);
+    function speak(text) {
+      if (!audioEnabled) return;
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+      }
     }
 
-    function performPosition() {
-      if (!isScanning) return;
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      document.getElementById('audioBtn').textContent = audioEnabled ? "🔊 Audio On" : "🔇 Audio Off";
+      speak(audioEnabled ? "Audio enabled" : "Audio muted");
+    }
+
+    function togglePause() {
+      isPaused = !isPaused;
+      document.getElementById('pauseBtn').textContent = isPaused ? "▶ Resume" : "⏸ Pause";
+      speak(isPaused ? "Scan paused" : "Scan resumed");
+      if (!isPaused) performPositionScan();
+    }
+
+    function switchCamera() {
+      usingFront = !usingFront;
+      initCamera();
+      speak(usingFront ? "Front camera" : "Rear camera");
+    }
+
+    function exitScan() {
+      if (confirm("Exit scan? Progress will be lost.")) {
+        window.location.href = "index.html";
+      }
+    }
+
+    function performPositionScan() {
+      if (isPaused || !isScanning) return;
       const pos = scanPositions[currentPosition];
-      const eyeText = currentEye === 'right' ? "Right Eye" : "Left Eye";
-      document.getElementById('progressText').textContent =
-        `${eyeText} - Position ${currentPosition+1} of ${totalPositions}`;
-      document.getElementById('directionArrow').textContent = pos.arrow;
-
+      instructionEl.textContent = `${currentEye.toUpperCase()} eye: ${pos.instruction} ${pos.arrow}`;
       speak(pos.instruction);
-
-      setTimeout(() => {
-        speak("Hold steady");
-        document.getElementById('eyeTarget').className = 'eye-target';
-        setTimeout(() => capturePosition(), 4000);
-      }, 2000);
+      target.className = "eye-target positioned";
+      setTimeout(() => { if (!isPaused && isScanning) capturePosition(); }, 3000);
     }
 
     function capturePosition() {
-      if (!isScanning) return;
-      const target = document.getElementById('eyeTarget');
-      target.className = 'eye-target capturing';
-      speak("Captured");
-
+      if (isPaused || !isScanning) return;
+      target.className = "eye-target capturing";
+      speak("Hold steady");
       setTimeout(() => {
-        target.className = 'eye-target';
-        nextPosition();
+        if (!isPaused && isScanning) {
+          target.className = "eye-target captured";
+          speak("Captured");
+          setTimeout(() => { nextPosition(); }, 1500);
+        }
       }, 1500);
     }
 
     function nextPosition() {
       currentPosition++;
       if (currentPosition >= totalPositions) {
-        if (currentEye === 'right') {
-          currentEye = 'left';
+        if (currentEye === "right") {
+          currentEye = "left";
           currentPosition = 0;
-          speak("Switch eyes. Cover your right eye.");
-          setTimeout(() => performPosition(), 3000);
+          speak("Right eye complete. Cover your right eye, scanning left eye.");
+          setTimeout(() => performPositionScan(), 3000);
         } else {
           completeScan();
         }
       } else {
-        performPosition();
+        performPositionScan();
       }
     }
 
     function completeScan() {
       isScanning = false;
-      speak("Scan complete. Analyzing results.");
-      setTimeout(showResults, 2500);
-    }
-
-    function showResults() {
-      const ts = new Date();
-      document.getElementById('timestamp').textContent =
-        "Generated: " + ts.toLocaleString();
-
-      const container = document.getElementById('resultsContainer');
-      container.innerHTML = "";
-      const resultPool = [
-        {title:"Normal retina detected", text:"Healthy structure observed.", color:"green"},
-        {title:"General eye health", text:"No significant findings.", color:"green"},
-        {title:"Possible diabetic changes", text:"Irregular patterns detected.", color:"yellow"},
-        {title:"Retinal blood vessel irregularities", text:"Some stress noted.", color:"yellow"},
-        {title:"Cardiovascular stress", text:"Signs of vascular strain.", color:"red"},
-        {title:"Hypertension indicators", text:"Possible high blood pressure.", color:"red"},
-        {title:"Cholesterol deposits", text:"Minor deposits visible.", color:"yellow"},
-        {title:"Optic nerve stress", text:"Some pressure observed.", color:"red"},
-        {title:"Neurological health", text:"No risk factors detected.", color:"green"},
-        {title:"Healthy blood vessel flow", text:"Normal circulation patterns.", color:"green"}
-      ];
-
-      let shuffled = resultPool.sort(() => 0.5 - Math.random());
-      let picked = shuffled.slice(0,4);
-
-      if (!picked.some(r=>r.color==="green")) picked[0] = resultPool.find(r=>r.color==="green");
-      if (!picked.some(r=>r.color!=="green")) picked[1] = resultPool.find(r=>r.color!=="green");
-
-      picked.forEach((r, i)=>{
-        const div = document.createElement('div');
-        div.className = `results-card ${r.color}`;
-        div.innerHTML = `<h3>${r.title}</h3><p>${r.text}</p>`;
-        container.appendChild(div);
-        setTimeout(()=>div.classList.add("show"), i*500);
-      });
-
       document.getElementById('scanComplete').classList.add('show');
-    }
+      const ts = new Date().toLocaleString();
 
-    function backToStart() { window.location.href = "index.html"; }
-    function restartScan() { location.reload(); }
-    function shareResults() {
-      if (navigator.share) {
-        navigator.share({
-          title: "Trust Your Sight Demo Results",
-          text: "Here are my demo retinal scan results.",
-          url: window.location.href
-        });
-      } else {
-        alert("Sharing not supported on this device.");
+      // pick 6 unique results, make sure at least 2 are green
+      const greens = demoResults.filter(r => r.startsWith("🟢"));
+      const others = demoResults.filter(r => !r.startsWith("🟢"));
+      const selected = [];
+
+      // add 2 greens
+      selected.push(greens[Math.floor(Math.random() * greens.length)]);
+      selected.push(greens[Math.floor(Math.random() * greens.length)]);
+
+      // add 4 others
+      while (selected.length < 6) {
+        const choice = others[Math.floor(Math.random() * others.length)];
+        if (!selected.includes(choice)) selected.push(choice);
       }
-    }
-    function shareStory() {
-      alert("In the live version, this button will let you share your testimonial.");
+
+      document.getElementById('resultText').innerHTML =
+        `<ul style="text-align:left;max-width:400px;margin:0 auto;">${selected.map(r => `<li>${r}</li>`).join("")}</ul><p><em>Generated: ${ts}</em></p>`;
+      speak("Scan complete. Results displayed.");
     }
 
-    document.addEventListener('DOMContentLoaded', initCamera);
+    function startOver() { window.location.href = "Vision.html"; }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initCamera();
+      speak("Starting scan. Cover your left eye and face the camera.");
+      setTimeout(() => { isScanning = true; performPositionScan(); }, 3000);
+    });
   </script>
 </body>
 </html>
