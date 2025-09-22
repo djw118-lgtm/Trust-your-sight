@@ -3,1045 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trust Your Sight - Eye Health Education</title>
+    <title>Trust Your Sight - AI-Powered Eye Health Screening</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
-            color: white; 
-            line-height: 1.6; 
-            min-height: 100vh;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .container { 
-            max-width: 400px; 
-            margin: 0 auto; 
-            min-height: 100vh; 
-            position: relative; 
-            padding: 20px;
-        }
-        @media (min-width: 768px) { 
-            .container { max-width: 800px; } 
-        }
-        .section { 
-            display: none; 
-            padding: 20px;
-        }
-        .section.active { 
-            display: block; 
-        }
-        .header { 
-            text-align: center; 
-            margin-bottom: 30px;
-            padding: 20px 0;
-        }
-        .logo { 
-            font-size: 48px; 
-            margin-bottom: 10px; 
-        }
-        .app-title { 
-            font-size: 28px; 
-            font-weight: 700; 
-            background: linear-gradient(45deg, #22c55e, #3b82f6); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            margin-bottom: 5px; 
-        }
-        .subtitle { 
-            font-size: 16px; 
-            color: #94a3b8; 
-            font-weight: 400; 
-        }
-        .step-indicator {
-            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f1419 100%);
             color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 414px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 40px;
+        }
+
+        .logo {
+            font-size: 60px;
             margin-bottom: 20px;
         }
-        .btn-primary { 
-            background: linear-gradient(45deg, #22c55e, #16a34a); 
-            border: none; 
-            color: white; 
-            padding: 15px 30px; 
-            border-radius: 25px; 
-            font-size: 16px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: transform 0.2s; 
-            margin: 5px; 
-            min-width: 140px;
-            box-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
+
+        .app-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 10px;
         }
-        .btn-primary:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
-        }
-        .btn-secondary { 
-            background: rgba(100, 116, 139, 0.3); 
-            border: 2px solid #64748b; 
-            color: white; 
-            padding: 12px 25px; 
-            border-radius: 25px; 
-            font-size: 14px; 
-            font-weight: 500; 
-            cursor: pointer; 
-            margin: 5px; 
-            min-width: 120px;
-            box-shadow: 0 2px 8px rgba(100, 116, 139, 0.2);
-        }
-        .btn-secondary:hover { 
-            background: rgba(100, 116, 139, 0.4);
-            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
-        }
-        .button-group {
-            display: flex;
-            gap: 15px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .radio-option,         .checkbox-option {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 15px 0;
-            cursor: pointer;
-            transition: all 0.3s;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
+
+        .subtitle {
             font-size: 16px;
-            position: relative;
-        }
-        .checkbox-option input[type="checkbox"] {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-        }
-        .checkbox-option .checkmark {
-            height: 20px;
-            width: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            flex-shrink: 0;
-        }
-        .checkbox-option.selected .checkmark {
-            background-color: #22c55e;
-            border-color: #22c55e;
-        }
-        .checkbox-option.selected .checkmark:after {
-            content: "✓";
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .radio-option:hover, .checkbox-option:hover {
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.1);
-        }
-        .radio-option.selected, .checkbox-option.selected {
-            border-color: #22c55e;
-            background: rgba(34, 197, 94, 0.1);
-        }
-        .warning-box {
-            background: rgba(239, 68, 68, 0.1);
-            border: 2px solid rgba(239, 68, 68, 0.5);
-            color: #fca5a5;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-        .info-box {
-            background: rgba(59, 130, 246, 0.1);
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            color: #93c5fd;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-        .success-box {
-            background: rgba(34, 197, 94, 0.1);
-            border: 2px solid rgba(34, 197, 94, 0.3);
-            color: #86efac;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-        .signature-box {
-            background: rgba(251, 191, 36, 0.1);
-            border: 2px solid rgba(251, 191, 36, 0.5);
-            color: #fbbf24;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-        .progress-bar {
-            background: rgba(255, 255, 255, 0.1);
-            height: 6px;
-            border-radius: 3px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        .progress-fill {
-            background: linear-gradient(90deg, #22c55e, #3b82f6);
-            height: 100%;
-            border-radius: 3px;
-            transition: width 0.5s ease;
-        }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin: 25px 0;
-        }
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.2s;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        h3 {
-            color: #f1f5f9;
-            margin-bottom: 15px;
-            font-size: 22px;
-        }
-        h4 {
-            color: #e2e8f0;
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-        p {
-            color: #cbd5e1;
-            margin-bottom: 15px;
-        }
-        ul {
-            color: #cbd5e1;
-            margin: 15px 0;
-            padding-left: 25px;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        input[type="checkbox"], input[type="radio"] {
-            transform: scale(1.3);
-            margin-right: 12px;
-        }
-        .text-small {
-            font-size: 13px;
             color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .detection-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.1));
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin-bottom: 12px;
+        }
+
+        .detection-card h3 {
+            color: #60a5fa;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .detection-card p {
+            color: #e2e8f0;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(71, 85, 105, 0.8);
+            color: #e2e8f0;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .age-verification {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .age-verification h2 {
+            color: #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .age-verification p {
+            color: #94a3b8;
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-
-        <!-- Step 1: Age Verification (FIRST SCREEN) -->
-        <div id="ageVerification" class="section active">
+        <!-- Welcome Section -->
+        <div id="welcomeSection" class="section active">
             <div class="header">
                 <div class="logo">👁️</div>
-                <div class="app-title">Trust Your Sight</div>
-                <div class="subtitle">Eye Health Education & Awareness</div>
+                <h1 class="app-title">Trust Your Sight</h1>
+                <p class="subtitle">AI-Powered Eye Health Screening</p>
             </div>
-            
-            <div class="step-indicator">1</div>
-            <h3>Account Setup & Age Verification</h3>
-            <p>Before beginning your eye health education, we need to verify your age and account type for legal compliance.</p>
-            
+
             <div style="text-align: center; margin: 30px 0;">
-                <h4 style="margin-bottom: 25px;">Are you 18 years or older?</h4>
-                <div class="button-group">
-                    <button class="btn-primary" onclick="selectAge(true)">Yes, I'm 18+</button>
-                    <button class="btn-secondary" onclick="selectAge(false)">No, Under 18</button>
-                </div>
+                <h3 style="color: #e2e8f0; margin-bottom: 20px;">Ready to Begin Your Eye Health Scan</h3>
+                <p style="color: #94a3b8; margin-bottom: 30px;">Your personalized retinal analysis will take approximately 2 minutes to complete both eyes.</p>
             </div>
-            
-            <div id="parentalConsent" class="warning-box" style="display: none;">
-                <h4>Parental Consent Required</h4>
-                <p>Users under 18 must have a parent or guardian complete this educational tutorial and provide consent.</p>
-                <p style="font-weight: 600; margin-top: 15px;">Please have your parent or guardian restart this process.</p>
+
+            <div style="text-align: center; margin: 30px 0 20px;">
+                <div style="color: #3b82f6; font-weight: 600; font-size: 16px; margin-bottom: 15px;">🔍 What We Can Detect</div>
             </div>
-            
-            <div id="accountSelection" style="display: none;">
-                <h4>Account Type Selection:</h4>
-                
-                <div class="radio-option" onclick="selectAccount('individual', this)">
-                    <input type="radio" name="account" value="individual">
-                    <strong>Individual Account - $19.99/month</strong><br>
-                    <span class="text-small">Basic features for personal use</span>
-                </div>
-                
-                <div class="radio-option" onclick="selectAccount('family', this)">
-                    <input type="radio" name="account" value="family">
-                    <strong>Family Account - $29.99/month (up to 4 members)</strong><br>
-                    <span class="text-small">Multiple users under one account</span>
-                </div>
-                
-                <div class="radio-option" onclick="selectAccount('senior', this)">
-                    <input type="radio" name="account" value="senior">
-                    <strong>Senior Account (65+) - $14.99/month</strong><br>
-                    <span class="text-small">with ID verification</span>
-                </div>
-                
-                <div style="text-align: center;">
-                    <button class="btn-primary" onclick="nextStep('welcomeInfo')">Continue to Education</button>
+
+            <div class="detection-card">
+                <h3>💙 Cardiovascular Health</h3>
+                <p>Blood vessel changes that may indicate heart health concerns</p>
+            </div>
+
+            <div class="detection-card" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.1)); border: 1px solid rgba(245, 158, 11, 0.2);">
+                <h3 style="color: #fbbf24;">🩺 Diabetes Screening</h3>
+                <p>Early detection of diabetic retinopathy risk indicators</p>
+            </div>
+
+            <div class="detection-card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1)); border: 1px solid rgba(239, 68, 68, 0.2);">
+                <h3 style="color: #f87171;">🩸 Blood Pressure Signs</h3>
+                <p>Retinal patterns associated with hypertension</p>
+            </div>
+
+            <div class="detection-card" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(147, 51, 234, 0.1)); border: 1px solid rgba(168, 85, 247, 0.2);">
+                <h3 style="color: #c084fc;">🧠 Neurological Health</h3>
+                <p>Optic nerve health and potential neurological indicators</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="showAgeVerification()">Enter Trust Your Sight App</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px; color: #94a3b8; font-size: 12px; font-style: italic;">
+                *All results require professional medical confirmation
+            </div>
+        </div>
+
+        <!-- Age Verification Section -->
+        <div id="ageSection" class="section">
+            <div class="age-verification">
+                <div class="logo">👁️</div>
+                <h1 class="app-title">Trust Your Sight</h1>
+                <p class="subtitle">AI-Powered Eye Health Screening</p>
+
+                <h2>Age Verification Required</h2>
+                <p>This medical screening tool requires age verification for appropriate use.</p>
+
+                <div style="margin: 30px 0;">
+                    <button class="btn btn-primary" onclick="startApp()">I am 18 years or older</button>
+                    <button class="btn btn-secondary" onclick="showUnderageMessage()">I am under 18 years old</button>
                 </div>
             </div>
         </div>
 
-        <!-- Step 2: Welcome Information -->
-        <div id="welcomeInfo" class="section">
+        <!-- Main App Section -->
+        <div id="appSection" class="section">
             <div class="header">
                 <div class="logo">👁️</div>
-                <div class="app-title">Trust Your Sight</div>
-                <div class="subtitle">Eye Health Education & Awareness</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 20%;"></div>
-                </div>
+                <h1 class="app-title">Trust Your Sight</h1>
+                <p class="subtitle">Ready to Begin Scanning</p>
             </div>
-            
-            <div class="step-indicator">2</div>
-            <h3>Welcome to Your Eye Health Journey</h3>
-            <p>Trust Your Sight is an educational tool designed to help you understand and monitor your eye health awareness.</p>
-            
-            <h4>What this app provides:</h4>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div style="font-size: 24px; margin-bottom: 10px;">📚</div>
-                    <strong>Educational Content</strong>
-                </div>
-                <div class="feature-card">
-                    <div style="font-size: 24px; margin-bottom: 10px;">⏰</div>
-                    <strong>Exam Reminders</strong>
-                </div>
-                <div class="feature-card">
-                    <div style="font-size: 24px; margin-bottom: 10px;">📊</div>
-                    <strong>Health Tracking</strong>
-                </div>
-                <div class="feature-card">
-                    <div style="font-size: 24px; margin-bottom: 10px;">👥</div>
-                    <strong>Professional Referrals</strong>
-                </div>
-            </div>
-            
-            <div class="info-box">
-                <h4>Your Account Selection:</h4>
-                <div id="selectedAccountDisplay">Individual Account - $19.99/month</div>
-                <div class="text-small">Basic features for personal use</div>
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('welcomeAgree', this)">
-                <input type="checkbox" id="welcomeAgree">
-                <span class="checkmark"></span>
-                I have read and understand this welcome information
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-secondary" onclick="previousStep('ageVerification')">Previous</button>
-                <button class="btn-primary" onclick="proceedToDisclaimer()">Begin Education</button>
-            </div>
-        </div>
 
-        <!-- Step 3: Medical Disclaimers -->
-        <div id="medicalDisclaimers" class="section">
-            <div class="header">
-                <div class="logo">⚠️</div>
-                <div class="app-title">Important Medical Disclaimers</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 35%;"></div>
-                </div>
-            </div>
-            
-            <div class="step-indicator">3</div>
-            <h3>Important Medical Disclaimers</h3>
-            
-            <div class="warning-box">
-                <h4>CRITICAL: This App Cannot Diagnose Medical Conditions</h4>
-                <ul>
-                    <li>This app is for general wellness and eye health monitoring only</li>
-                    <li>It cannot detect flu, COVID, acute illnesses, or any medical conditions</li>
-                    <li>It is not a medical device and provides no medical diagnosis</li>
-                    <li>Always consult eye care professionals for medical concerns</li>
-                </ul>
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('disclaimerAgree', this)">
-                <input type="checkbox" id="disclaimerAgree">
-                <span class="checkmark"></span>
-                I understand these critical medical disclaimers and limitations
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-secondary" onclick="previousStep('welcomeInfo')">Previous</button>
-                <button class="btn-primary" onclick="checkAndProceed('disclaimerAgree', 'diabeticEducation')">I Understand</button>
-            </div>
-        </div>
-
-        <!-- Step 4: Diabetic Education -->
-        <div id="diabeticEducation" class="section">
-            <div class="header">
-                <div class="logo">🩺</div>
-                <div class="app-title">Understanding Diabetic Retinopathy</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 50%;"></div>
-                </div>
-            </div>
-            
-            <div class="step-indicator">4</div>
-            <h3>Understanding Diabetic Retinopathy</h3>
-            <p>Diabetic retinopathy is a serious eye condition that affects people with diabetes. Early detection through professional screening is crucial.</p>
-            
-            <div class="info-box">
-                <h4>Who's at risk:</h4>
-                <p>Anyone with Type 1 or Type 2 diabetes</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>Symptoms:</h4>
-                <p>Often no early symptoms - why screening matters</p>
-            </div>
-            
-            <div class="info-box">
-                <h4>Treatment:</h4>
-                <p>Available when caught early by professionals</p>
-            </div>
-            
-            <div class="warning-box">
-                <h4>Professional Screening Required</h4>
-                <p>Diabetic retinopathy screening requires specialized equipment and medical training. This app provides education and reminders to see qualified professionals.</p>
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('diabeticAgree', this)">
-                <input type="checkbox" id="diabeticAgree">
-                <span class="checkmark"></span>
-                I understand diabetic retinopathy requires professional screening
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-secondary" onclick="previousStep('medicalDisclaimers')">Previous</button>
-                <button class="btn-primary" onclick="checkAndProceed('diabeticAgree', 'usageGuidelines')">Continue Learning</button>
-            </div>
-        </div>
-
-        <!-- Step 5: Usage Guidelines -->
-        <div id="usageGuidelines" class="section">
-            <div class="header">
-                <div class="logo">📋</div>
-                <div class="app-title">Usage Guidelines</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%;"></div>
-                </div>
-            </div>
-            
-            <div class="step-indicator">5</div>
-            <h3>Recommended Usage:</h3>
-            <ul>
-                <li>Use as an educational resource about eye health</li>
-                <li>Set reminders for regular professional eye exams</li>
-                <li>Track your eye health awareness and habits</li>
-                <li>Connect with qualified eye care professionals in your area</li>
-            </ul>
-            
-            <div class="warning-box">
-                <h4>When to See a Professional Immediately:</h4>
-                <ul>
-                    <li>Sudden vision changes or loss</li>
-                    <li>Eye pain or severe discomfort</li>
-                    <li>Flashing lights or new floaters</li>
-                    <li>Any concerning eye symptoms</li>
-                </ul>
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('usageAgree', this)">
-                <input type="checkbox" id="usageAgree">
-                <span class="checkmark"></span>
-                I understand proper usage guidelines and emergency warning signs
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-secondary" onclick="previousStep('diabeticEducation')">Previous</button>
-                <button class="btn-primary" onclick="checkAndProceed('usageAgree', 'educationComplete')">Continue</button>
-            </div>
-        </div>
-
-        <!-- Step 6: Education Complete -->
-        <div id="educationComplete" class="section">
-            <div class="header">
-                <div class="logo">✅</div>
-                <div class="app-title">Education Complete!</div>
-                <div class="subtitle">Eye Health Education & Awareness</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%;"></div>
-                </div>
-            </div>
-            
             <div style="text-align: center; margin: 40px 0;">
-                <div style="font-size: 72px; color: #22c55e; margin-bottom: 20px;">✓</div>
-                <h3>Education Complete!</h3>
-                <p>You have successfully completed the mandatory eye health education program.</p>
-            </div>
-            
-            <div class="success-box" style="margin: 20px 0; padding: 20px;">
-                <h4>You now have access to:</h4>
-                <div class="feature-grid" style="margin-top: 20px; gap: 15px;">
-                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 20px; text-align: center;">Eye Health Dashboard</div>
-                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 20px; text-align: center;">Exam Reminders</div>
-                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 20px; text-align: center;">Educational Library</div>
-                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 20px; text-align: center;">Professional Directory</div>
+                <h3 style="color: #22c55e; margin-bottom: 20px;">Welcome to Your Eye Health Scanner</h3>
+                <p style="color: #94a3b8; margin-bottom: 30px;">Follow the audio instructions and hold your phone 6-8 inches from your face. Keep your phone straight and steady.</p>
+                
+                <div style="background: rgba(239, 68, 68, 0.1); border-radius: 12px; padding: 20px; margin: 20px 0; border: 1px solid rgba(239, 68, 68, 0.3);">
+                    <div style="color: #f87171; font-weight: 600; margin-bottom: 10px;">⚠️ Important Health Notice</div>
+                    <div style="color: #e2e8f0; font-size: 14px;">This screening tool provides preliminary health indicators only. Results must be confirmed by qualified medical professionals. Never delay professional medical care based on these results.</div>
                 </div>
-            </div>
-            
-            <div style="text-align: center;">
-                <button class="btn-primary" onclick="nextStep('instructionsSection')" style="font-size: 18px; padding: 20px 40px;">Enter Trust Your Sight App</button>
-            </div>
-            
-            <p class="text-small" style="text-align: center; margin-top: 20px;">
-                Your education completion has been recorded. You can review this information anytime in the app settings.
-            </p>
-        </div>
 
-        <!-- Step 7: Retinal Scan Instructions -->
-        <div id="instructionsSection" class="section">
-            <div class="header">
-                <div class="logo">👁️</div>
-                <div class="app-title">Retinal Scan Instructions</div>
-                <div class="subtitle">Prepare for your comprehensive eye scan</div>
-            </div>
-            
-            <h3>Retinal Scan Instructions</h3>
-            <p>You're about to perform a comprehensive retinal scan. This process will capture 9 positions of each eye for thorough analysis.</p>
-            
-            <h4>Before We Begin:</h4>
-            <ul>
-                <li>Find a well-lit area with consistent lighting</li>
-                <li>Hold your phone steady with one hand</li>
-                <li>Use your other hand to gently cover the non-scanning eye</li>
-                <li>Position the camera 8-10 inches from your eye</li>
-                <li>Keep your eye naturally open - don't stretch eyelids</li>
-                <li>Follow the audio instructions carefully</li>
-            </ul>
-            
-            <div style="background: #1e293b; border: 2px solid #64748b; border-radius: 15px; padding: 40px 20px; text-align: center; color: #64748b; margin: 20px 0;">
-                📷 Camera preview will appear here
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-secondary" onclick="nextStep('educationComplete')">Cancel</button>
-                <button class="btn-primary" onclick="beginActualScan()">Start Scan</button>
+                <button class="btn btn-primary" onclick="startDemo()">Start Eye Scan</button>
+                <button class="btn btn-secondary" onclick="showDemo()">View Demo Results</button>
             </div>
         </div>
-
-        <!-- Step 8: Scanning Interface -->
-        <div id="scanningSection" class="section">
-            <button onclick="exitScan()" style="position: absolute; top: 15px; right: 15px; background: rgba(239, 68, 68, 0.8); color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; font-size: 20px; z-index: 1000;">×</button>
-            
-            <div style="background: #000; border-radius: 15px; overflow: hidden; margin: 20px 0; position: relative;">
-                <video id="scannerVideo" autoplay muted playsinline style="width: 100%; height: 280px; object-fit: cover;"></video>
-                <div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px;">
-                    <button onclick="toggleSound()" id="soundBtn" style="background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(255, 255, 255, 0.3); color: white; padding: 12px; border-radius: 50%; cursor: pointer; font-size: 18px;">🔊</button>
-                    <button onclick="pauseResume()" id="pauseBtn" style="background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(255, 255, 255, 0.3); color: white; padding: 12px; border-radius: 50%; cursor: pointer; font-size: 18px;">⏸️</button>
-                </div>
-            </div>
-            
-            <div class="progress-bar">
-                <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
-            </div>
-            
-            <div id="scanStatus" style="background: rgba(59, 130, 246, 0.1); border: 2px solid rgba(59, 130, 246, 0.3); border-radius: 15px; padding: 25px; margin: 20px 0; text-align: center; font-size: 18px; font-weight: 600;">
-                <div id="positionEmoji" style="font-size: 32px; margin-bottom: 10px;">👁️</div>
-                <div id="positionText">Preparing to scan...</div>
-                <div id="eyeInstruction" style="font-size: 14px; color: #94a3b8; margin-top: 10px;">Hold phone steady</div>
-            </div>
-        </div>
-
-        <!-- Step 9: Final Results -->
-        <div id="finalResults" class="section">
-            <div class="header">
-                <div class="logo">✅</div>
-                <div class="app-title">Scan Complete!</div>
-                <div class="subtitle">Educational Demo Results</div>
-            </div>
-            
-            <div style="text-align: center; margin: 40px 0;">
-                <div style="font-size: 72px; color: #22c55e; margin-bottom: 20px;">✓</div>
-                <h3>Demo Complete!</h3>
-                <p>You have successfully completed the educational eye health scanning demonstration.</p>
-            </div>
-            
-            <div class="success-box">
-                <h4>Demo Results Summary:</h4>
-                <p>This demonstration showed you how professional retinal scanning works for educational purposes.</p>
-                <p style="margin-top: 15px; font-weight: 600;">Remember: This is for educational purposes only. Always consult qualified eye care professionals for actual medical screening.</p>
-            </div>
-            
-            <div class="button-group" style="justify-content: center;">
-                <button class="btn-primary" onclick="restartApp()">Start Over</button>
-                <button class="btn-secondary" onclick="showMoreInfo()">Learn More</button>
-            </div>
-        </div>
-
     </div>
 
     <script>
-        // Simple, clean JavaScript
-        let selectedAge = null;
-        let selectedAccount = null;
-        let stream = null;
-        let isScanning = false;
-        let isPaused = false;
-        let currentPosition = 0;
-        let currentEye = 'right';
-        let soundEnabled = true;
-
-        // Complete 9-position scan sequence
-        const scanPositions = [
-            { text: "Look straight ahead", emoji: "👁️" },
-            { text: "Look up", emoji: "⬆️" },
-            { text: "Look to your right", emoji: "➡️" },
-            { text: "Look down", emoji: "⬇️" },
-            { text: "Look to your left", emoji: "⬅️" },
-            { text: "Look up and to your right", emoji: "↗️" },
-            { text: "Look up and to your left", emoji: "↖️" },
-            { text: "Look down and to your left", emoji: "↙️" },
-            { text: "Look down and to your right", emoji: "↘️" }
-        ];
-
-        function beginActualScan() {
-            nextStep('scanningSection');
-            initCamera();
-            setTimeout(() => {
-                startScanSequence();
-            }, 2000);
+        function showAgeVerification() {
+            document.getElementById('welcomeSection').classList.remove('active');
+            document.getElementById('ageSection').classList.add('active');
         }
 
-        // Camera functions
-        async function initCamera() {
-            try {
-                const constraints = {
-                    video: {
-                        facingMode: 'user',
-                        width: { ideal: 640 },
-                        height: { ideal: 480 }
-                    },
-                    audio: false
-                };
-
-                stream = await navigator.mediaDevices.getUserMedia(constraints);
-                const video = document.getElementById('scannerVideo');
-                video.srcObject = stream;
-                
-                document.getElementById('positionText').textContent = 'Camera ready';
-                document.getElementById('eyeInstruction').textContent = 'Hold phone 6-8 inches from face';
-                
-            } catch (error) {
-                console.error('Camera initialization error:', error);
-                document.getElementById('positionText').textContent = 'Camera access required';
-                document.getElementById('eyeInstruction').textContent = 'Please allow camera permissions and refresh';
-            }
+        function startApp() {
+            document.getElementById('ageSection').classList.remove('active');
+            document.getElementById('appSection').classList.add('active');
         }
 
-        function startScanSequence() {
-            isScanning = true;
-            currentPosition = 0;
-            currentEye = 'right';
-            
-            document.getElementById('positionText').textContent = 'Starting RIGHT eye scan';
-            document.getElementById('eyeInstruction').textContent = 'Cover your LEFT eye with your hand';
-            
-            // Start the first position after a brief delay
-            setTimeout(() => {
-                scanNextPosition();
-            }, 3000);
+        function showUnderageMessage() {
+            alert('This screening tool is designed for adults 18 and older. Please consult with a parent or guardian and visit an eye care professional for proper screening.');
         }
 
-        function scanNextPosition() {
-            if (!isScanning || isPaused) return;
-            
-            if (currentPosition < scanPositions.length) {
-                const position = scanPositions[currentPosition];
-                
-                // Update UI immediately
-                document.getElementById('positionEmoji').textContent = position.emoji;
-                document.getElementById('positionText').textContent = `Position ${currentPosition + 1}/9: ${position.text}`;
-                
-                const eyeInstruction = currentEye === 'right' ? 'Cover your LEFT eye with your hand' : 'Cover your RIGHT eye with your hand';
-                document.getElementById('eyeInstruction').textContent = eyeInstruction;
-                
-                // Speak the instruction
-                if (soundEnabled && 'speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance(position.text);
-                    utterance.rate = 0.8;
-                    utterance.pitch = 1.0;
-                    utterance.volume = 0.8;
-                    window.speechSynthesis.speak(utterance);
-                }
-                
-                // Wait 3 seconds, then capture
-                setTimeout(() => {
-                    capturePosition();
-                }, 3000);
-            }
+        function startDemo() {
+            alert('🎯 Demo Mode: This would initiate the camera scanning sequence with 9-position analysis for both eyes. The full scanning functionality includes:\n\n📱 Camera initialization\n👁️ 9-position sequence per eye\n🔊 Audio instructions\n📊 AI analysis results\n\nIn a real implementation, this would access your camera and guide you through the complete retinal scanning process.');
         }
 
-        function capturePosition() {
-            // Play beep sound
-            if (soundEnabled) {
-                try {
-                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    
-                    oscillator.frequency.value = 800;
-                    oscillator.type = 'sine';
-                    
-                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-                    
-                    oscillator.start(audioContext.currentTime);
-                    oscillator.stop(audioContext.currentTime + 0.3);
-                } catch (error) {
-                    console.log('Audio error:', error);
-                }
-            }
-            
-            // Show capture confirmation
-            document.getElementById('positionText').textContent = `✅ Position ${currentPosition + 1} captured!`;
-            
-            // Update progress
-            currentPosition++;
-            const totalPositions = currentEye === 'left' ? 18 : 9;
-            const completedPositions = currentPosition + (currentEye === 'left' ? 9 : 0);
-            const progress = (completedPositions / totalPositions) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            
-            // Wait 1.5 seconds then move to next
-            setTimeout(() => {
-                if (currentPosition >= 9) {
-                    if (currentEye === 'right') {
-                        switchToLeftEye();
-                    } else {
-                        completeScan();
-                    }
-                } else {
-                    scanNextPosition();
-                }
-            }, 1500);
+        function showDemo() {
+            alert('📊 Demo Results:\n\n✅ Cardiovascular Health: Low Risk\n⚠️ Diabetes Screening: Medium Risk\n🩸 Blood Pressure: Normal\n🧠 Neurological: No concerns detected\n\n*These are demonstration results only. Real screening requires professional medical evaluation.');
         }
 
-        function switchToLeftEye() {
-            currentEye = 'left';
-            currentPosition = 0;
-            
-            document.getElementById('positionText').textContent = 'Great! Now scanning LEFT eye';
-            document.getElementById('eyeInstruction').textContent = 'Cover your RIGHT eye with your hand';
-            document.getElementById('positionEmoji').textContent = '👁️';
-            
-            if (soundEnabled && 'speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance("Great job! Now we'll scan your left eye. Cover your right eye with your hand.");
-                utterance.rate = 0.8;
-                window.speechSynthesis.speak(utterance);
-            }
-            
-            setTimeout(() => {
-                scanNextPosition();
-            }, 4000);
-        }
-
-        function completeScan() {
-            isScanning = false;
-            document.getElementById('progressFill').style.width = '100%';
-            document.getElementById('positionText').textContent = 'Scan Complete!';
-            document.getElementById('eyeInstruction').textContent = 'Both eyes scanned successfully';
-            document.getElementById('positionEmoji').textContent = '✅';
-            
-            speak("Scan complete! Processing your educational results.", () => {
-                setTimeout(() => {
-                    showFinalResults();
-                }, 2000);
-            });
-        }
-
-        function showFinalResults() {
-            emergencyStopScanning();
-            nextStep('finalResults');
-        }
-
-        // Audio functions
-        function speak(text, callback = null, delay = 0) {
-            if (!soundEnabled) {
-                if (callback) setTimeout(callback, 1000);
-                return;
-            }
-            
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-            
-            setTimeout(() => {
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.rate = 0.8;
-                    utterance.pitch = 1.0;
-                    utterance.volume = 0.8;
-                    
-                    utterance.onend = () => {
-                        if (callback) {
-                            setTimeout(callback, 500);
-                        }
-                    };
-                    
-                    window.speechSynthesis.speak(utterance);
-                } else {
-                    if (callback) setTimeout(callback, 2000);
-                }
-            }, delay);
-        }
-
-        function playBeep(callback = null) {
-            if (!soundEnabled) {
-                if (callback) setTimeout(callback, 200);
-                return;
-            }
-            
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.value = 800;
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.3);
-                
-                if (callback) {
-                    setTimeout(callback, 400);
-                }
-            } catch (error) {
-                if (callback) setTimeout(callback, 400);
-            }
-        }
-
-        // Control functions
-        function toggleSound() {
-            soundEnabled = !soundEnabled;
-            const btn = document.getElementById('soundBtn');
-            btn.textContent = soundEnabled ? '🔊' : '🔇';
-            
-            if (!soundEnabled && 'speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-        }
-
-        function pauseResume() {
-            isPaused = !isPaused;
-            const btn = document.getElementById('pauseBtn');
-            btn.textContent = isPaused ? '▶️' : '⏸️';
-            
-            if (isPaused) {
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                }
-            } else if (isScanning) {
-                scanNextPosition();
-            }
-        }
-
-        function exitScan() {
-            emergencyStopScanning();
-            nextStep('educationComplete');
-        }
-
-        function emergencyStopScanning() {
-            isScanning = false;
-            isPaused = false;
-            currentPosition = 0;
-            currentEye = 'right';
-
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                stream = null;
-            }
-
-            const video = document.getElementById('scannerVideo');
-            if (video) {
-                video.srcObject = null;
-            }
-
-            document.getElementById('progressFill').style.width = '0%';
-        }
-
-        function showMoreInfo() {
-            alert(`Educational Demo Information:
-
-This demonstration shows how professional retinal scanning works
-Real eye health screening requires specialized medical equipment
-Always consult qualified ophthalmologists for actual diagnosis
-
-Google AI Research Validation:
-• 90.3% sensitivity for detecting diabetic retinopathy
-• 98.1% specificity (accuracy in healthy patients)
-• Trained on 128,175 retinal images by 54 ophthalmologists
-• Published in JAMA (Journal of American Medical Association)
-
-Research Links:
-• Google Research: https://research.google/pubs/pub45732/
-• JAMA Publication: https://jamanetwork.com/journals/jama/fullarticle/2588763
-
-Remember: This app is for educational purposes only and cannot diagnose medical conditions.`);
-        }
-
-        function selectAge(isOver18) {
-            console.log('Age selected:', isOver18);
-            selectedAge = isOver18;
-            
-            if (isOver18) {
-                document.getElementById('parentalConsent').style.display = 'none';
-                document.getElementById('accountSelection').style.display = 'block';
-            } else {
-                document.getElementById('parentalConsent').style.display = 'block';
-                document.getElementById('accountSelection').style.display = 'none';
-            }
-        }
-
-        function selectAccount(type, element) {
-            console.log('Account selected:', type);
-            selectedAccount = type;
-            
-            // Update radio button
-            const radio = element.querySelector('input[type="radio"]');
-            if (radio) radio.checked = true;
-            
-            // Update visual selection
-            document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            
-            // Update display text
-            let displayText = '';
-            if (type === 'individual') {
-                displayText = 'Individual Account - $19.99/month';
-            } else if (type === 'family') {
-                displayText = 'Family Account - $29.99/month (up to 4 members)';
-            } else if (type === 'senior') {
-                displayText = 'Senior Account (65+) - $14.99/month';
-            }
-            
-            const display = document.getElementById('selectedAccountDisplay');
-            if (display) display.textContent = displayText;
-        }
-
-        function toggleCheck(checkboxId, element) {
-            console.log('Checkbox toggled:', checkboxId);
-            const checkbox = document.getElementById(checkboxId);
-            if (checkbox) {
-                checkbox.checked = !checkbox.checked;
-                
-                if (checkbox.checked) {
-                    element.classList.add('selected');
-                } else {
-                    element.classList.remove('selected');
-                }
-            }
-        }
-
-        function nextStep(stepId) {
-            // Validate account selection before leaving age verification
-            if (stepId === 'welcomeInfo' && !selectedAccount) {
-                alert('Please select an account type before continuing.');
-                return;
-            }
-            
-            console.log('Moving to step:', stepId);
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show target section
-            const targetSection = document.getElementById(stepId);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
-        }
-
-        function previousStep(stepId) {
-            nextStep(stepId);
-        }
-
-        function proceedToDisclaimer() {
-            const checkbox = document.getElementById('welcomeAgree');
-            if (!checkbox || !checkbox.checked) {
-                alert('Please read and check the agreement to continue.');
-                return;
-            }
-            nextStep('medicalDisclaimers');
-        }
-
-        function checkAndProceed(checkboxId, nextStepId) {
-            const checkbox = document.getElementById(checkboxId);
-            if (!checkbox || !checkbox.checked) {
-                alert('Please check the required agreement to continue.');
-                return;
-            }
-            nextStep(nextStepId);
-        }
-
-        function restartApp() {
-            // Reset everything and go back to start
-            selectedAge = null;
-            selectedAccount = null;
-            
-            // Reset form inputs
-            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            document.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
-            document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-            
-            // Hide conditional sections
-            document.getElementById('parentalConsent').style.display = 'none';
-            document.getElementById('accountSelection').style.display = 'none';
-            
-            // Go back to first screen
-            nextStep('ageVerification');
-        }
-
-        // Test button functionality on load
-        console.log('Trust Your Sight JavaScript loaded successfully!');
-        
-        // Quick test - move to results section after 10 seconds if you want to test
-        // setTimeout(() => nextStep('resultsSection'), 10000);
+        // Initialize the app
+        console.log('👁️ Trust Your Sight - App Loaded Successfully');
     </script>
 </body>
 </html>
