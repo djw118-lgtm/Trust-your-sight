@@ -30,6 +30,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .control-btn.pause { background: rgba(255, 193, 7, 0.8); }
 .control-btn.close { background: rgba(220, 53, 69, 0.8); }
 .control-btn.camera-flip { background: rgba(13, 110, 253, 0.8); }
+.control-btn.sound-toggle { background: rgba(34, 197, 94, 0.8); }
 .eye-target { position: absolute; top: 50%; left: 50%; width: 120px; height: 120px; border: 3px solid #22c55e; border-radius: 50%; transform: translate(-50%, -50%); transition: all 0.3s ease; }
 .eye-target.positioned { border-color: #22c55e; box-shadow: 0 0 20px rgba(34, 197, 94, 0.5); }
 .eye-target.capturing { border-color: #ef4444; animation: pulse 0.5s ease-in-out; background: rgba(239, 68, 68, 0.2); }
@@ -67,6 +68,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .container { max-width: 100%; padding: 0 10px; }
 .app-title { font-size: 24px; }
 .feature-grid { gap: 10px; }
+}
+@media (min-width: 768px) {
+.container { max-width: 800px; }
+.feature-grid { grid-template-columns: repeat(2, 1fr); }
+.results-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -126,6 +132,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 <button class="control-btn camera-flip" onclick="flipCamera()" title="Switch Camera">📷</button>
 <button class="control-btn pause" onclick="pauseScan()" title="Pause">⏸️</button>
 <button class="control-btn close" onclick="exitScan()" title="Exit">✖️</button>
+<button class="control-btn sound-toggle" onclick="toggleSound()" title="Toggle Sound">🔊</button>
 </div>
 <div class="overlay">
 <div class="eye-target" id="eyeTarget"></div>
@@ -173,6 +180,8 @@ let isScanning = false;
 let isPaused = false;
 let stream = null;
 let currentCamera = 'user';
+let soundEnabled = true;
+let scanningTimeout = null;
 const scanPositions = [
 { text: "Look straight ahead", emoji: "👁️" },
 { text: "Look up", emoji: "⬆️" },
@@ -214,7 +223,37 @@ cameraBtn.innerHTML = '📷';
 cameraBtn.title = 'Switch to Front Camera (for self-scanning)';
 }
 }
-async function flipCamera() {
+function toggleSound() {
+soundEnabled = !soundEnabled;
+const soundBtn = document.querySelector('.sound-toggle');
+if (soundEnabled) {
+soundBtn.innerHTML = '🔊';
+soundBtn.title = 'Sound On - Click to mute';
+showMessage('Sound enabled', 1000);
+} else {
+soundBtn.innerHTML = '🔇';
+soundBtn.title = 'Sound Off - Click to enable';
+showMessage('Sound muted', 1000);
+}
+}
+function playBeep() {
+if (!soundEnabled) return;
+try {
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const oscillator = audioContext.createOscillator();
+const gainNode = audioContext.createGain();
+oscillator.connect(gainNode);
+gainNode.connect(audioContext.destination);
+oscillator.frequency.value = 800;
+oscillator.type = 'sine';
+gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+oscillator.start(audioContext.currentTime);
+oscillator.stop(audioContext.currentTime + 0.2);
+} catch (error) {
+console.log('Audio not supported:', error);
+}
+}
 currentCamera = currentCamera === 'user' ? 'environment' : 'user';
 await initCamera();
 const message = currentCamera === 'user' ? 'Front camera: Perfect for self-scanning' : 'Back camera: Great for scanning family members';
