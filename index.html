@@ -1,566 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trust Your Sight - Retinal Scanner</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000;
-            color: white;
-            overflow: hidden;
-        }
-
-        .scanner-container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .camera-view {
-            flex: 1;
-            position: relative;
-            background: #000;
-        }
-
-        #scannerVideo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-        }
-
-        .eye-target {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 120px;
-            height: 120px;
-            border: 3px solid #22c55e;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.3s ease;
-        }
-
-        .eye-target.positioned {
-            border-color: #22c55e;
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
-        }
-
-        .eye-target.capturing {
-            border-color: #ef4444;
-            animation: pulse 0.5s ease-in-out;
-            background: rgba(239, 68, 68, 0.2);
-        }
-
-        .eye-target.captured {
-            border-color: #22c55e;
-            background: rgba(34, 197, 94, 0.2);
-        }
-
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-            100% { transform: translate(-50%, -50%) scale(1); }
-        }
-
-        .direction-arrow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 40px;
-            height: 40px;
-            transform: translate(-50%, -50%);
-            color: #22c55e;
-            font-size: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .control-panel {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .control-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        .control-btn:active {
-            transform: scale(0.95);
-        }
-
-        .instruction-text {
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 20px;
-            margin: 0 10px;
-            flex: 1;
-        }
-
-        .progress-indicator {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 15px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .scan-complete {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9);
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            z-index: 1000;
-            display: none;
-        }
-
-        .scan-complete.show {
-            display: block;
-        }
-
-        .scan-complete h2 {
-            color: #22c55e;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .scan-complete p {
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-
-        .results-btn {
-            background: #22c55e;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .results-btn:hover {
-            background: #16a34a;
-            transform: translateY(-2px);
-        }
-
-        .position-grid {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 20px);
-            grid-template-rows: repeat(3, 20px);
-            gap: 4px;
-        }
-
-        .position-dot {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .position-dot.completed {
-            background: #22c55e;
-        }
-
-        .position-dot.current {
-            background: #ef4444;
-            animation: pulse 0.5s infinite;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trust Your Sight - Demo</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0b0b0b;
+      color: #fff;
+    }
+    header {
+      background: #111;
+      color: #fbbf24;
+      text-align: center;
+      padding: 10px;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    h1, h2 { margin-bottom: 20px; }
+    p { margin-bottom: 15px; line-height: 1.5; }
+    button {
+      background: #22c55e;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background: #16a34a;
+    }
+    .plan {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .plan.selected {
+      border-color: #22c55e;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+    }
+    .warning {
+      background: #7f1d1d;
+      color: #fca5a5;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .checkbox-wrap {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+    }
+    .checkbox-wrap input {
+      margin-right: 10px;
+    }
+    .step-indicator {
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
+  </style>
 </head>
 <body>
-    <div class="scanner-container">
-        <div class="camera-view">
-            <video id="scannerVideo" autoplay muted playsinline></video>
-            
-            <div class="overlay">
-                <div class="eye-target" id="eyeTarget"></div>
-                <div class="direction-arrow" id="directionArrow">👁️</div>
-            </div>
-            
-            <div class="progress-indicator" id="progressText">
-                Right Eye - Position 1 of 9
-            </div>
-
-            <div class="position-grid" id="positionGrid">
-                <!-- 9 position dots -->
-                <div class="position-dot" data-position="0"></div>
-                <div class="position-dot" data-position="1"></div>
-                <div class="position-dot" data-position="2"></div>
-                <div class="position-dot" data-position="3"></div>
-                <div class="position-dot" data-position="4"></div>
-                <div class="position-dot" data-position="5"></div>
-                <div class="position-dot" data-position="6"></div>
-                <div class="position-dot" data-position="7"></div>
-                <div class="position-dot" data-position="8"></div>
-            </div>
-        </div>
-
-        <div class="control-panel">
-            <button class="control-btn" id="muteBtn" onclick="toggleAudio()">🔊</button>
-            <div class="instruction-text" id="instructionText">
-                Position phone 6-8 inches from your right eye. Cover left eye with hand.
-            </div>
-            <button class="control-btn" id="pauseBtn" onclick="togglePause()">⏸️</button>
-            <button class="control-btn" id="exitBtn" onclick="exitScanner()">❌</button>
-        </div>
-
-        <div class="scan-complete" id="scanComplete">
-            <h2>✅ Scan Complete!</h2>
-            <p>Your retinal health scan has been completed successfully. Analysis will be available shortly.</p>
-            <button class="results-btn" onclick="viewResults()">View Results</button>
-        </div>
+  <header>⚠️ Demo Version — No real diagnosis or payment</header>
+  <div class="container">
+    
+    <!-- Landing -->
+    <div id="landing" class="screen active">
+      <h1>Trust Your Sight</h1>
+      <p>Early awareness for eye and health conditions. This demo simulates the full experience.</p>
+      <button onclick="nextScreen('age')">Continue</button>
     </div>
 
-    <script>
-        let currentEye = 'right';
-        let currentPosition = 0;
-        let totalPositions = 9;
-        let isScanning = false;
-        let isPaused = false;
-        let audioEnabled = true;
-        let scanTimer;
-        
-        // Complete 9-position sequence for each eye
-        const scanPositions = [
-            { name: 'center', instruction: 'Look straight ahead at the camera', arrow: '👁️' },
-            { name: 'up', instruction: 'Look up', arrow: '⬆️' },
-            { name: 'up-right', instruction: 'Look up and to your right', arrow: '↗️' },
-            { name: 'right', instruction: 'Look to your right', arrow: '➡️' },
-            { name: 'down-right', instruction: 'Look down and to your right', arrow: '↘️' },
-            { name: 'down', instruction: 'Look down', arrow: '⬇️' },
-            { name: 'down-left', instruction: 'Look down and to your left', arrow: '↙️' },
-            { name: 'left', instruction: 'Look to your left', arrow: '⬅️' },
-            { name: 'up-left', instruction: 'Look up and to your left', arrow: '↖️' }
-        ];
+    <!-- Age check -->
+    <div id="age" class="screen">
+      <div class="step-indicator">Step 1 of 5</div>
+      <h2>Are you over 18?</h2>
+      <button onclick="nextScreen('pricing')">Yes, I am 18+</button>
+      <div style="margin-top:15px;">
+        <button onclick="showUnder18()">No, I am under 18</button>
+      </div>
+      <div id="under18" class="warning" style="display:none;">
+        You must be over 18 to use this demo.
+      </div>
+    </div>
 
-        function speak(text, rate = 1) {
-            if (!audioEnabled) return;
-            
-            try {
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.rate = rate;
-                    utterance.pitch = 1;
-                    utterance.volume = 0.8;
-                    window.speechSynthesis.speak(utterance);
-                } else {
-                    showTextInstruction(text);
-                }
-            } catch (error) {
-                showTextInstruction(text);
-            }
-        }
+    <!-- Pricing -->
+    <div id="pricing" class="screen">
+      <div class="step-indicator">Step 2 of 5</div>
+      <h2>Select a Plan (Demo Only)</h2>
+      <div class="plan" onclick="selectPlan(this)">Single — $19.99</div>
+      <div class="plan" onclick="selectPlan(this)">Family (up to 4) — $29.99</div>
+      <div class="plan" onclick="selectPlan(this)">Senior — $12.99</div>
+      <p style="color:#aaa; font-size:14px;">⚠️ Demo only — no charges will be made.</p>
+      <button id="pricingNext" onclick="nextScreen('disclaimer1')" disabled>Next</button>
+    </div>
 
-        function showTextInstruction(text) {
-            const instructionEl = document.getElementById('instructionText');
-            const originalBg = instructionEl.style.backgroundColor;
-            instructionEl.style.backgroundColor = '#fbbf24';
-            instructionEl.style.color = '#000';
-            instructionEl.textContent = text;
-            
-            setTimeout(() => {
-                instructionEl.style.backgroundColor = originalBg;
-                instructionEl.style.color = '#fff';
-            }, 2000);
-        }
+    <!-- Disclaimers -->
+    <div id="disclaimer1" class="screen">
+      <div class="step-indicator">Step 3 of 5</div>
+      <h2>Disclaimer 1</h2>
+      <p>This demo does not diagnose COVID-19 or flu.</p>
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="d1" onchange="toggleNext('d1','d1next')">
+        <label for="d1">I understand</label>
+      </div>
+      <button id="d1next" onclick="nextScreen('disclaimer2')" disabled>Continue</button>
+    </div>
 
-        function vibrate() {
-            if ('vibrate' in navigator) {
-                navigator.vibrate(200);
-            }
-        }
+    <div id="disclaimer2" class="screen">
+      <div class="step-indicator">Step 3 of 5</div>
+      <h2>Disclaimer 2</h2>
+      <p>This demo is for educational use only.</p>
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="d2" onchange="toggleNext('d2','d2next')">
+        <label for="d2">I understand</label>
+      </div>
+      <button id="d2next" onclick="nextScreen('disclaimer3')" disabled>Continue</button>
+    </div>
 
-        async function initCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { 
-                        facingMode: 'user', // Front-facing camera
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    },
-                    audio: false
-                });
-                
-                const video = document.getElementById('scannerVideo');
-                video.srcObject = stream;
-                
-                video.onloadedmetadata = () => {
-                    setTimeout(() => {
-                        if (!isScanning) {
-                            startScanning();
-                        }
-                    }, 1000);
-                };
-                
-            } catch (error) {
-                console.error('Camera access error:', error);
-                showTextInstruction('Camera access required. Please allow camera permission and reload.');
-            }
-        }
+    <div id="disclaimer3" class="screen">
+      <div class="step-indicator">Step 3 of 5</div>
+      <h2>Disclaimer 3</h2>
+      <p>Consult a doctor for medical advice about your health.</p>
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="d3" onchange="toggleNext('d3','d3next')">
+        <label for="d3">I understand</label>
+      </div>
+      <button id="d3next" onclick="nextScreen('disclaimer4')" disabled>Continue</button>
+    </div>
 
-        function startScanning() {
-            if (isScanning || isPaused) return;
-            
-            isScanning = true;
-            currentEye = 'right';
-            currentPosition = 0;
-            
-            speak("Starting retinal scan. Cover your left eye with your hand and look straight ahead.", 0.9);
-            
-            setTimeout(() => {
-                performPositionScan();
-            }, 3000);
-        }
+    <div id="disclaimer4" class="screen">
+      <div class="step-indicator">Step 3 of 5</div>
+      <h2>Disclaimer 4</h2>
+      <p>This demo may show simulated health findings.</p>
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="d4" onchange="toggleNext('d4','d4next')">
+        <label for="d4">I understand</label>
+      </div>
+      <button id="d4next" onclick="nextScreen('disclaimer5')" disabled>Continue</button>
+    </div>
 
-        function performPositionScan() {
-            if (isPaused || !isScanning) return;
-            
-            const position = scanPositions[currentPosition];
-            const eyeText = currentEye === 'right' ? 'Right' : 'Left';
-            const coverEye = currentEye === 'right' ? 'left' : 'right';
-            
-            // Update UI
-            document.getElementById('progressText').textContent = 
-                `${eyeText} Eye - Position ${currentPosition + 1} of ${totalPositions}`;
-            
-            document.getElementById('directionArrow').textContent = position.arrow;
-            
-            const instructionText = currentPosition === 0 ? 
-                `Cover your ${coverEye} eye with your hand. ${position.instruction}` :
-                position.instruction;
-            
-            document.getElementById('instructionText').textContent = instructionText;
-            
-            // Update position grid
-            updatePositionGrid();
-            
-            // Audio instruction
-            speak(instructionText, 0.8);
-            
-            // Positioning phase (4 seconds)
-            const target = document.getElementById('eyeTarget');
-            target.className = 'eye-target positioned';
-            
-            setTimeout(() => {
-                if (!isPaused && isScanning) {
-                    capturePosition();
-                }
-            }, 4000);
-        }
+    <div id="disclaimer5" class="screen">
+      <div class="step-indicator">Step 3 of 5</div>
+      <h2>Disclaimer 5</h2>
+      <p>No personal data is stored in this demo.</p>
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="d5" onchange="toggleNext('d5','d5next')">
+        <label for="d5">I understand</label>
+      </div>
+      <button id="d5next" onclick="nextScreen('instructions')" disabled>Continue</button>
+    </div>
 
-        function capturePosition() {
-            if (isPaused || !isScanning) return;
-            
-            const target = document.getElementById('eyeTarget');
-            target.className = 'eye-target capturing';
-            
-            speak('Hold steady', 1.2);
-            vibrate();
-            
-            // Capture simulation (1 second)
-            setTimeout(() => {
-                if (!isPaused && isScanning) {
-                    target.className = 'eye-target captured';
-                    speak('Captured', 1.2);
-                    
-                    // Update position grid
-                    markPositionCompleted(currentPosition);
-                    
-                    setTimeout(() => {
-                        if (!isPaused && isScanning) {
-                            nextPosition();
-                        }
-                    }, 1500);
-                }
-            }, 1000);
-        }
+    <!-- Instructions -->
+    <div id="instructions" class="screen">
+      <div class="step-indicator">Step 4 of 5</div>
+      <h2>Scan Instructions</h2>
+      <ul>
+        <li>Hold your phone 6–8 inches from your face.</li>
+        <li>Cover one eye with your hand.</li>
+        <li>Follow the on-screen and voice instructions.</li>
+        <li>The scan takes about 1–2 minutes.</li>
+      </ul>
+      <button onclick="startScan()">Start Scan</button>
+    </div>
 
-        function nextPosition() {
-            if (isPaused || !isScanning) return;
-            
-            currentPosition++;
-            
-            if (currentPosition >= totalPositions) {
-                if (currentEye === 'right') {
-                    // Switch to left eye
-                    currentEye = 'left';
-                    currentPosition = 0;
-                    
-                    speak("Right eye complete. Now cover your right eye with your hand for left eye scanning.", 0.8);
-                    
-                    setTimeout(() => {
-                        if (!isPaused && isScanning) {
-                            performPositionScan();
-                        }
-                    }, 3000);
-                } else {
-                    // Both eyes complete
-                    completeScan();
-                }
-            } else {
-                performPositionScan();
-            }
-        }
+  </div>
 
-        function completeScan() {
-            isScanning = false;
-            
-            speak("Scan complete. Analyzing results.", 0.8);
-            
-            setTimeout(() => {
-                document.getElementById('scanComplete').classList.add('show');
-                speak("Your retinal health scan is complete. Results are ready for review.", 0.8);
-            }, 2000);
-        }
-
-        function updatePositionGrid() {
-            const dots = document.querySelectorAll('.position-dot');
-            const baseIndex = currentEye === 'right' ? 0 : 9;
-            
-            dots.forEach((dot, index) => {
-                const relativeIndex = index % 9;
-                const isCurrentEye = currentEye === 'right' ? index < 9 : index >= 9;
-                
-                if (isCurrentEye && relativeIndex === currentPosition) {
-                    dot.className = 'position-dot current';
-                } else if (isCurrentEye && relativeIndex < currentPosition) {
-                    dot.className = 'position-dot completed';
-                } else {
-                    dot.className = 'position-dot';
-                }
-            });
-        }
-
-        function markPositionCompleted(position) {
-            const dots = document.querySelectorAll('.position-dot');
-            const baseIndex = currentEye === 'right' ? 0 : 9;
-            const dotIndex = baseIndex + position;
-            
-            if (dots[dotIndex]) {
-                dots[dotIndex].className = 'position-dot completed';
-            }
-        }
-
-        function toggleAudio() {
-            audioEnabled = !audioEnabled;
-            const btn = document.getElementById('muteBtn');
-            btn.textContent = audioEnabled ? '🔊' : '🔇';
-            
-            try {
-                speak(audioEnabled ? "Audio enabled" : "Audio disabled");
-            } catch (error) {
-                showTextInstruction(audioEnabled ? "Audio enabled" : "Audio disabled");
-            }
-        }
-
-        function togglePause() {
-            isPaused = !isPaused;
-            const btn = document.getElementById('pauseBtn');
-            btn.textContent = isPaused ? '▶️' : '⏸️';
-            
-            if (isPaused) {
-                speak("Scan paused");
-            } else {
-                speak("Scan resumed");
-                if (isScanning) {
-                    setTimeout(() => {
-                        performPositionScan();
-                    }, 1000);
-                }
-            }
-        }
-
-        function exitScanner() {
-            if (confirm('Exit scanner? Your progress will be lost.')) {
-                isScanning = false;
-                isPaused = false;
-                speak("Scanner exited");
-                // In a real app, this would navigate back or close the scanner
-                window.history.back();
-            }
-        }
-
-        function viewResults() {
-            // In a real app, this would navigate to results page
-            speak("Loading results page");
-            alert("Results page would load here");
-        }
-
-        // Initialize the scanner when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            speak("Welcome to the Trust Your Sight retinal scanner. Please hold your phone 6 to 8 inches from your face.", 0.8);
-            
-            setTimeout(() => {
-                initCamera();
-            }, 2000);
-        });
-
-        // Handle page visibility changes
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                isPaused = true;
-                isScanning = false;
-            }
-        });
-
-        console.log('Trust Your Sight - Complete 9-Position Retinal Scanner Loaded');
-    </script>
+  <script>
+    function nextScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0,0);
+    }
+    function showUnder18() {
+      document.getElementById('under18').style.display='block';
+    }
+    function selectPlan(el) {
+      document.querySelectorAll('.plan').forEach(p=>p.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('pricingNext').disabled = false;
+    }
+    function toggleNext(cbId, btnId) {
+      const cb = document.getElementById(cbId);
+      const btn = document.getElementById(btnId);
+      btn.disabled = !cb.checked;
+    }
+    function startScan() {
+      // send user seamlessly into Vision.html
+      window.location.href = "Vision.html";
+    }
+  </script>
 </body>
 </html>
