@@ -8,256 +8,333 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); 
             color: white; 
             line-height: 1.6; 
-            overflow-x: hidden; 
+            min-height: 100vh;
         }
         .container { 
             max-width: 400px; 
             margin: 0 auto; 
             min-height: 100vh; 
             position: relative; 
+            padding: 20px;
         }
         @media (min-width: 768px) { 
-            .container { max-width: 800px; } 
+            .container { max-width: 600px; } 
         }
         .section { 
-            padding: 20px; 
             display: none; 
+            background: white;
+            color: #1f2937;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         .section.active { 
             display: block; 
         }
         .header { 
             text-align: center; 
-            margin-bottom: 30px; 
-            padding: 20px 0; 
-        }
-        .logo { 
-            font-size: 48px; 
-            margin-bottom: 10px; 
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: -25px -25px 25px -25px;
         }
         .app-title { 
-            font-size: 28px; 
+            font-size: 24px; 
             font-weight: 700; 
-            background: linear-gradient(45deg, #22c55e, #3b82f6); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
             margin-bottom: 5px; 
         }
         .subtitle { 
-            font-size: 16px; 
-            color: #94a3b8; 
-            font-weight: 400; 
+            font-size: 14px; 
+            opacity: 0.9; 
+        }
+        .step-indicator {
+            background: #3b82f6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
         .btn-primary { 
-            background: linear-gradient(45deg, #22c55e, #16a34a); 
+            background: #3b82f6; 
             border: none; 
-            color: white; 
-            padding: 15px 30px; 
-            border-radius: 25px; 
-            font-size: 16px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: transform 0.2s; 
-            margin: 5px; 
-        }
-        .btn-primary:hover { 
-            transform: scale(1.05); 
-        }
-        .btn-secondary { 
-            background: rgba(100, 116, 139, 0.3); 
-            border: 2px solid #64748b; 
             color: white; 
             padding: 12px 25px; 
-            border-radius: 25px; 
+            border-radius: 8px; 
             font-size: 14px; 
-            font-weight: 500; 
+            font-weight: 600; 
             cursor: pointer; 
             margin: 5px; 
+            width: 100%;
         }
-        .video-container { 
-            position: relative; 
-            width: 100%; 
-            max-width: 350px; 
-            margin: 0 auto; 
-            background: #000; 
-            border-radius: 15px; 
-            overflow: hidden; 
-        }
-        #scannerVideo { 
-            width: 100%; 
-            height: 280px; 
-            object-fit: cover; 
-        }
-        .camera-controls { 
-            position: absolute; 
-            bottom: 15px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            display: flex; 
-            gap: 15px; 
-        }
-        .control-btn { 
-            background: rgba(0, 0, 0, 0.7); 
-            border: 2px solid rgba(255, 255, 255, 0.3); 
-            color: white; 
-            padding: 10px; 
-            border-radius: 50%; 
-            cursor: pointer; 
-            font-size: 18px; 
-        }
-        .progress-bar { 
-            width: 100%; 
-            height: 6px; 
-            background: rgba(255, 255, 255, 0.2); 
-            border-radius: 3px; 
-            margin: 15px 0; 
-            overflow: hidden; 
-        }
-        .progress-fill { 
-            height: 100%; 
-            background: linear-gradient(90deg, #22c55e, #3b82f6); 
-            width: 0%; 
-            transition: width 0.3s ease; 
-            border-radius: 3px; 
-        }
-        .instruction-text { 
-            text-align: center; 
-            font-size: 16px; 
-            margin: 20px 0; 
-            padding: 15px; 
-            background: rgba(59, 130, 246, 0.1); 
-            border-radius: 10px; 
-            border: 1px solid rgba(59, 130, 246, 0.3); 
-            min-height: 120px; 
-        }
-        .close-btn { 
-            position: absolute; 
-            top: 15px; 
-            right: 15px; 
-            background: rgba(239, 68, 68, 0.8); 
-            color: white; 
+        .btn-secondary { 
+            background: #6b7280; 
             border: none; 
-            padding: 8px 12px; 
-            border-radius: 50%; 
+            color: white; 
+            padding: 12px 25px; 
+            border-radius: 8px; 
+            font-size: 14px; 
             cursor: pointer; 
-            font-size: 18px; 
-            z-index: 1000; 
+            margin: 5px; 
+            width: 100%;
         }
-        input[type="checkbox"], input[type="radio"] { 
-            transform: scale(1.2); 
-            margin-right: 10px; 
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
         }
-        label { 
-            cursor: pointer; 
-            user-select: none; 
+        .button-group .btn-primary,
+        .button-group .btn-secondary {
+            width: auto;
+            flex: 1;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .radio-option, .checkbox-option {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .radio-option:hover, .checkbox-option:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .radio-option.selected, .checkbox-option.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .radio-option input, .checkbox-option input {
+            margin-right: 10px;
+        }
+        .warning-box {
+            background: #fef2f2;
+            border: 2px solid #fca5a5;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .info-box {
+            background: #eff6ff;
+            border: 2px solid #93c5fd;
+            color: #1e40af;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .success-box {
+            background: #f0fdf4;
+            border: 2px solid #86efac;
+            color: #166534;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .progress-bar {
+            background: #e5e7eb;
+            height: 6px;
+            border-radius: 3px;
+            margin: 20px 0;
+        }
+        .progress-fill {
+            background: #3b82f6;
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+        .signature-box {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            color: #92400e;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .checkmark {
+            color: #10b981;
+            font-size: 24px;
+        }
+        h3 {
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        h4 {
+            color: #374151;
+            margin-bottom: 10px;
+        }
+        .text-small {
+            font-size: 12px;
+            color: #6b7280;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Age Verification Section -->
-        <div id="ageVerification" class="section active">
+        
+        <!-- Step 1: Retinal Scan Instructions -->
+        <div id="instructionsSection" class="section active">
             <div class="header">
-                <div class="logo">👁️</div>
-                <div class="app-title">Trust Your Sight</div>
-                <div class="subtitle">Eye Health Education & Awareness</div>
+                <div class="app-title">Retinal Scan Instructions</div>
             </div>
             
-            <h3 style="text-align: center; margin-bottom: 20px;">Account Setup & Age Verification</h3>
-            <p style="text-align: center; margin-bottom: 30px; color: #94a3b8;">
-                Before beginning your eye health education, we need to verify your age and account type for legal compliance.
-            </p>
+            <p style="margin-bottom: 20px;">You're about to perform a comprehensive retinal scan. This process will capture 8 positions of each eye for thorough analysis.</p>
             
-            <div style="text-align: center; margin-bottom: 30px;">
-                <h4 style="margin-bottom: 15px;">Are you 18 years or older?</h4>
-                <button onclick="selectAge(true)" class="btn-primary" style="margin: 0 10px;">Yes, I'm 18+</button>
-                <button onclick="selectAge(false)" class="btn-secondary" style="margin: 0 10px;">No, Under 18</button>
+            <h4>Before We Begin:</h4>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li>Find a well-lit area with consistent lighting</li>
+                <li>Hold your phone steady with one hand</li>
+                <li>Use your other hand to gently cover the non-scanning eye</li>
+                <li>Position the camera 8-10 inches from your eye</li>
+                <li>Keep your eye naturally open - don't stretch eyelids</li>
+                <li>Follow the audio instructions carefully</li>
+            </ul>
+            
+            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0; min-height: 100px;">
+                <!-- Camera preview area placeholder -->
             </div>
             
-            <div id="parentalConsent" style="display: none; background: rgba(239, 68, 68, 0.1); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 10px; padding: 20px; margin: 20px 0;">
-                <h4 style="color: #ef4444; margin-bottom: 10px;">Parental Consent Required</h4>
+            <div class="button-group">
+                <button class="btn-secondary" onclick="cancelScan()">Cancel</button>
+                <button class="btn-primary" onclick="nextStep('ageVerification')">Start Scan</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Age Verification -->
+        <div id="ageVerification" class="section">
+            <div class="header">
+                <div class="app-title">Optimized Trust Your Sight App</div>
+            </div>
+            
+            <div class="step-indicator">1</div>
+            <h3>Account Setup & Age Verification</h3>
+            <p style="margin-bottom: 20px;">Before beginning your eye health education, we need to verify your age and account type for legal compliance.</p>
+            
+            <div class="form-group">
+                <h4>Are you 18 years or older?</h4>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="selectAge(true)">Yes, I'm 18+</button>
+                    <button class="btn-secondary" onclick="selectAge(false)">No, Under 18</button>
+                </div>
+            </div>
+            
+            <div id="parentalConsent" class="warning-box" style="display: none;">
+                <h4>Parental Consent Required</h4>
                 <p>Users under 18 must have a parent or guardian complete this educational tutorial and provide consent.</p>
-                <p style="margin-top: 10px; font-weight: 600;">Please have your parent or guardian restart this process.</p>
+                <p><strong>Please have your parent or guardian restart this process.</strong></p>
             </div>
             
-            <div id="accountTypes" style="display: none;">
-                <h4 style="margin-bottom: 15px; text-align: center;">Account Type Selection:</h4>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 10px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                        <input type="radio" name="accountType" value="individual">
-                        Individual Account - $19.99/month<br>
-                        <small style="color: #94a3b8;">Basic features for personal use</small>
-                    </label>
-                    <label style="display: block; margin-bottom: 10px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                        <input type="radio" name="accountType" value="family">
-                        Family Account - $29.99/month (up to 4 members)<br>
-                        <small style="color: #94a3b8;">Multiple users under one account</small>
-                    </label>
-                    <label style="display: block; margin-bottom: 10px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                        <input type="radio" name="accountType" value="senior">
-                        Senior Account (65+) - $14.99/month<br>
-                        <small style="color: #94a3b8;">with ID verification</small>
-                    </label>
+            <div id="accountSelection" style="display: none;">
+                <h4>Account Type Selection:</h4>
+                
+                <div class="radio-option" onclick="selectAccount('individual', this)">
+                    <input type="radio" name="account" value="individual">
+                    <strong>Individual Account - $19.99/month</strong><br>
+                    <span class="text-small">Basic features for personal use</span>
                 </div>
-                <div style="text-align: center;">
-                    <button onclick="proceedToWelcome()" class="btn-primary">Continue to Education</button>
+                
+                <div class="radio-option" onclick="selectAccount('family', this)">
+                    <input type="radio" name="account" value="family">
+                    <strong>Family Account - $29.99/month (up to 4 members)</strong><br>
+                    <span class="text-small">Multiple users under one account</span>
                 </div>
+                
+                <div class="radio-option" onclick="selectAccount('senior', this)">
+                    <input type="radio" name="account" value="senior">
+                    <strong>Senior Account (65+) - $14.99/month</strong><br>
+                    <span class="text-small">with ID verification</span>
+                </div>
+                
+                <button class="btn-primary" onclick="nextStep('welcomeInfo')" style="margin-top: 20px;">Continue to Education</button>
             </div>
         </div>
 
-        <!-- Welcome Information Section -->
-        <div id="welcomeSection" class="section">
+        <!-- Step 3: Welcome Information -->
+        <div id="welcomeInfo" class="section">
             <div class="header">
-                <div class="logo">👁️</div>
                 <div class="app-title">Trust Your Sight</div>
                 <div class="subtitle">Eye Health Education & Awareness</div>
-            </div>
-            
-            <h3 style="text-align: center; margin-bottom: 20px;">Welcome to Your Eye Health Journey</h3>
-            <p style="text-align: center; margin-bottom: 20px;">
-                Trust Your Sight is an educational tool designed to help you understand and monitor your eye health awareness.
-            </p>
-            
-            <div style="background: rgba(34, 197, 94, 0.1); border: 2px solid rgba(34, 197, 94, 0.3); border-radius: 10px; padding: 20px; margin: 20px 0;">
-                <h4 style="margin-bottom: 15px;">What this app provides:</h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div style="text-align: center;">Educational Content</div>
-                    <div style="text-align: center;">Exam Reminders</div>
-                    <div style="text-align: center;">Health Tracking</div>
-                    <div style="text-align: center;">Professional Referrals</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 30%;"></div>
                 </div>
             </div>
             
-            <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 20px; margin: 20px 0;">
-                <h4>Your Account Selection:</h4>
-                <div id="selectedAccount">Individual Account - $19.99/month</div>
-                <div style="color: #94a3b8; margin-top: 5px;">Basic features for personal use</div>
+            <div class="step-indicator">2</div>
+            <h3>Welcome to Your Eye Health Journey</h3>
+            <p>Trust Your Sight is an educational tool designed to help you understand and monitor your eye health awareness.</p>
+            
+            <h4 style="margin-top: 20px;">What this app provides:</h4>
+            <div class="feature-grid">
+                <div class="feature-item">Educational Content</div>
+                <div class="feature-item">Exam Reminders</div>
+                <div class="feature-item">Health Tracking</div>
+                <div class="feature-item">Professional Referrals</div>
             </div>
             
-            <div style="text-align: center; margin: 20px 0;">
-                <label style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                    <input type="checkbox" id="welcomeAgreement">
-                    I have read and understand this welcome information
-                </label>
-                
-                <button onclick="proceedToDisclaimer()" class="btn-primary">Begin Education</button>
-                <button onclick="goBack('ageVerification')" class="btn-secondary">Previous</button>
+            <div class="info-box">
+                <h4>Your Account Selection:</h4>
+                <div id="selectedAccountDisplay">Individual Account - $19.99/month</div>
+                <div class="text-small">Basic features for personal use</div>
+            </div>
+            
+            <div class="checkbox-option" onclick="toggleCheck('welcomeAgree', this)">
+                <input type="checkbox" id="welcomeAgree">
+                I have read and understand this welcome information
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep('ageVerification')">Previous</button>
+                <button class="btn-primary" onclick="proceedToEducation()">Begin Education</button>
             </div>
         </div>
 
-        <!-- Medical Disclaimer Section -->
-        <div id="disclaimerSection" class="section">
+        <!-- Step 4: Medical Disclaimers -->
+        <div id="medicalDisclaimers" class="section">
             <div class="header">
-                <div class="logo">👁️</div>
-                <div class="subtitle">Important Medical Disclaimers</div>
+                <div class="app-title">Optimized Trust Your Sight App</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%;"></div>
+                </div>
             </div>
             
-            <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 10px; padding: 20px; margin: 20px 0;">
-                <h4 style="color: #ef4444; margin-bottom: 15px;">CRITICAL: This App Cannot Diagnose Medical Conditions</h4>
-                <ul style="color: #f1f5f9; line-height: 1.8;">
+            <div class="step-indicator">3</div>
+            <h3>Important Medical Disclaimers</h3>
+            
+            <div class="warning-box">
+                <h4>CRITICAL: This App Cannot Diagnose Medical Conditions</h4>
+                <ul>
                     <li>This app is for general wellness and eye health monitoring only</li>
                     <li>It cannot detect flu, COVID, acute illnesses, or any medical conditions</li>
                     <li>It is not a medical device and provides no medical diagnosis</li>
@@ -265,28 +342,31 @@
                 </ul>
             </div>
             
-            <div style="text-align: center; margin: 20px 0;">
-                <label style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                    <input type="checkbox" id="disclaimerAgreement">
-                    I understand these critical medical disclaimers and limitations
-                </label>
-                
-                <button onclick="proceedToEducation()" class="btn-primary">I Understand</button>
-                <button onclick="goBack('welcomeSection')" class="btn-secondary">Previous</button>
+            <div class="checkbox-option" onclick="toggleCheck('disclaimerAgree', this)">
+                <input type="checkbox" id="disclaimerAgree">
+                I understand these critical medical disclaimers and limitations
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep('welcomeInfo')">Previous</button>
+                <button class="btn-primary" onclick="nextStep('diabeticEducation')">I Understand</button>
             </div>
         </div>
 
-        <!-- Diabetic Education Section -->
-        <div id="educationSection" class="section">
+        <!-- Step 5: Diabetic Retinopathy Education -->
+        <div id="diabeticEducation" class="section">
             <div class="header">
-                <div class="logo">👁️</div>
-                <div class="subtitle">Understanding Diabetic Retinopathy</div>
+                <div class="app-title">Optimized Trust Your Sight App</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%;"></div>
+                </div>
             </div>
             
+            <div class="step-indicator">4</div>
             <h3>Understanding Diabetic Retinopathy</h3>
-            <p style="margin-bottom: 20px;">Diabetic retinopathy is a serious eye condition that affects people with diabetes. Early detection through professional screening is crucial.</p>
+            <p>Diabetic retinopathy is a serious eye condition that affects people with diabetes. Early detection through professional screening is crucial.</p>
             
-            <div style="margin-bottom: 20px;">
+            <div style="margin: 20px 0;">
                 <h4>Who's at risk:</h4>
                 <p>Anyone with Type 1 or Type 2 diabetes</p>
                 
@@ -300,40 +380,42 @@
                 <p>Available when caught early by professionals</p>
             </div>
             
-            <div style="background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.5); border-radius: 10px; padding: 20px; margin: 20px 0;">
+            <div class="warning-box">
                 <h4>Professional Screening Required</h4>
                 <p>Diabetic retinopathy screening requires specialized equipment and medical training. This app provides education and reminders to see qualified professionals.</p>
             </div>
             
-            <div style="text-align: center; margin: 20px 0;">
-                <label style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                    <input type="checkbox" id="educationAgreement">
-                    I understand diabetic retinopathy requires professional screening
-                </label>
-                
-                <button onclick="proceedToUsage()" class="btn-primary">Continue Learning</button>
-                <button onclick="goBack('disclaimerSection')" class="btn-secondary">Previous</button>
+            <div class="checkbox-option" onclick="toggleCheck('diabeticAgree', this)">
+                <input type="checkbox" id="diabeticAgree">
+                I understand diabetic retinopathy requires professional screening
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep('medicalDisclaimers')">Previous</button>
+                <button class="btn-primary" onclick="nextStep('usageGuidelines')">Continue Learning</button>
             </div>
         </div>
 
-        <!-- Usage Guidelines Section -->
-        <div id="usageSection" class="section">
+        <!-- Step 6: Usage Guidelines -->
+        <div id="usageGuidelines" class="section">
             <div class="header">
-                <div class="logo">👁️</div>
-                <div class="subtitle">Recommended Usage</div>
+                <div class="app-title">Optimized Trust Your Sight App</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%;"></div>
+                </div>
             </div>
             
             <h3>Recommended Usage:</h3>
-            <ul style="margin-bottom: 20px; line-height: 1.8;">
+            <ul style="margin: 20px 0; padding-left: 20px;">
                 <li>Use as an educational resource about eye health</li>
                 <li>Set reminders for regular professional eye exams</li>
                 <li>Track your eye health awareness and habits</li>
                 <li>Connect with qualified eye care professionals in your area</li>
             </ul>
             
-            <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 10px; padding: 20px; margin: 20px 0;">
+            <div class="warning-box">
                 <h4>When to See a Professional Immediately:</h4>
-                <ul style="line-height: 1.8;">
+                <ul>
                     <li>Sudden vision changes or loss</li>
                     <li>Eye pain or severe discomfort</li>
                     <li>Flashing lights or new floaters</li>
@@ -341,363 +423,251 @@
                 </ul>
             </div>
             
-            <div style="text-align: center; margin: 20px 0;">
-                <label style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                    <input type="checkbox" id="usageAgreement">
-                    I understand proper usage guidelines and emergency warning signs
-                </label>
-                
-                <button onclick="proceedToDemo()" class="btn-primary">Continue</button>
-                <button onclick="goBack('educationSection')" class="btn-secondary">Previous</button>
+            <div class="checkbox-option" onclick="toggleCheck('usageAgree', this)">
+                <input type="checkbox" id="usageAgree">
+                I understand proper usage guidelines and emergency warning signs
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep('diabeticEducation')">Previous</button>
+                <button class="btn-primary" onclick="nextStep('professionalReferrals')">Continue</button>
             </div>
         </div>
 
-        <!-- Demo Introduction Section -->
-        <div id="demoSection" class="section">
+        <!-- Step 7: Professional Referrals -->
+        <div id="professionalReferrals" class="section">
             <div class="header">
-                <div class="logo">👁️</div>
-                <div class="subtitle">Trust Your Sight Demo Scanner</div>
-            </div>
-            
-            <h3 style="text-align: center; margin-bottom: 20px;">Eye Health Awareness Demo</h3>
-            <p style="text-align: center; margin-bottom: 20px; color: #94a3b8;">
-                This demonstration will show you how professional eye scanning works for educational purposes.
-            </p>
-            
-            <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 20px; margin: 20px 0;">
-                <h4>Demo Instructions:</h4>
-                <ul style="line-height: 1.8; margin-bottom: 15px;">
-                    <li>Hold your phone 6-8 inches from your face</li>
-                    <li>Follow the scanning positions for both eyes</li>
-                    <li>Listen for audio instructions and timing</li>
-                    <li>Complete demo takes about 2 minutes</li>
-                </ul>
-            </div>
-            
-            <div style="text-align: center;">
-                <button onclick="startDemo()" class="btn-primary">Start Educational Demo</button>
-                <button onclick="goBack('usageSection')" class="btn-secondary">Previous</button>
-            </div>
-        </div>
-
-        <!-- Scanning Section -->
-        <div id="scanningSection" class="section">
-            <button onclick="exitScan()" class="close-btn">×</button>
-            
-            <div class="video-container">
-                <video id="scannerVideo" autoplay muted playsinline></video>
-                <div class="camera-controls">
-                    <button onclick="toggleSound()" class="control-btn" id="soundBtn">🔊</button>
-                    <button onclick="pauseResume()" class="control-btn" id="pauseBtn">⏸️</button>
-                    <button onclick="switchCamera()" class="control-btn">🔄</button>
+                <div class="app-title">Optimized Trust Your Sight App</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 90%;"></div>
                 </div>
             </div>
             
-            <div class="progress-bar">
-                <div id="progressFill" class="progress-fill"></div>
+            <div class="step-indicator">6</div>
+            <h3>Finding Professional Eye Care</h3>
+            <p>This app includes a referral system to help you connect with qualified eye care professionals.</p>
+            
+            <h4>Types of Eye Care Professionals:</h4>
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li><strong>Ophthalmologists:</strong> Medical doctors specializing in eye care</li>
+                <li><strong>Optometrists:</strong> Doctors of optometry for eye exams and care</li>
+                <li><strong>Retinal Specialists:</strong> For diabetic retinopathy screening</li>
+            </ul>
+            
+            <div class="checkbox-option" onclick="toggleCheck('referralAgree', this)">
+                <input type="checkbox" id="referralAgree">
+                I understand the importance of connecting with qualified eye care professionals
             </div>
             
-            <div id="instructionText" class="instruction-text">
-                Initializing camera...
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep('usageGuidelines')">Previous</button>
+                <button class="btn-primary" onclick="nextStep('legalAcknowledgment')">Almost Done</button>
             </div>
         </div>
 
-        <!-- Results Section -->
-        <div id="resultsSection" class="section">
+        <!-- Step 8: Legal Acknowledgment -->
+        <div id="legalAcknowledgment" class="section">
             <div class="header">
-                <div class="logo">✅</div>
-                <div class="app-title">Demo Complete!</div>
-                <div class="subtitle">Educational Scan Results</div>
+                <div class="app-title">Optimized Trust Your Sight App</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 95%;"></div>
+                </div>
             </div>
             
-            <div style="background: rgba(34, 197, 94, 0.1); border: 2px solid rgba(34, 197, 94, 0.3); border-radius: 10px; padding: 20px; margin: 20px 0;">
-                <h4>Demo Results Summary:</h4>
-                <p>You have successfully completed the educational eye health demo. This demonstrates how professional retinal scanning works.</p>
-                <p style="margin-top: 15px; font-weight: 600;">Remember: This is for educational purposes only. Always consult qualified eye care professionals for actual medical screening.</p>
+            <div class="step-indicator">7</div>
+            <h3>Legal Acknowledgment & Identity Confirmation</h3>
+            
+            <div class="warning-box">
+                <h4>Identity Verification Required</h4>
+                <p>By checking the boxes below, you are legally confirming:</p>
+                <ul>
+                    <li>You are the account holder completing this education</li>
+                    <li>You are 18 years or older</li>
+                    <li>All information provided is accurate and truthful</li>
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <h4>Required Legal Acknowledgments:</h4>
+                <div class="checkbox-option" onclick="toggleCheck('legal1', this)">
+                    <input type="checkbox" id="legal1">
+                    I am 18+ years old and the actual person completing this education
+                </div>
+                
+                <div class="checkbox-option" onclick="toggleCheck('legal2', this)">
+                    <input type="checkbox" id="legal2">
+                    I understand this app is for educational purposes and general wellness monitoring only
+                </div>
+                
+                <div class="checkbox-option" onclick="toggleCheck('legal3', this)">
+                    <input type="checkbox" id="legal3">
+                    I understand this app cannot diagnose medical conditions or replace professional eye care
+                </div>
+                
+                <div class="checkbox-option" onclick="toggleCheck('legal4', this)">
+                    <input type="checkbox" id="legal4">
+                    I understand I should see qualified professionals for eye health concerns and regular screening
+                </div>
+                
+                <div class="checkbox-option" onclick="toggleCheck('legal5', this)">
+                    <input type="checkbox" id="legal5">
+                    I have read and understand the limitations and proper use of this educational tool
+                </div>
+            </div>
+            
+            <div class="signature-box">
+                <h4>Electronic Signature</h4>
+                <p>Your completion of this education with checked acknowledgments serves as your electronic signature and legal agreement to these terms.</p>
+                <p><strong>Date:</strong> <span id="currentDate"></span></p>
+                <p><strong>Account Type:</strong> <span id="accountTypeSignature">Individual</span></p>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep('professionalReferrals')">Previous</button>
+                <button class="btn-primary" onclick="completeEducation()">Complete Education & Start</button>
+            </div>
+        </div>
+
+        <!-- Step 9: Education Complete -->
+        <div id="educationComplete" class="section">
+            <div class="header">
+                <div class="app-title">Trust Your Sight</div>
+                <div class="subtitle">Eye Health Education & Awareness</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
             </div>
             
             <div style="text-align: center;">
-                <button onclick="restartApp()" class="btn-primary">Start Over</button>
-                <button onclick="showMoreInfo()" class="btn-secondary">Learn More</button>
+                <div class="checkmark">✓</div>
+                <h3>Education Complete!</h3>
+                <p>You have successfully completed the mandatory eye health education program.</p>
             </div>
+            
+            <div class="success-box">
+                <h4>You now have access to:</h4>
+                <div class="feature-grid">
+                    <div class="feature-item">Eye Health Dashboard</div>
+                    <div class="feature-item">Exam Reminders</div>
+                    <div class="feature-item">Educational Library</div>
+                    <div class="feature-item">Professional Directory</div>
+                </div>
+            </div>
+            
+            <button class="btn-primary" onclick="enterApp()">Enter Trust Your Sight App</button>
+            
+            <p class="text-small" style="text-align: center; margin-top: 15px;">
+                Your education completion has been recorded. You can review this information anytime in the app settings.
+            </p>
         </div>
+
     </div>
 
     <script>
-        // Global variables
-        let stream = null;
-        let isScanning = false;
-        let isPaused = false;
-        let currentPosition = 0;
-        let currentEye = 'right';
-        let positions = [];
-        let scanningTimeout = null;
-        let soundEnabled = true;
-        let currentAudio = null;
-        let isOver18 = false;
-        let selectedAccountType = '';
-        let currentSpeech = null;
+        let currentStep = 'instructionsSection';
+        let selectedAge = null;
+        let selectedAccount = null;
 
-        // Onboarding functions
-        function selectAge(over18) {
-            isOver18 = over18;
-            
-            if (!over18) {
-                document.getElementById('parentalConsent').style.display = 'block';
-                document.getElementById('accountTypes').style.display = 'none';
-            } else {
+        // Initialize
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+
+        function nextStep(stepId) {
+            document.getElementById(currentStep).classList.remove('active');
+            document.getElementById(stepId).classList.add('active');
+            currentStep = stepId;
+        }
+
+        function previousStep(stepId) {
+            document.getElementById(currentStep).classList.remove('active');
+            document.getElementById(stepId).classList.add('active');
+            currentStep = stepId;
+        }
+
+        function cancelScan() {
+            alert('Scan cancelled. Returning to start.');
+            location.reload();
+        }
+
+        function selectAge(isOver18) {
+            selectedAge = isOver18;
+            if (isOver18) {
                 document.getElementById('parentalConsent').style.display = 'none';
-                document.getElementById('accountTypes').style.display = 'block';
+                document.getElementById('accountSelection').style.display = 'block';
+            } else {
+                document.getElementById('parentalConsent').style.display = 'block';
+                document.getElementById('accountSelection').style.display = 'none';
             }
         }
 
-        function proceedToWelcome() {
-            const selected = document.querySelector('input[name="accountType"]:checked');
-            if (!selected) {
-                alert('Please select an account type to continue.');
-                return;
+        function selectAccount(type, element) {
+            selectedAccount = type;
+            
+            // Update radio button
+            element.querySelector('input[type="radio"]').checked = true;
+            
+            // Update visual selection
+            document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            // Update display text
+            let displayText = '';
+            if (type === 'individual') {
+                displayText = 'Individual Account - $19.99/month';
+            } else if (type === 'family') {
+                displayText = 'Family Account - $29.99/month (up to 4 members)';
+            } else if (type === 'senior') {
+                displayText = 'Senior Account (65+) - $14.99/month';
             }
             
-            selectedAccountType = selected.value;
-            let accountDisplay = '';
-            
-            if (selectedAccountType === 'individual') {
-                accountDisplay = 'Individual Account - $19.99/month';
-            } else if (selectedAccountType === 'family') {
-                accountDisplay = 'Family Account - $29.99/month (up to 4 members)';
-            } else if (selectedAccountType === 'senior') {
-                accountDisplay = 'Senior Account (65+) - $14.99/month';
-            }
-            
-            document.getElementById('selectedAccount').textContent = accountDisplay;
-            showSection('welcomeSection');
+            document.getElementById('selectedAccountDisplay').textContent = displayText;
+            document.getElementById('accountTypeSignature').textContent = type.charAt(0).toUpperCase() + type.slice(1);
         }
 
-        function proceedToDisclaimer() {
-            const checkbox = document.getElementById('welcomeAgreement');
+        function toggleCheck(checkboxId, element) {
+            const checkbox = document.getElementById(checkboxId);
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                element.classList.add('selected');
+            } else {
+                element.classList.remove('selected');
+            }
+        }
+
+        function proceedToEducation() {
+            const checkbox = document.getElementById('welcomeAgree');
             if (!checkbox.checked) {
                 alert('Please read and check the agreement to continue.');
                 return;
             }
-            showSection('disclaimerSection');
+            nextStep('medicalDisclaimers');
         }
 
-        function proceedToEducation() {
-            const checkbox = document.getElementById('disclaimerAgreement');
-            if (!checkbox.checked) {
-                alert('Please read and understand the medical disclaimers to continue.');
-                return;
-            }
-            showSection('educationSection');
-        }
-
-        function proceedToUsage() {
-            const checkbox = document.getElementById('educationAgreement');
-            if (!checkbox.checked) {
-                alert('Please acknowledge the professional screening requirement to continue.');
-                return;
-            }
-            showSection('usageSection');
-        }
-
-        function proceedToDemo() {
-            const checkbox = document.getElementById('usageAgreement');
-            if (!checkbox.checked) {
-                alert('Please confirm you understand the usage guidelines to continue.');
-                return;
-            }
-            showSection('demoSection');
-        }
-
-        function startDemo() {
-            showSection('scanningSection');
-            startScan();
-        }
-
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-                section.style.display = 'none';
-            });
+        function completeEducation() {
+            // Check all required checkboxes
+            const required = ['legal1', 'legal2', 'legal3', 'legal4', 'legal5'];
+            let allChecked = true;
             
-            // Show target section
-            const targetSection = document.getElementById(sectionId);
-            if (targetSection) {
-                targetSection.classList.add('active');
-                targetSection.style.display = 'block';
-            }
-        }
-
-        function goBack(sectionId) {
-            showSection(sectionId);
-        }
-
-        // Audio and speech functions with improved timing
-        function speak(text, callback = null, delay = 0) {
-            if (!soundEnabled) {
-                if (callback) setTimeout(callback, 1000);
-                return;
-            }
-            
-            // Stop any current speech
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-            
-            setTimeout(() => {
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.rate = 0.8; // Slower speech
-                    utterance.pitch = 1.0;
-                    utterance.volume = 0.8;
-                    
-                    utterance.onend = () => {
-                        if (callback) {
-                            setTimeout(callback, 500); // Brief pause after speech
-                        }
-                    };
-                    
-                    window.speechSynthesis.speak(utterance);
-                } else {
-                    if (callback) setTimeout(callback, 2000);
+            required.forEach(id => {
+                if (!document.getElementById(id).checked) {
+                    allChecked = false;
                 }
-            }, delay);
-        }
-
-        function playBeep(callback = null) {
-            if (!soundEnabled) {
-                if (callback) setTimeout(callback, 200);
+            });
+            
+            if (!allChecked) {
+                alert('Please check all required legal acknowledgments to complete education.');
                 return;
             }
             
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.value = 800;
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.3);
-                
-                if (callback) {
-                    setTimeout(callback, 400);
-                }
-            } catch (error) {
-                console.log('Audio context error:', error);
-                if (callback) setTimeout(callback, 400);
-            }
+            nextStep('educationComplete');
         }
 
-        // Camera functions
-        async function initCamera() {
-            try {
-                const constraints = {
-                    video: {
-                        facingMode: 'user',
-                        width: { ideal: 640 },
-                        height: { ideal: 480 }
-                    },
-                    audio: false
-                };
-
-                stream = await navigator.mediaDevices.getUserMedia(constraints);
-                const video = document.getElementById('scannerVideo');
-                video.srcObject = stream;
-                
-                console.log('Camera initialized successfully');
-            } catch (error) {
-                console.error('Camera initialization error:', error);
-                document.getElementById('instructionText').innerHTML = '<span style="color: #ef4444;">Camera access required. Please allow camera permissions and refresh the page.</span>';
-            }
+        function enterApp() {
+            alert('Welcome to Trust Your Sight! The scanning functionality would be activated here.');
+            // This is where the actual scanning interface would load
         }
 
-        // Scanning functions with proper timing
-        async function startScan() {
-            await initCamera();
-            
-            document.getElementById('instructionText').innerHTML = `
-                <strong>Welcome to Trust Your Sight!</strong><br>
-                Hold your phone 6-8 inches from your face<br>
-                We'll scan both eyes with 9 positions each<br>
-                Listen for audio instructions<br>
-                Total scan time: About 2 minutes<br>
-                <small>Preparing to begin...</small>
-            `;
-            
-            speak("Welcome to the Trust Your Sight demonstration scanner. Please hold your phone steady, six to eight inches from your face.", () => {
-                setTimeout(() => {
-                    beginScanning();
-                }, 2000);
-            });
-        }
-
-        function beginScanning() {
-            isScanning = true;
-            currentPosition = 0;
-            currentEye = 'right';
-            
-            document.getElementById('instructionText').innerHTML = `
-                <strong>Starting RIGHT eye scan</strong><br>
-                Cover your LEFT eye with your hand<br>
-                Keep phone 6-8 inches away<br>
-                Look directly at the camera<br>
-                Keep your head straight and still<br>
-                <small>Getting ready for first position...</small>
-            `;
-            
-            speak("Starting right eye scan. Cover your left eye with your hand and look directly at the camera.", () => {
-                setTimeout(() => {
-                    scanNextPosition();
-                }, 3000);
-            });
-        }
-
-        function scanNextPosition() {
-            if (!isScanning || isPaused) return;
-            
-            const positionInstructions = [
-                { name: 'straight ahead', instruction: 'Look straight ahead at the camera' },
-                { name: 'to your right', instruction: 'Look to your right' },
-                { name: 'down', instruction: 'Look down' },
-                { name: 'to your left', instruction: 'Look to your left' },
-                { name: 'up and to your right', instruction: 'Look up and to your right' },
-                { name: 'up and to your left', instruction: 'Look up and to your left' },
-                { name: 'down and to your left', instruction: 'Look down and to your left' },
-                { name: 'down and to your right', instruction: 'Look down and to your right' },
-                { name: 'up', instruction: 'Look up' }
-            ];
-            
-            if (currentPosition < positionInstructions.length) {
-                const position = positionInstructions[currentPosition];
-                const eyeInstruction = currentEye === 'right' ? 'Cover your LEFT eye with your hand' : 'Cover your RIGHT eye with your hand';
-                
-                document.getElementById('instructionText').innerHTML = `
-                    <strong>Scanning ${currentEye} eye - Position ${currentPosition + 1}/9</strong><br>
-                    ${eyeInstruction}<br>
-                    ${position.instruction}<br>
-                    <small>Hold steady...</small>
-                `;
-                
-                speak(position.instruction, () => {
-                    // Capture position after instruction
-                    setTimeout(() => {
-                        playBeep(() => {
-                            document.getElementById('instructionText').innerHTML += '<br><span style="color: #22c55e;">Position captured!</span>';
-                            
-                            currentPosition++;
-                            const progress = ((currentPosition + (currentEye === 'left' ? 9 : 0)) / 18) * 100;
-                            document.getElementById('progressFill').style.width = progress + '%';
-                            
-                            // Move to next position
-                            setTimeout(() => {
-                                if (currentPosition >= 9) {
-                                    if (currentEye === 'right') {
+        console.log('Trust Your Sight Education Flow Ready');
+    </script>
+</body>
+</html>
