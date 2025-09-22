@@ -276,8 +276,40 @@ if (isScanning) { continueScanning(); }
 function exitScan() {
 if (confirm('Are you sure you want to exit the scan?')) {
 stopScanning();
+clearTimeout(scanningTimeout);
 document.getElementById('welcomeSection').style.display = 'block';
 document.getElementById('scanningSection').style.display = 'none';
+}
+}
+function toggleSound() {
+soundEnabled = !soundEnabled;
+const soundBtn = document.querySelector('.sound-toggle');
+if (soundEnabled) {
+soundBtn.innerHTML = '🔊';
+soundBtn.title = 'Sound On - Click to mute';
+showMessage('Sound enabled', 1000);
+} else {
+soundBtn.innerHTML = '🔇';
+soundBtn.title = 'Sound Off - Click to enable';
+showMessage('Sound muted', 1000);
+}
+}
+function playBeep() {
+if (!soundEnabled) return;
+try {
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const oscillator = audioContext.createOscillator();
+const gainNode = audioContext.createGain();
+oscillator.connect(gainNode);
+gainNode.connect(audioContext.destination);
+oscillator.frequency.value = 800;
+oscillator.type = 'sine';
+gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+oscillator.start(audioContext.currentTime);
+oscillator.stop(audioContext.currentTime + 0.2);
+} catch (error) {
+console.log('Audio not supported:', error);
 }
 }
 function showMessage(text, duration = 3000) {
@@ -326,12 +358,13 @@ eyeTarget.className = 'eye-target positioned';
 setTimeout(() => {
 if (isPaused) return;
 eyeTarget.className = 'eye-target capturing';
+playBeep();
 if (navigator.vibrate) { navigator.vibrate(200); }
 setTimeout(() => {
 if (isPaused) return;
 eyeTarget.className = 'eye-target captured';
 currentPosition++;
-setTimeout(() => { if (!isPaused) { scanNextPosition(); } }, 800);
+scanningTimeout = setTimeout(() => { if (!isPaused) { scanNextPosition(); } }, 800);
 }, 1000);
 }, 2000);
 }
@@ -370,6 +403,7 @@ isScanning = false;
 isPaused = false;
 currentPosition = 0;
 currentEye = 'right';
+clearTimeout(scanningTimeout);
 if (stream) { stream.getTracks().forEach(track => track.stop()); stream = null; }
 }
 function startNewScan() {
