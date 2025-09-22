@@ -93,23 +93,12 @@
             margin: 5px; 
             min-width: 120px;
         }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+        .button-group {
+            display: flex;
             gap: 15px;
-            margin: 25px 0;
-        }
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.2s;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
+            margin: 30px 0;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         .radio-option, .checkbox-option {
             background: rgba(255, 255, 255, 0.05);
@@ -173,11 +162,23 @@
             border-radius: 3px;
             transition: width 0.5s ease;
         }
-        .button-group {
-            display: flex;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            margin: 30px 0;
-            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
         }
         h3 {
             color: #f1f5f9;
@@ -209,72 +210,6 @@
             font-size: 13px;
             color: #94a3b8;
         }
-        .scan-position {
-            background: rgba(59, 130, 246, 0.1);
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-        }
-        .scan-progress {
-            background: rgba(34, 197, 94, 0.1);
-            border: 2px solid rgba(34, 197, 94, 0.3);
-            color: #22c55e;
-            border-radius: 15px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: center;
-        }
-        .video-container {
-            background: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 20px 0;
-            position: relative;
-        }
-        #scannerVideo {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-        }
-        .camera-controls {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-        }
-        .control-btn {
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            transition: all 0.2s;
-        }
-        .control-btn:hover {
-            background: rgba(0, 0, 0, 0.9);
-            transform: scale(1.1);
-        }
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(239, 68, 68, 0.8);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            z-index: 1000;
-        }
     </style>
 </head>
 <body>
@@ -294,7 +229,7 @@
             
             <div style="text-align: center; margin: 30px 0;">
                 <h4 style="margin-bottom: 25px;">Are you 18 years or older?</h4>
-                <div class="button-group" style="justify-content: center;">
+                <div class="button-group">
                     <button class="btn-primary" onclick="selectAge(true)">Yes, I'm 18+</button>
                     <button class="btn-secondary" onclick="selectAge(false)">No, Under 18</button>
                 </div>
@@ -419,297 +354,135 @@
             </div>
         </div>
 
-        <!-- Step 4: Diabetic Education -->
-        <div id="diabeticEducation" class="section">
-            <div class="header">
-                <div class="logo">🩺</div>
-                <div class="app-title">Understanding Diabetic Retinopathy</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 50%;"></div>
-                </div>
-            </div>
-            
-            <div class="step-indicator">4</div>
-            <h3>Understanding Diabetic Retinopathy</h3>
-            <p>Diabetic retinopathy is a serious eye condition that affects people with diabetes. Early detection through professional screening is crucial.</p>
-            
-            <div style="margin: 25px 0;">
-                <div class="info-box">
-                    <h4>👥 Who's at risk:</h4>
-                    <p>Anyone with Type 1 or Type 2 diabetes</p>
-                </div>
-                
-                <div class="info-box">
-                    <h4>🔍 Symptoms:</h4>
-                    <p>Often no early symptoms - why screening matters</p>
-                </div>
-                
-                <div class="info-box">
-                    <h4>🛡️ Prevention:</h4>
-                    <p>Blood sugar control and regular eye exams</p>
-                </div>
-                
-                <div class="info-box">
-                    <h4>💊 Treatment:</h4>
-                    <p>Available when caught early by professionals</p>
-                </div>
-            </div>
-            
-            <div class="warning-box">
-                <h4>Professional Screening Required</h4>
-                <p>Diabetic retinopathy screening requires specialized equipment and medical training. This app provides education and reminders to see qualified professionals.</p>
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('diabeticAgree', this)">
-                <input type="checkbox" id="diabeticAgree">
-                I understand diabetic retinopathy requires professional screening
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-secondary" onclick="previousStep('medicalDisclaimers')">Previous</button>
-                <button class="btn-primary" onclick="nextStep('usageGuidelines')">Continue Learning</button>
-            </div>
-        </div>
-
-        <!-- Step 5: Usage Guidelines -->
-        <div id="usageGuidelines" class="section">
-            <div class="header">
-                <div class="logo">📋</div>
-                <div class="app-title">Usage Guidelines</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%;"></div>
-                </div>
-            </div>
-            
-            <div class="step-indicator">5</div>
-            <h3>Recommended Usage:</h3>
-            <ul>
-                <li>Use as an educational resource about eye health</li>
-                <li>Set reminders for regular professional eye exams</li>
-                <li>Track your eye health awareness and habits</li>
-                <li>Connect with qualified eye care professionals in your area</li>
-            </ul>
-            
-            <div class="warning-box">
-                <h4>When to See a Professional Immediately:</h4>
-                <ul>
-                    <li>Sudden vision changes or loss</li>
-                    <li>Eye pain or severe discomfort</li>
-                    <li>Flashing lights or new floaters</li>
-                    <li>Any concerning eye symptoms</li>
-                </ul>
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('usageAgree', this)">
-                <input type="checkbox" id="usageAgree">
-                I understand proper usage guidelines and emergency warning signs
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-secondary" onclick="previousStep('diabeticEducation')">Previous</button>
-                <button class="btn-primary" onclick="nextStep('professionalReferrals')">Continue</button>
-            </div>
-        </div>
-
-        <!-- Step 6: Professional Referrals -->
-        <div id="professionalReferrals" class="section">
-            <div class="header">
-                <div class="logo">👨‍⚕️</div>
-                <div class="app-title">Finding Professional Eye Care</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 80%;"></div>
-                </div>
-            </div>
-            
-            <div class="step-indicator">6</div>
-            <h3>Finding Professional Eye Care</h3>
-            <p>This app includes a referral system to help you connect with qualified eye care professionals.</p>
-            
-            <h4>Types of Eye Care Professionals:</h4>
-            
-            <div class="feature-card">
-                <h4>👨‍⚕️ Ophthalmologists</h4>
-                <p>Medical doctors specializing in eye care</p>
-            </div>
-            
-            <div class="feature-card">
-                <h4>👓 Optometrists</h4>
-                <p>Doctors of optometry for eye exams and care</p>
-            </div>
-            
-            <div class="feature-card">
-                <h4>🔬 Retinal Specialists</h4>
-                <p>For diabetic retinopathy screening</p>
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('referralAgree', this)">
-                <input type="checkbox" id="referralAgree">
-                I understand the importance of connecting with qualified eye care professionals
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-secondary" onclick="previousStep('usageGuidelines')">Previous</button>
-                <button class="btn-primary" onclick="nextStep('legalAcknowledgment')">Almost Done</button>
-            </div>
-        </div>
-
-        <!-- Step 7: Legal Acknowledgment -->
-        <div id="legalAcknowledgment" class="section">
-            <div class="header">
-                <div class="logo">📝</div>
-                <div class="app-title">Legal Acknowledgment</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 90%;"></div>
-                </div>
-            </div>
-            
-            <div class="step-indicator">7</div>
-            <h3>Legal Acknowledgment & Identity Confirmation</h3>
-            
-            <div class="warning-box">
-                <h4>Identity Verification Required</h4>
-                <p>By checking the boxes below, you are legally confirming:</p>
-                <ul>
-                    <li>You are the account holder completing this education</li>
-                    <li>You are 18 years or older</li>
-                    <li>All information provided is accurate and truthful</li>
-                </ul>
-            </div>
-            
-            <h4>Required Legal Acknowledgments:</h4>
-            
-            <div class="checkbox-option" onclick="toggleCheck('legal1', this)">
-                <input type="checkbox" id="legal1">
-                I am 18+ years old and the actual person completing this education
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('legal2', this)">
-                <input type="checkbox" id="legal2">
-                I understand this app is for educational purposes and general wellness monitoring only
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('legal3', this)">
-                <input type="checkbox" id="legal3">
-                I understand this app cannot diagnose medical conditions or replace professional eye care
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('legal4', this)">
-                <input type="checkbox" id="legal4">
-                I understand I should see qualified professionals for eye health concerns and regular screening
-            </div>
-            
-            <div class="checkbox-option" onclick="toggleCheck('legal5', this)">
-                <input type="checkbox" id="legal5">
-                I have read and understand the limitations and proper use of this educational tool
-            </div>
-            
-            <div class="signature-box">
-                <h4>Electronic Signature</h4>
-                <p>Your completion of this education with checked acknowledgments serves as your electronic signature and legal agreement to these terms.</p>
-                <p><strong>Date:</strong> <span id="currentDate"></span></p>
-                <p><strong>Account Type:</strong> <span id="accountTypeSignature">Individual</span></p>
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-secondary" onclick="previousStep('professionalReferrals')">Previous</button>
-                <button class="btn-primary" onclick="completeEducation()">Complete Education</button>
-            </div>
-        </div>
-
-        <!-- Step 8: Education Complete -->
-        <div id="educationComplete" class="section">
+        <!-- Results Section (for quick testing) -->
+        <div id="resultsSection" class="section">
             <div class="header">
                 <div class="logo">✅</div>
-                <div class="app-title">Education Complete!</div>
-                <div class="subtitle">Eye Health Education & Awareness</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%;"></div>
-                </div>
+                <div class="app-title">Demo Works!</div>
+                <div class="subtitle">JavaScript is functioning correctly</div>
             </div>
             
             <div style="text-align: center; margin: 40px 0;">
                 <div style="font-size: 72px; color: #22c55e; margin-bottom: 20px;">✓</div>
-                <h3>Education Complete!</h3>
-                <p>You have successfully completed the mandatory eye health education program.</p>
-            </div>
-            
-            <div class="success-box">
-                <h4>You now have access to:</h4>
-                <div class="feature-grid" style="margin-top: 20px;">
-                    <div class="feature-card">Eye Health Dashboard</div>
-                    <div class="feature-card">Exam Reminders</div>
-                    <div class="feature-card">Educational Library</div>
-                    <div class="feature-card">Professional Directory</div>
-                </div>
-            </div>
-            
-            <div style="text-align: center;">
-                <button class="btn-primary" onclick="startScanning()" style="font-size: 18px; padding: 20px 40px;">Enter Trust Your Sight App</button>
-            </div>
-            
-            <p class="text-small" style="text-align: center; margin-top: 20px;">
-                Your education completion has been recorded. You can review this information anytime in the app settings.
-            </p>
-        </div>
-
-        <!-- Step 9: Retinal Scan Instructions (MOVED TO AFTER EDUCATION) -->
-        <div id="instructionsSection" class="section">
-            <div class="header">
-                <div class="logo">👁️</div>
-                <div class="app-title">Retinal Scan Instructions</div>
-                <div class="subtitle">Prepare for your comprehensive eye scan</div>
-            </div>
-            
-            <h3>Retinal Scan Instructions</h3>
-            <p>You're about to perform a comprehensive retinal scan. This process will capture 9 positions of each eye for thorough analysis.</p>
-            
-            <h4>Before We Begin:</h4>
-            <ul>
-                <li>Find a well-lit area with consistent lighting</li>
-                <li>Hold your phone steady with one hand</li>
-                <li>Use your other hand to gently cover the non-scanning eye</li>
-                <li>Position the camera 8-10 inches from your eye</li>
-                <li>Keep your eye naturally open - don't stretch eyelids</li>
-                <li>Follow the audio instructions carefully</li>
-            </ul>
-            
-            <div class="video-container">
-                <video id="scannerVideo" autoplay muted playsinline style="display: none;"></video>
-                <div style="padding: 60px 20px; text-align: center; color: #64748b; background: #1e293b;">
-                    📷 Camera preview will appear here
-                </div>
+                <h3>Buttons Are Working!</h3>
+                <p>The JavaScript functions are now properly connected and the buttons are responsive.</p>
             </div>
             
             <div class="button-group" style="justify-content: center;">
-                <button class="btn-secondary" onclick="goBack()">Cancel</button>
-                <button class="btn-primary" onclick="beginScan()">Start Scan</button>
+                <button class="btn-primary" onclick="restartApp()">Go Back to Start</button>
             </div>
         </div>
 
-        <!-- Step 10: Scanning Interface -->
-        <div id="scanningSection" class="section">
-            <button onclick="exitScan()" class="close-btn">×</button>
+    </div>
+
+    <script>
+        // Simple, clean JavaScript
+        let selectedAge = null;
+        let selectedAccount = null;
+
+        function selectAge(isOver18) {
+            console.log('Age selected:', isOver18);
+            selectedAge = isOver18;
             
-            <div class="video-container">
-                <video id="activeScannerVideo" autoplay muted playsinline></video>
-                <div class="camera-controls">
-                    <button onclick="toggleSound()" class="control-btn" id="soundBtn">🔊</button>
-                    <button onclick="pauseResume()" class="control-btn" id="pauseBtn">⏸️</button>
-                    <button onclick="switchCamera()" class="control-btn">🔄</button>
-                </div>
-            </div>
+            if (isOver18) {
+                document.getElementById('parentalConsent').style.display = 'none';
+                document.getElementById('accountSelection').style.display = 'block';
+            } else {
+                document.getElementById('parentalConsent').style.display = 'block';
+                document.getElementById('accountSelection').style.display = 'none';
+            }
+        }
+
+        function selectAccount(type, element) {
+            console.log('Account selected:', type);
+            selectedAccount = type;
             
-            <div class="progress-bar">
-                <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
-            </div>
+            // Update radio button
+            const radio = element.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
             
-            <div id="scanProgress" class="scan-progress">
-                <div id="scanStatus">Preparing scan...</div>
-                <div class="text-small" id="scanDetails">Initializing camera...</div>
-            </div>
+            // Update visual selection
+            document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
             
-            <div id="instructionText" class="scan-position">
-                <div id="positionEmoji" style="font-size: 32px; margin-bottom: 10px;">👁️</div>
-                <div id="positionText">Preparing to scan...</div>
-                <div class="text-small" id="eyeInstruction">Hold phone steady</div>
-            </div>
+            // Update display text
+            let displayText = '';
+            if (type === 'individual') {
+                displayText = 'Individual Account - $19.99/month';
+            } else if (type === 'family') {
+                displayText = 'Family Account - $29.99/month (up to 4 members)';
+            } else if (type === 'senior') {
+                displayText = 'Senior Account (65+) - $14.99/month';
+            }
+            
+            const display = document.getElementById('selectedAccountDisplay');
+            if (display) display.textContent = displayText;
+        }
+
+        function toggleCheck(checkboxId, element) {
+            console.log('Checkbox toggled:', checkboxId);
+            const checkbox = document.getElementById(checkboxId);
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                
+                if (checkbox.checked) {
+                    element.classList.add('selected');
+                } else {
+                    element.classList.remove('selected');
+                }
+            }
+        }
+
+        function nextStep(stepId) {
+            console.log('Moving to step:', stepId);
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(stepId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        }
+
+        function previousStep(stepId) {
+            nextStep(stepId);
+        }
+
+        function proceedToDisclaimer() {
+            const checkbox = document.getElementById('welcomeAgree');
+            if (!checkbox || !checkbox.checked) {
+                alert('Please read and check the agreement to continue.');
+                return;
+            }
+            nextStep('medicalDisclaimers');
+        }
+
+        function restartApp() {
+            // Reset everything and go back to start
+            selectedAge = null;
+            selectedAccount = null;
+            
+            // Reset form inputs
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+            document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+            
+            // Hide conditional sections
+            document.getElementById('parentalConsent').style.display = 'none';
+            document.getElementById('accountSelection').style.display = 'none';
+            
+            // Go back to first screen
+            nextStep('ageVerification');
+        }
+
+        // Test button functionality on load
+        console.log('Trust Your Sight JavaScript loaded successfully!');
+        
+        // Quick test - move to results section after 10 seconds if you want to test
+        // setTimeout(() => nextStep('resultsSection'), 10000);
+    </script>
+</body>
+</html>
