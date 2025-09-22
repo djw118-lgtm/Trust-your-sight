@@ -100,14 +100,18 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-        .radio-option, .checkbox-option {
+        .radio-option,         .checkbox-option {
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 20px;
+            padding: 25px;
             margin: 15px 0;
             cursor: pointer;
             transition: all 0.3s;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
         }
         .radio-option:hover, .checkbox-option:hover {
             border-color: #3b82f6;
@@ -354,6 +358,127 @@
             </div>
         </div>
 
+        <!-- Step 4: Diabetic Education -->
+        <div id="diabeticEducation" class="section">
+            <div class="header">
+                <div class="logo">🩺</div>
+                <div class="app-title">Understanding Diabetic Retinopathy</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+            
+            <div class="step-indicator">4</div>
+            <h3>Understanding Diabetic Retinopathy</h3>
+            <p>Diabetic retinopathy is a serious eye condition that affects people with diabetes. Early detection through professional screening is crucial.</p>
+            
+            <div class="info-box">
+                <h4>Who's at risk:</h4>
+                <p>Anyone with Type 1 or Type 2 diabetes</p>
+            </div>
+            
+            <div class="info-box">
+                <h4>Symptoms:</h4>
+                <p>Often no early symptoms - why screening matters</p>
+            </div>
+            
+            <div class="info-box">
+                <h4>Treatment:</h4>
+                <p>Available when caught early by professionals</p>
+            </div>
+            
+            <div class="warning-box">
+                <h4>Professional Screening Required</h4>
+                <p>Diabetic retinopathy screening requires specialized equipment and medical training. This app provides education and reminders to see qualified professionals.</p>
+            </div>
+            
+            <div class="checkbox-option" onclick="toggleCheck('diabeticAgree', this)">
+                <input type="checkbox" id="diabeticAgree">
+                I understand diabetic retinopathy requires professional screening
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep('medicalDisclaimers')">Previous</button>
+                <button class="btn-primary" onclick="checkAndProceed('diabeticAgree', 'usageGuidelines')">Continue Learning</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Usage Guidelines -->
+        <div id="usageGuidelines" class="section">
+            <div class="header">
+                <div class="logo">📋</div>
+                <div class="app-title">Usage Guidelines</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%;"></div>
+                </div>
+            </div>
+            
+            <div class="step-indicator">5</div>
+            <h3>Recommended Usage:</h3>
+            <ul>
+                <li>Use as an educational resource about eye health</li>
+                <li>Set reminders for regular professional eye exams</li>
+                <li>Track your eye health awareness and habits</li>
+                <li>Connect with qualified eye care professionals in your area</li>
+            </ul>
+            
+            <div class="warning-box">
+                <h4>When to See a Professional Immediately:</h4>
+                <ul>
+                    <li>Sudden vision changes or loss</li>
+                    <li>Eye pain or severe discomfort</li>
+                    <li>Flashing lights or new floaters</li>
+                    <li>Any concerning eye symptoms</li>
+                </ul>
+            </div>
+            
+            <div class="checkbox-option" onclick="toggleCheck('usageAgree', this)">
+                <input type="checkbox" id="usageAgree">
+                I understand proper usage guidelines and emergency warning signs
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep('diabeticEducation')">Previous</button>
+                <button class="btn-primary" onclick="checkAndProceed('usageAgree', 'educationComplete')">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 6: Education Complete -->
+        <div id="educationComplete" class="section">
+            <div class="header">
+                <div class="logo">✅</div>
+                <div class="app-title">Education Complete!</div>
+                <div class="subtitle">Eye Health Education & Awareness</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin: 40px 0;">
+                <div style="font-size: 72px; color: #22c55e; margin-bottom: 20px;">✓</div>
+                <h3>Education Complete!</h3>
+                <p>You have successfully completed the mandatory eye health education program.</p>
+            </div>
+            
+            <div class="success-box">
+                <h4>You now have access to:</h4>
+                <div class="feature-grid" style="margin-top: 20px;">
+                    <div class="feature-card">Eye Health Dashboard</div>
+                    <div class="feature-card">Exam Reminders</div>
+                    <div class="feature-card">Educational Library</div>
+                    <div class="feature-card">Professional Directory</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="btn-primary" onclick="nextStep('resultsSection')" style="font-size: 18px; padding: 20px 40px;">Enter Trust Your Sight App</button>
+            </div>
+            
+            <p class="text-small" style="text-align: center; margin-top: 20px;">
+                Your education completion has been recorded. You can review this information anytime in the app settings.
+            </p>
+        </div>
+
         <!-- Results Section (for quick testing) -->
         <div id="resultsSection" class="section">
             <div class="header">
@@ -364,8 +489,8 @@
             
             <div style="text-align: center; margin: 40px 0;">
                 <div style="font-size: 72px; color: #22c55e; margin-bottom: 20px;">✓</div>
-                <h3>Buttons Are Working!</h3>
-                <p>The JavaScript functions are now properly connected and the buttons are responsive.</p>
+                <h3>All Features Working!</h3>
+                <p>The complete onboarding flow is now functional with proper validation and mobile-friendly checkboxes.</p>
             </div>
             
             <div class="button-group" style="justify-content: center;">
@@ -434,6 +559,12 @@
         }
 
         function nextStep(stepId) {
+            // Validate account selection before leaving age verification
+            if (stepId === 'welcomeInfo' && !selectedAccount) {
+                alert('Please select an account type before continuing.');
+                return;
+            }
+            
             console.log('Moving to step:', stepId);
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
@@ -458,6 +589,15 @@
                 return;
             }
             nextStep('medicalDisclaimers');
+        }
+
+        function checkAndProceed(checkboxId, nextStepId) {
+            const checkbox = document.getElementById(checkboxId);
+            if (!checkbox || !checkbox.checked) {
+                alert('Please check the required agreement to continue.');
+                return;
+            }
+            nextStep(nextStepId);
         }
 
         function restartApp() {
