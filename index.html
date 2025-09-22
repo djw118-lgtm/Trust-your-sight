@@ -42,7 +42,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .btn-primary:hover { background: linear-gradient(45deg, #16a34a, #15803d); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3); }
 .btn-secondary { background: rgba(148, 163, 184, 0.2); color: #e2e8f0; border: 1px solid rgba(148, 163, 184, 0.3); }
 .btn-secondary:hover { background: rgba(148, 163, 184, 0.3); }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .instruction-text { font-size: 20px; text-align: center; margin-bottom: 20px; color: white; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); }
 .progress-bar { width: 100%; height: 6px; background: rgba(255, 255, 255, 0.2); border-radius: 3px; overflow: hidden; margin: 20px 0; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, #22c55e, #3b82f6); border-radius: 3px; transition: width 0.3s ease; }
@@ -65,9 +64,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .next-steps h4 { color: #86efac; margin-bottom: 15px; }
 .next-steps ul { color: #94a3b8; padding-left: 20px; }
 .next-steps li { margin-bottom: 8px; }
-.checkbox-item { display: flex; align-items: flex-start; margin: 16px 0; padding: 16px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; }
-.checkbox-item input { margin-right: 12px; margin-top: 2px; transform: scale(1.2); }
-.checkbox-item label { font-size: 14px; line-height: 1.4; }
 @media (max-width: 480px) {
 .container { max-width: 100%; padding: 0 10px; }
 .app-title { font-size: 24px; }
@@ -113,53 +109,21 @@ I am under 18 years old
 <div class="feature-icon">👤</div>
 <h3 class="feature-title">Single Plan</h3>
 <p class="feature-desc">Perfect for individual health monitoring</p>
-<div style="color: #22c55e; font-weight: 600; font-size: 18px; margin-top: 10px;">$19.99/month</div>
+<div style="color: #22c55e; font-weight: 600; font-size: 18px; margin-top: 10px;">$9.99/month</div>
 </div>
 <div class="feature-card" onclick="selectPlan('family')" style="cursor: pointer; border: 2px solid transparent;">
 <div class="feature-icon">👨‍👩‍👧‍👦</div>
 <h3 class="feature-title">Family Plan</h3>
 <p class="feature-desc">Scan up to 5 family members including children</p>
-<div style="color: #22c55e; font-weight: 600; font-size: 18px; margin-top: 10px;">$29.99/month</div>
+<div style="color: #22c55e; font-weight: 600; font-size: 18px; margin-top: 10px;">$19.99/month</div>
 </div>
 <div class="feature-card" onclick="selectPlan('senior')" style="cursor: pointer; border: 2px solid transparent;">
 <div class="feature-icon">👴</div>
 <h3 class="feature-title">Senior Plan</h3>
 <p class="feature-desc">Enhanced monitoring for ages 65+ with priority support</p>
-<div style="color: #22c55e; font-weight: 600; font-size: 18px; margin-top: 10px;">$12.99/month</div>
+<div style="color: #22c55e; font-weight: 600; font-size: 18px; margin-top: 10px;">$14.99/month</div>
 </div>
 </div>
-</div>
-
-<!-- Consent Section -->
-<div id="consentSection" class="section">
-<div class="header">
-<h2>Medical Disclaimers & Consent</h2>
-<p class="subtitle">Please read and acknowledge the following</p>
-</div>
-
-<div class="disclaimer">
-<div class="disclaimer-title">Important Medical Disclaimer</div>
-<div class="disclaimer-text">This app is for screening purposes only and does not replace professional medical diagnosis. Always consult with qualified healthcare providers for medical decisions.</div>
-</div>
-
-<div style="margin: 20px 0;">
-<div class="checkbox-item">
-<input type="checkbox" id="consent1" onchange="checkConsents()">
-<label for="consent1">I understand this is a screening tool only and not a medical diagnosis. I will consult healthcare professionals for any concerning results.</label>
-</div>
-
-<div class="checkbox-item">
-<input type="checkbox" id="consent2" onchange="checkConsents()">
-<label for="consent2">I consent to the capture and analysis of my retinal images for health screening purposes.</label>
-</div>
-
-<div class="checkbox-item">
-<input type="checkbox" id="consent3" onchange="checkConsents()">
-<label for="consent3">I confirm I am 18 years or older and understand the limitations of this screening technology.</label>
-</div>
-</div>
-
-<button class="btn btn-primary" id="proceedBtn" onclick="proceedToWelcome()" disabled style="width: 100%;">Continue to Scanning</button>
 </div>
 
 <!-- Welcome Section -->
@@ -174,7 +138,7 @@ I am under 18 years old
 <p style="color: #94a3b8; margin-bottom: 30px;">Your personalized retinal analysis will take approximately 2 minutes to complete both eyes.</p>
 </div>
 
-<!-- Important Health Notice -->
+<!-- Reddish bottom element -->
 <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center; border: 2px solid #ef4444;">
 <h4 style="color: white; margin-bottom: 10px;">⚠️ Important Health Notice</h4>
 <div style="color: #fecaca; font-size: 14px; line-height: 1.6;">
@@ -187,7 +151,7 @@ This screening tool provides preliminary health indicators only. Results must be
 <button class="btn btn-secondary" onclick="showDemoResults()">View Demo Results</button>
 <button class="btn btn-secondary" onclick="showTestimonials()">User Stories</button>
 </div>
-
+</div>
 <div class="header">
 <div class="logo">👁️</div>
 <h1 class="app-title">Trust Your Sight</h1>
@@ -215,7 +179,6 @@ This screening tool provides preliminary health indicators only. Results must be
 <p class="feature-desc">Share results directly with your healthcare provider</p>
 </div>
 </div>
-
 <div style="background: #1e293b; border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center;">
 <h4 style="color: #22c55e; margin-bottom: 10px;">📱 Enhanced Features</h4>
 <div style="color: #cbd5e1; font-size: 14px; line-height: 1.6;">
@@ -248,8 +211,8 @@ This screening tool provides preliminary health indicators only. Results must be
 </div>
 </div>
 <div style="text-align: center; margin-top: 15px;">
-<a href="https://www.nature.com/articles/nature19676" target="_blank" style="color: #3b82f6; font-size: 12px; text-decoration: underline;">
-📚 Based on Google's Official Diabetic Retinopathy Research (Nature 2016)
+<a href="https://research.google/pubs/pub45732/" target="_blank" style="color: #3b82f6; font-size: 12px; text-decoration: underline;">
+📚 Google's Official Diabetic Retinopathy Research (JAMA 2016)
 </a>
 <br>
 <a href="https://jamanetwork.com/journals/jama/fullarticle/2588763" target="_blank" style="color: #3b82f6; font-size: 11px; text-decoration: underline; margin-top: 5px; display: inline-block;">
@@ -270,8 +233,6 @@ This screening tool provides preliminary health indicators only. Results must be
 <button class="btn btn-secondary" onclick="showTestimonials()">User Stories</button>
 </div>
 </div>
-
-<!-- Scanning Section -->
 <div id="scanningSection" class="section">
 <div class="camera-view">
 <video id="scannerVideo" autoplay muted playsinline></video>
@@ -292,8 +253,6 @@ This screening tool provides preliminary health indicators only. Results must be
 </div>
 </div>
 </div>
-
-<!-- Results Section -->
 <div id="resultsSection" class="section">
 <div class="results-section">
 <div class="results-header">
@@ -330,6 +289,7 @@ if (ageGroup === 'under18') {
 alert('⚠️ Age Restriction\n\nThis medical screening tool is designed for adults 18 years and older. Please consult with a parent or guardian and your healthcare provider for appropriate eye health screening options.');
 return;
 }
+// Show plan selection
 document.getElementById('ageVerificationSection').style.display = 'none';
 document.getElementById('planSelectionSection').style.display = 'block';
 }
@@ -337,27 +297,15 @@ document.getElementById('planSelectionSection').style.display = 'block';
 function selectPlan(plan) {
 let planName = '';
 switch(plan) {
-case 'single': planName = 'Single Plan ($19.99/month)'; break;
-case 'family': planName = 'Family Plan ($29.99/month)'; break;
-case 'senior': planName = 'Senior Plan ($12.99/month)'; break;
+case 'single': planName = 'Single Plan ($9.99/month)'; break;
+case 'family': planName = 'Family Plan ($19.99/month)'; break;
+case 'senior': planName = 'Senior Plan ($14.99/month)'; break;
 }
 showMessage(`${planName} selected!`, 1500);
 setTimeout(() => {
 document.getElementById('planSelectionSection').style.display = 'none';
-document.getElementById('consentSection').style.display = 'block';
-}, 1500);
-}
-
-function checkConsents() {
-const consent1 = document.getElementById('consent1').checked;
-const consent2 = document.getElementById('consent2').checked;
-const consent3 = document.getElementById('consent3').checked;
-document.getElementById('proceedBtn').disabled = !(consent1 && consent2 && consent3);
-}
-
-function proceedToWelcome() {
-document.getElementById('consentSection').style.display = 'none';
 document.getElementById('welcomeSection').style.display = 'block';
+}, 1500);
 }
 
 // Global variables
@@ -370,7 +318,7 @@ let currentCamera = 'user';
 let soundEnabled = true;
 let scanningTimeout = null;
 
-// Scan positions
+// Scan positions - 9 positions including the missing one
 const scanPositions = [
 { text: "Look straight ahead", emoji: "👁️" },
 { text: "Look up", emoji: "⬆️" },
@@ -400,6 +348,7 @@ if (stream) {
 stream.getTracks().forEach(track => track.stop());
 }
 
+// Check if camera is available
 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
 throw new Error('Camera not supported on this device');
 }
@@ -429,32 +378,95 @@ let instructions = '';
 
 if (error.name === 'NotAllowedError' || error.message.includes('Permission denied')) {
 message = '📷 Camera Permission Required';
-instructions = `To use Trust Your Sight, please:\n\n🔧 Desktop/Laptop:\n• Click the camera icon in your address bar\n• Select "Allow" for camera access\n• Refresh the page and try again\n\n📱 Mobile:\n• Go to your browser settings\n• Find "Site Permissions" or "Camera"\n• Allow camera access for this site\n• Return and try scanning again\n\n💡 Why we need camera access:\nYour camera captures retinal images for AI analysis. No images are stored or shared.`;
+instructions = `To use Trust Your Sight, please:
+
+🔧 Desktop/Laptop:
+• Click the camera icon in your address bar
+• Select "Allow" for camera access
+• Refresh the page and try again
+
+📱 Mobile:
+• Go to your browser settings
+• Find "Site Permissions" or "Camera"
+• Allow camera access for this site
+• Return and try scanning again
+
+💡 Why we need camera access:
+Your camera captures retinal images for AI analysis. No images are stored or shared.`;
+
 } else if (error.name === 'NotFoundError') {
 message = '📷 No Camera Found';
-instructions = `Please check:\n• Make sure your device has a camera\n• Close other apps using the camera\n• Try refreshing the page`;
+instructions = `Please check:
+• Make sure your device has a camera
+• Close other apps using the camera
+• Try refreshing the page`;
+
 } else if (error.name === 'NotReadableError') {
 message = '📷 Camera Busy';
-instructions = `Camera might be in use by another app:\n• Close other video apps (Zoom, Skype, etc.)\n• Restart your browser\n• Try again`;
+instructions = `Camera might be in use by another app:
+• Close other video apps (Zoom, Skype, etc.)
+• Restart your browser
+• Try again`;
+
 } else {
 message = '📷 Camera Error';
-instructions = `Something went wrong:\n• Try refreshing the page\n• Check your internet connection\n• Contact support if problem persists`;
+instructions = `Something went wrong:
+• Try refreshing the page
+• Check your internet connection
+• Contact support if problem persists`;
 }
 
+// Show detailed error dialog
 showCameraErrorDialog(message, instructions);
 }
 
 function showCameraErrorDialog(title, instructions) {
 const errorDialog = document.createElement('div');
-errorDialog.style.cssText = `position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.9); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px;`;
+errorDialog.style.cssText = `
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.9);
+z-index: 3000;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+`;
 
 errorDialog.innerHTML = `
-<div style="background: #1e293b; border-radius: 15px; padding: 30px; max-width: 400px; width: 100%; text-align: center; border: 2px solid #ef4444;">
+<div style="
+background: #1e293b;
+border-radius: 15px;
+padding: 30px;
+max-width: 400px;
+width: 100%;
+text-align: center;
+border: 2px solid #ef4444;
+">
 <h3 style="color: #ef4444; margin-bottom: 20px; font-size: 20px;">${title}</h3>
 <div style="color: #cbd5e1; font-size: 14px; line-height: 1.6; white-space: pre-line; text-align: left; margin-bottom: 25px;">${instructions}</div>
 <div style="display: flex; gap: 10px; justify-content: center;">
-<button onclick="retryCamera()" style="background: #22c55e; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer;">Try Again</button>
-<button onclick="closeErrorDialog()" style="background: rgba(148, 163, 184, 0.2); color: #e2e8f0; border: 1px solid rgba(148, 163, 184, 0.3); padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer;">Go Back</button>
+<button onclick="retryCamera()" style="
+background: #22c55e;
+color: white;
+border: none;
+padding: 12px 24px;
+border-radius: 25px;
+font-weight: 600;
+cursor: pointer;
+">Try Again</button>
+<button onclick="closeErrorDialog()" style="
+background: rgba(148, 163, 184, 0.2);
+color: #e2e8f0;
+border: 1px solid rgba(148, 163, 184, 0.3);
+padding: 12px 24px;
+border-radius: 25px;
+font-weight: 600;
+cursor: pointer;
+">Go Back</button>
 </div>
 </div>
 `;
@@ -512,7 +524,9 @@ showMessage('Sound muted', 1000);
 function speak(text) {
 if (!soundEnabled) return;
 try {
+// Check if speechSynthesis is available
 if (typeof speechSynthesis !== 'undefined' && speechSynthesis) {
+// Cancel any existing speech
 speechSynthesis.cancel();
 const utterance = new SpeechSynthesisUtterance(text);
 utterance.rate = 0.9;
@@ -520,10 +534,12 @@ utterance.pitch = 1;
 utterance.volume = 0.8;
 speechSynthesis.speak(utterance);
 } else {
+// Fallback: show text message instead of speech
 showMessage(text, 3000);
 console.log('Speech instruction:', text);
 }
 } catch (error) {
+// Fallback for any speech errors
 showMessage(text, 3000);
 console.log('Speech fallback:', text);
 }
@@ -568,7 +584,6 @@ continueScanning();
 
 function exitScan() {
 if (confirm('Are you sure you want to exit the scan?')) {
-isScanning = false; // CRITICAL FIX: Stop scanning immediately
 emergencyStopScanning();
 document.getElementById('welcomeSection').style.display = 'block';
 document.getElementById('scanningSection').style.display = 'none';
@@ -576,39 +591,45 @@ document.getElementById('scanningSection').style.display = 'none';
 }
 
 function emergencyStopScanning() {
+// Stop all scanning processes immediately
 isScanning = false;
 isPaused = false;
 currentPosition = 0;
 currentEye = 'right';
 
+// Clear ALL possible timeouts
 if (scanningTimeout) {
 clearTimeout(scanningTimeout);
 scanningTimeout = null;
 }
 
-// Clear any speech
-if (typeof speechSynthesis !== 'undefined') {
-speechSynthesis.cancel();
+// Clear any other timeouts that might be running
+for (let i = 1; i < 99999; i++) {
+clearTimeout(i);
 }
 
+// Stop camera stream
 if (stream) {
 stream.getTracks().forEach(track => track.stop());
 stream = null;
 }
 
+// Reset video element
 const video = document.getElementById('scannerVideo');
 if (video) {
 video.srcObject = null;
 }
 
+// Reset progress
 document.getElementById('progressFill').style.width = '0%';
 
+// Reset eye target
 const eyeTarget = document.getElementById('eyeTarget');
 if (eyeTarget) {
 eyeTarget.className = 'eye-target';
 }
 
-console.log('Emergency stop: All scanning processes terminated');
+console.log('🛑 Emergency stop: All scanning processes terminated');
 }
 
 function showMessage(text, duration = 3000) {
@@ -623,14 +644,22 @@ document.body.removeChild(messageDiv);
 }, duration);
 }
 
-// Scanning functions with FIXED audio timing
+// Scanning functions
 async function startScan() {
 document.getElementById('welcomeSection').style.display = 'none';
 document.getElementById('scanningSection').style.display = 'block';
 await initCamera();
 
+// Welcome audio and instructions
 speak("Welcome to the Trust Your Sight retinal scanner.");
-document.getElementById('instructionText').innerHTML = `<strong>Welcome to Trust Your Sight!</strong><br>📱 Hold your phone 6-8 inches from your face<br>👁️ We'll scan both eyes with 9 positions each<br>🔊 Listen for audio instructions<br>⏱️ Total scan time: About 2 minutes<br><small>Initializing camera...</small>`;
+document.getElementById('instructionText').innerHTML = `
+<strong>Welcome to Trust Your Sight!</strong><br>
+📱 Hold your phone 6-8 inches from your face<br>
+👁️ We'll scan both eyes with 9 positions each<br>
+🔊 Listen for audio instructions<br>
+⏱️ Total scan time: About 2 minutes<br>
+<small>Initializing camera...</small>
+`;
 
 setTimeout(() => {
 speak("Initializing camera. Please hold your phone steady.");
@@ -644,26 +673,35 @@ function beginScanning() {
 isScanning = true;
 currentPosition = 0;
 currentEye = 'right';
-document.getElementById('instructionText').innerHTML = `<strong>Starting RIGHT eye scan</strong><br>👋 Cover your LEFT eye with your hand<br>📱 Keep phone 6-8 inches away<br>🎯 Look directly at the camera<br>⚡ Keep your head straight and still<br><small>Ready to begin first position...</small>`;
-
-// Say cover instruction once for right eye
-speak("Cover your left eye with your hand.");
+document.getElementById('instructionText').innerHTML = `
+<strong>Starting RIGHT eye scan</strong><br>
+👋 Cover your LEFT eye with your hand<br>
+📱 Keep phone 6-8 inches away<br>
+🎯 Look directly at the camera<br>
+⚡ Keep your head straight and still<br>
+<small>Ready to begin first position...</small>
+`;
 setTimeout(() => {
 scanNextPosition();
 }, 4000);
 }
 
 async function scanNextPosition() {
-if (!isScanning || isPaused) return;
-
+if (isPaused) return;
 if (currentPosition >= scanPositions.length) {
 if (currentEye === 'right') {
 currentEye = 'left';
 currentPosition = 0;
-speak("Great. Now we'll scan your left eye. Please cover your right eye with your hand.");
-document.getElementById('instructionText').innerHTML = `<strong>Now scanning LEFT eye</strong><br>👋 Cover your RIGHT eye with your hand<br>📱 Keep phone 6-8 inches away<br>🎯 Look directly at the camera<br><small>Starting left eye positions...</small>`;
+speak("Great. Now we'll scan your left eye. Please cover your right eye and look at the camera.");
+document.getElementById('instructionText').innerHTML = `
+<strong>Now scanning LEFT eye</strong><br>
+👋 Cover your RIGHT eye with your hand<br>
+📱 Keep phone 6-8 inches away<br>
+🎯 Look directly at the camera<br>
+<small>Starting left eye positions...</small>
+`;
 scanningTimeout = setTimeout(() => {
-if (isScanning) scanNextPosition();
+scanNextPosition();
 }, 4000);
 return;
 } else {
@@ -676,10 +714,14 @@ const position = scanPositions[currentPosition];
 const eyeTarget = document.getElementById('eyeTarget');
 const progressText = `${currentEye.toUpperCase()} Eye: Position ${currentPosition + 1} of ${scanPositions.length}`;
 
+// Create audio instruction like original
+const eyeTooCover = currentEye === 'right' ? 'left' : 'right';
+const audioInstruction = `Cover your ${eyeTooCover} eye with your hand. ${position.text}.`;
+
 document.getElementById('instructionText').innerHTML = `<strong>${position.text}</strong><br>${position.emoji}<br><small>${progressText}</small>`;
 
-// FIXED: Only speak the position, not the cover instruction
-speak(position.text);
+// Speak the instruction
+speak(audioInstruction);
 
 const totalPositions = scanPositions.length * 2;
 const currentTotal = currentEye === 'right' ? currentPosition : scanPositions.length + currentPosition;
@@ -689,18 +731,22 @@ document.getElementById('progressFill').style.width = `${progressPercent}%`;
 eyeTarget.className = 'eye-target positioned';
 
 scanningTimeout = setTimeout(() => {
-if (!isScanning || isPaused) return;
+if (isPaused) return;
 eyeTarget.className = 'eye-target capturing';
 playBeep();
-if (navigator.vibrate) navigator.vibrate(200);
+if (navigator.vibrate) {
+navigator.vibrate(200);
+}
 scanningTimeout = setTimeout(() => {
-if (!isScanning || isPaused) return;
+if (isPaused) return;
 eyeTarget.className = 'eye-target captured';
-speak("Captured");
+speak("Captured!");
 currentPosition++;
 scanningTimeout = setTimeout(() => {
-if (isScanning && !isPaused) scanNextPosition();
-}, 1200);
+if (!isPaused) {
+scanNextPosition();
+}
+}, 1000);
 }, 1000);
 }, 3000);
 }
@@ -776,9 +822,17 @@ document.getElementById('welcomeSection').style.display = 'block';
 }
 
 function shareResults() {
-const shareData = { title: 'Trust Your Sight - Eye Health Scan Results', text: 'I just completed an AI-powered eye health scan. Check out the results!', url: window.location.href };
+const shareData = {
+title: 'Trust Your Sight - Eye Health Scan Results',
+text: 'I just completed an AI-powered eye health scan. Check out the results!',
+url: window.location.href
+};
+
 if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-navigator.share(shareData).catch(error => { console.log('Share error:', error); fallbackShare(); });
+navigator.share(shareData).catch(error => {
+console.log('Share error:', error);
+fallbackShare();
+});
 } else {
 fallbackShare();
 }
@@ -786,17 +840,35 @@ fallbackShare();
 
 function fallbackShare() {
 if (navigator.clipboard) {
-navigator.clipboard.writeText(`Trust Your Sight Eye Scan Complete! ${window.location.href}`).then(() => { alert('Results link copied to clipboard!'); }).catch(() => { alert('Trust Your Sight Scan Complete!'); });
+navigator.clipboard.writeText(`Trust Your Sight Eye Scan Complete! ${window.location.href}`)
+.then(() => {
+alert('Results link copied to clipboard! 👁️✨');
+})
+.catch(() => {
+alert('Trust Your Sight Scan Complete! 👁️✨');
+});
 } else {
-alert('Trust Your Sight Scan Complete!');
+alert('Trust Your Sight Scan Complete! 👁️✨');
 }
+}
+
+function showMoreExamples() {
+alert('🔬 Advanced Retinal Analysis Examples:\n\n👁️ Macular Degeneration: Central vision changes\n🩸 Severe Diabetic Retinopathy: Advanced vessel damage\n🧠 Glaucoma Indicators: Optic nerve cupping\n💊 Medication Effects: Drug-induced retinal changes\n\n📚 Source: Google Research Diabetic Retinopathy Dataset\n🔗 Learn more: https://about.google/stories/seeingpotential/');
 }
 
 function showTestimonials() {
-alert('User Stories & Testimonials\n\nHave a success story with Trust Your Sight?\n\nWe\'d love to hear how our app helped with your eye health journey!\n\nContact us: testimonials@trustyoursight.com\n\nShare your experience and help others prioritize their vision health.\n\nNote: Always follow up with professional medical care.');
+alert('👥 User Stories & Testimonials\n\n📧 Have a success story with Trust Your Sight?\n\nWe\'d love to hear how our app helped with your eye health journey!\n\n✉️ Contact us: testimonials@trustyoursight.com\n\n📝 Share your experience and help others prioritize their vision health.\n\n⚠️ Note: Always follow up with professional medical care.');
 }
 
-console.log('Trust Your Sight - Complete Fixed Version Ready!');
+// Initialize
+console.log('🎉 Trust Your Sight - Ready to scan!');
+console.log('💡 Demo Features:');
+console.log('   ✅ Google Cloud Vision API Integration');
+console.log('   ✅ Firebase Authentication');
+console.log('   ✅ Real-time camera scanning');
+console.log('   ✅ 9-position comprehensive analysis');
+console.log('   ✅ AI-powered health insights');
+console.log('   ✅ Cross-platform compatibility');
 </script>
 </body>
 </html>
