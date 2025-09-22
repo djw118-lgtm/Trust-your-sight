@@ -15,7 +15,6 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f1419 100%);
             color: white;
-            min-height: 100vh;
             overflow-x: hidden;
         }
 
@@ -33,8 +32,38 @@
         }
 
         .logo {
-            font-size: 60px;
-            margin-bottom: 20px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #8B4513 30%, #654321 70%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 20px rgba(139, 69, 19, 0.3);
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 35px;
+            height: 35px;
+            background: #2c1810;
+            border-radius: 50%;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3);
         }
 
         .app-title {
@@ -42,12 +71,52 @@
             font-weight: 700;
             color: #60a5fa;
             margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(96, 165, 250, 0.3);
         }
 
         .subtitle {
             font-size: 16px;
             color: #94a3b8;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: #e2e8f0;
             margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .feature-card {
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid rgba(100, 116, 139, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-desc {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         .detection-card {
@@ -71,6 +140,53 @@
             line-height: 1.4;
         }
 
+        .detection-card.diabetes {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.1));
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .detection-card.diabetes h3 {
+            color: #fbbf24;
+        }
+
+        .detection-card.blood-pressure {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1));
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .detection-card.blood-pressure h3 {
+            color: #f87171;
+        }
+
+        .detection-card.neurological {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(147, 51, 234, 0.1));
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .detection-card.neurological h3 {
+            color: #c084fc;
+        }
+
+        .enhanced-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px 0;
+        }
+
+        .checkmark {
+            color: #22c55e;
+            font-size: 18px;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+
+        .feature-text {
+            color: #e2e8f0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
         .btn {
             display: inline-block;
             padding: 15px 30px;
@@ -81,17 +197,104 @@
             text-decoration: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 10px;
+            margin: 10px auto;
+            display: block;
+            text-align: center;
+            max-width: 280px;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #22c55e, #16a34a);
             color: white;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 40px 0 30px;
+        }
+
+        .section-divider h2 {
+            color: #3b82f6;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .disclaimer {
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            text-align: center;
+        }
+
+        .disclaimer-title {
+            color: #f87171;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .disclaimer-text {
+            color: #e2e8f0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .research-link {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .research-link a {
+            color: #3b82f6;
+            font-size: 12px;
+            text-decoration: underline;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .final-disclaimer {
+            text-align: center;
+            margin: 30px 0;
+            color: #94a3b8;
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .section.hidden {
+            display: none;
+        }
+
+        .age-section {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .age-section h2 {
+            color: #e2e8f0;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .age-section p {
+            color: #94a3b8;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .age-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 300px;
+            margin: 0 auto;
         }
 
         .btn-secondary {
@@ -99,48 +302,79 @@
             color: #e2e8f0;
             border: 1px solid rgba(148, 163, 184, 0.3);
         }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        .age-verification {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .age-verification h2 {
-            color: #e2e8f0;
-            margin-bottom: 20px;
-        }
-
-        .age-verification p {
-            color: #94a3b8;
-            margin-bottom: 30px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Welcome Section -->
-        <div id="welcomeSection" class="section active">
+        <!-- Main Landing Page -->
+        <div id="landingPage" class="section">
             <div class="header">
-                <div class="logo">👁️</div>
+                <div class="logo"></div>
                 <h1 class="app-title">Trust Your Sight</h1>
                 <p class="subtitle">AI-Powered Eye Health Screening</p>
             </div>
 
-            <div style="text-align: center; margin: 30px 0;">
-                <h3 style="color: #e2e8f0; margin-bottom: 20px;">Ready to Begin Your Eye Health Scan</h3>
-                <p style="color: #94a3b8; margin-bottom: 30px;">Your personalized retinal analysis will take approximately 2 minutes to complete both eyes.</p>
+            <!-- Advanced AI Analysis -->
+            <div class="feature-card">
+                <div class="feature-icon">🔬</div>
+                <div class="feature-title">Advanced AI Analysis</div>
+                <div class="feature-desc">Detect early signs of diabetic retinopathy and other eye conditions</div>
             </div>
 
-            <div style="text-align: center; margin: 30px 0 20px;">
-                <div style="color: #3b82f6; font-weight: 600; font-size: 16px; margin-bottom: 15px;">🔍 What We Can Detect</div>
+            <!-- Smartphone Powered -->
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <div class="feature-title">Smartphone Powered</div>
+                <div class="feature-desc">Professional-grade scanning using your phone's camera</div>
+            </div>
+
+            <!-- Instant Results -->
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">Instant Results</div>
+                <div class="feature-desc">Get comprehensive health insights in under 2 minutes</div>
+            </div>
+
+            <!-- Medical Integration -->
+            <div class="feature-card">
+                <div class="feature-icon">🏥</div>
+                <div class="feature-title">Medical Integration</div>
+                <div class="feature-desc">Share results directly with your healthcare provider</div>
+            </div>
+
+            <!-- Enhanced Features -->
+            <div class="section-divider">
+                <h2>📋 Enhanced Features</h2>
+            </div>
+
+            <div class="enhanced-feature">
+                <span class="checkmark">✅</span>
+                <span class="feature-text"><strong>9-Position Comprehensive Scan</strong> - Complete retinal coverage</span>
+            </div>
+
+            <div class="enhanced-feature">
+                <span class="checkmark">✅</span>
+                <span class="feature-text"><strong>Dual Camera Support</strong> - Front camera (self) + Back camera (family)</span>
+            </div>
+
+            <div class="enhanced-feature">
+                <span class="checkmark">✅</span>
+                <span class="feature-text"><strong>Smart Controls</strong> - Pause, exit, camera switching</span>
+            </div>
+
+            <div class="enhanced-feature">
+                <span class="checkmark">✅</span>
+                <span class="feature-text"><strong>Vibration + Sound Feedback</strong> - Audio/haptic confirmation</span>
+            </div>
+
+            <div class="enhanced-feature">
+                <span class="checkmark">✅</span>
+                <span class="feature-text"><strong>Family Mode</strong> - Perfect for scanning children with back camera</span>
+            </div>
+
+            <!-- What We Can Detect -->
+            <div class="section-divider">
+                <h2>🔍 What We Can Detect</h2>
             </div>
 
             <div class="detection-card">
@@ -148,41 +382,59 @@
                 <p>Blood vessel changes that may indicate heart health concerns</p>
             </div>
 
-            <div class="detection-card" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.1)); border: 1px solid rgba(245, 158, 11, 0.2);">
-                <h3 style="color: #fbbf24;">🩺 Diabetes Screening</h3>
+            <div class="detection-card diabetes">
+                <h3>🩺 Diabetes Screening</h3>
                 <p>Early detection of diabetic retinopathy risk indicators</p>
             </div>
 
-            <div class="detection-card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1)); border: 1px solid rgba(239, 68, 68, 0.2);">
-                <h3 style="color: #f87171;">🩸 Blood Pressure Signs</h3>
+            <div class="detection-card blood-pressure">
+                <h3>🩸 Blood Pressure Signs</h3>
                 <p>Retinal patterns associated with hypertension</p>
             </div>
 
-            <div class="detection-card" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(147, 51, 234, 0.1)); border: 1px solid rgba(168, 85, 247, 0.2);">
-                <h3 style="color: #c084fc;">🧠 Neurological Health</h3>
+            <div class="detection-card neurological">
+                <h3>🧠 Neurological Health</h3>
                 <p>Optic nerve health and potential neurological indicators</p>
             </div>
 
-            <div style="text-align: center; margin-top: 30px;">
-                <button class="btn btn-primary" onclick="showAgeVerification()">Enter Trust Your Sight App</button>
+            <!-- Research Links -->
+            <div class="research-link">
+                <a href="https://research.google/pubs/pub45732/" target="_blank">
+                    📚 Google's Official Diabetic Retinopathy Research (JAMA 2016)
+                </a>
+                <a href="https://jamanetwork.com/journals/jama/fullarticle/2588763" target="_blank">
+                    🔬 View Full Research Paper
+                </a>
             </div>
 
-            <div style="text-align: center; margin-top: 20px; color: #94a3b8; font-size: 12px; font-style: italic;">
-                *All results require professional medical confirmation
+            <!-- Medical Disclaimer -->
+            <div class="disclaimer">
+                <div class="disclaimer-title">Medical Disclaimer</div>
+                <div class="disclaimer-text">This app is for screening purposes only and does not replace professional medical diagnosis. Always consult with qualified healthcare providers for medical decisions.</div>
             </div>
+
+            <!-- Ready to Begin -->
+            <div class="section-title">
+                <h3 style="color: #e2e8f0; margin-bottom: 20px;">Ready to Begin Your Eye Health Scan</h3>
+                <p style="color: #94a3b8; margin-bottom: 30px;">Your personalized retinal analysis will take approximately 2 minutes to complete both eyes.</p>
+            </div>
+
+            <button class="btn btn-primary" onclick="showAgeVerification()">Enter Trust Your Sight App</button>
+
+            <div class="final-disclaimer">*All results require professional medical confirmation</div>
         </div>
 
         <!-- Age Verification Section -->
-        <div id="ageSection" class="section">
-            <div class="age-verification">
-                <div class="logo">👁️</div>
+        <div id="ageSection" class="section hidden">
+            <div class="age-section">
+                <div class="logo"></div>
                 <h1 class="app-title">Trust Your Sight</h1>
                 <p class="subtitle">AI-Powered Eye Health Screening</p>
 
                 <h2>Age Verification Required</h2>
                 <p>This medical screening tool requires age verification for appropriate use.</p>
 
-                <div style="margin: 30px 0;">
+                <div class="age-buttons">
                     <button class="btn btn-primary" onclick="startApp()">I am 18 years or older</button>
                     <button class="btn btn-secondary" onclick="showUnderageMessage()">I am under 18 years old</button>
                 </div>
@@ -190,20 +442,20 @@
         </div>
 
         <!-- Main App Section -->
-        <div id="appSection" class="section">
+        <div id="appSection" class="section hidden">
             <div class="header">
-                <div class="logo">👁️</div>
+                <div class="logo"></div>
                 <h1 class="app-title">Trust Your Sight</h1>
                 <p class="subtitle">Ready to Begin Scanning</p>
             </div>
 
             <div style="text-align: center; margin: 40px 0;">
                 <h3 style="color: #22c55e; margin-bottom: 20px;">Welcome to Your Eye Health Scanner</h3>
-                <p style="color: #94a3b8; margin-bottom: 30px;">Follow the audio instructions and hold your phone 6-8 inches from your face. Keep your phone straight and steady.</p>
+                <p style="color: #94a3b8; margin-bottom: 30px;">Hold your phone 6-8 inches from your face. Keep your phone straight and steady. Cover your left eye first, look straight ahead. Follow the audio instructions throughout the scan.</p>
                 
-                <div style="background: rgba(239, 68, 68, 0.1); border-radius: 12px; padding: 20px; margin: 20px 0; border: 1px solid rgba(239, 68, 68, 0.3);">
-                    <div style="color: #f87171; font-weight: 600; margin-bottom: 10px;">⚠️ Important Health Notice</div>
-                    <div style="color: #e2e8f0; font-size: 14px;">This screening tool provides preliminary health indicators only. Results must be confirmed by qualified medical professionals. Never delay professional medical care based on these results.</div>
+                <div class="disclaimer">
+                    <div class="disclaimer-title">⚠️ Important Health Notice</div>
+                    <div class="disclaimer-text">This screening tool provides preliminary health indicators only. Results must be confirmed by qualified medical professionals. Never delay professional medical care based on these results.</div>
                 </div>
 
                 <button class="btn btn-primary" onclick="startDemo()">Start Eye Scan</button>
@@ -214,13 +466,13 @@
 
     <script>
         function showAgeVerification() {
-            document.getElementById('welcomeSection').classList.remove('active');
-            document.getElementById('ageSection').classList.add('active');
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('ageSection').classList.remove('hidden');
         }
 
         function startApp() {
-            document.getElementById('ageSection').classList.remove('active');
-            document.getElementById('appSection').classList.add('active');
+            document.getElementById('ageSection').classList.add('hidden');
+            document.getElementById('appSection').classList.remove('hidden');
         }
 
         function showUnderageMessage() {
@@ -228,15 +480,41 @@
         }
 
         function startDemo() {
-            alert('🎯 Demo Mode: This would initiate the camera scanning sequence with 9-position analysis for both eyes. The full scanning functionality includes:\n\n📱 Camera initialization\n👁️ 9-position sequence per eye\n🔊 Audio instructions\n📊 AI analysis results\n\nIn a real implementation, this would access your camera and guide you through the complete retinal scanning process.');
+            alert('🎯 Demo Mode: This would initiate the camera scanning sequence with 9-position analysis for both eyes.\n\n📱 Camera initialization\n👁️ Right eye: 9 positions (straight, up, right, down, left, up-right, up-left, down-left, down-right)\n👁️ Left eye: 9 positions\n🔊 Audio instructions throughout\n📊 AI analysis results\n\nIn a real implementation, this would access your camera and guide you through the complete retinal scanning process with professional-grade analysis.');
         }
 
         function showDemo() {
-            alert('📊 Demo Results:\n\n✅ Cardiovascular Health: Low Risk\n⚠️ Diabetes Screening: Medium Risk\n🩸 Blood Pressure: Normal\n🧠 Neurological: No concerns detected\n\n*These are demonstration results only. Real screening requires professional medical evaluation.');
+            const results = `📊 Demo Results Summary:
+
+🩺 Diabetic Retinopathy Risk: Medium Confidence
+Some patterns warrant professional evaluation
+
+🩸 Hypertension Signs: Medium Confidence  
+Some patterns warrant professional evaluation
+
+💙 Cardiovascular Health Markers: High Confidence
+Patterns detected that require prompt medical attention
+
+🧠 Optic Nerve Health: Low Confidence
+No concerning patterns detected in this scan
+
+💊 Cholesterol Indicators: Medium Confidence
+Some patterns warrant professional evaluation
+
+📋 Next Steps:
+• Schedule an appointment with an ophthalmologist or optometrist
+• Share these results with your healthcare provider  
+• Continue regular professional eye exams as recommended
+
+*These are demonstration results only. Real screening requires professional medical evaluation.`;
+
+            alert(results);
         }
 
         // Initialize the app
-        console.log('👁️ Trust Your Sight - App Loaded Successfully');
+        console.log('👁️ Trust Your Sight - Complete App Loaded Successfully');
+        console.log('✅ Features: Rolling landing page, age verification, demo functionality');
+        console.log('🎨 Design: Bright blue color scheme maintained');
     </script>
 </body>
 </html>
