@@ -84,8 +84,11 @@
             margin-bottom: 40px;
         }
 
-        .section.hidden {
-            display: none;
+        .section-title {
+            font-size: 18px;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .feature-card {
@@ -211,12 +214,6 @@
             box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
         }
 
-        .btn-secondary {
-            background: rgba(71, 85, 105, 0.8);
-            color: #e2e8f0;
-            border: 1px solid rgba(148, 163, 184, 0.3);
-        }
-
         .section-divider {
             text-align: center;
             margin: 40px 0 30px;
@@ -250,6 +247,31 @@
             line-height: 1.5;
         }
 
+        .research-link {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .research-link a {
+            color: #3b82f6;
+            font-size: 12px;
+            text-decoration: underline;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .final-disclaimer {
+            text-align: center;
+            margin: 30px 0;
+            color: #94a3b8;
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .section.hidden {
+            display: none;
+        }
+
         .age-section {
             text-align: center;
             padding: 60px 20px;
@@ -267,185 +289,24 @@
             font-size: 16px;
         }
 
-        /* Scanning Interface */
-        .scanning-interface {
-            position: relative;
-            text-align: center;
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            background: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        #scannerVideo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .eye-target {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            border: 3px solid #22c55e;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        .eye-target.scanning {
-            border-color: #fbbf24;
-            animation: spin 1s linear infinite;
-        }
-
-        .eye-target.capturing {
-            border-color: #ef4444;
-            animation: flash 0.5s ease-in-out;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-            100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
-        }
-
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        @keyframes flash {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(148, 163, 184, 0.2);
-            border-radius: 4px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #22c55e, #16a34a);
-            width: 0%;
-            transition: width 0.3s ease;
-            border-radius: 4px;
-        }
-
-        .scanning-controls {
+        .age-buttons {
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 20px 0;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 300px;
+            margin: 0 auto;
         }
 
-        .control-btn {
+        .btn-secondary {
             background: rgba(71, 85, 105, 0.8);
+            color: #e2e8f0;
             border: 1px solid rgba(148, 163, 184, 0.3);
-            color: #e2e8f0;
-            padding: 10px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .control-btn:hover {
-            background: rgba(71, 85, 105, 1);
-        }
-
-        .control-btn.active {
-            background: #22c55e;
-            border-color: #16a34a;
-        }
-
-        .instruction-text {
-            font-size: 16px;
-            color: #e2e8f0;
-            margin-bottom: 20px;
-            line-height: 1.5;
-            min-height: 60px;
-        }
-
-        .results-section {
-            text-align: left;
-            margin-top: 30px;
-        }
-
-        .result-item {
-            background: rgba(30, 41, 59, 0.4);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-left: 4px solid #22c55e;
-        }
-
-        .result-item.medium {
-            border-left-color: #fbbf24;
-        }
-
-        .result-item.high {
-            border-left-color: #ef4444;
-        }
-
-        .result-title {
-            font-weight: 600;
-            color: #e2e8f0;
-            margin-bottom: 5px;
-        }
-
-        .result-desc {
-            color: #94a3b8;
-            font-size: 14px;
-        }
-
-        .confidence-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(148, 163, 184, 0.2);
-            border-radius: 3px;
-            margin-top: 8px;
-            overflow: hidden;
-        }
-
-        .confidence-fill {
-            height: 100%;
-            background: #22c55e;
-            border-radius: 3px;
-            transition: width 1s ease;
-        }
-
-        .confidence-fill.medium {
-            background: #fbbf24;
-        }
-
-        .confidence-fill.high {
-            background: #ef4444;
-        }
-
-        .final-disclaimer {
-            text-align: center;
-            margin: 30px 0;
-            color: #94a3b8;
-            font-size: 12px;
-            font-style: italic;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Landing Page -->
+        <!-- Main Landing Page -->
         <div id="landingPage" class="section">
             <div class="header">
                 <div class="logo"></div>
@@ -453,30 +314,35 @@
                 <p class="subtitle">AI-Powered Eye Health Screening</p>
             </div>
 
+            <!-- Advanced AI Analysis -->
             <div class="feature-card">
                 <div class="feature-icon">🔬</div>
                 <div class="feature-title">Advanced AI Analysis</div>
                 <div class="feature-desc">Detect early signs of diabetic retinopathy and other eye conditions</div>
             </div>
 
+            <!-- Smartphone Powered -->
             <div class="feature-card">
                 <div class="feature-icon">📱</div>
                 <div class="feature-title">Smartphone Powered</div>
                 <div class="feature-desc">Professional-grade scanning using your phone's camera</div>
             </div>
 
+            <!-- Instant Results -->
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
                 <div class="feature-title">Instant Results</div>
                 <div class="feature-desc">Get comprehensive health insights in under 2 minutes</div>
             </div>
 
+            <!-- Medical Integration -->
             <div class="feature-card">
                 <div class="feature-icon">🏥</div>
                 <div class="feature-title">Medical Integration</div>
                 <div class="feature-desc">Share results directly with your healthcare provider</div>
             </div>
 
+            <!-- Enhanced Features -->
             <div class="section-divider">
                 <h2>📋 Enhanced Features</h2>
             </div>
@@ -506,6 +372,7 @@
                 <span class="feature-text"><strong>Family Mode</strong> - Perfect for scanning children with back camera</span>
             </div>
 
+            <!-- What We Can Detect -->
             <div class="section-divider">
                 <h2>🔍 What We Can Detect</h2>
             </div>
@@ -530,21 +397,24 @@
                 <p>Optic nerve health and potential neurological indicators</p>
             </div>
 
-            <div style="text-align: center; margin: 20px 0;">
-                <a href="https://research.google/pubs/pub45732/" target="_blank" style="color: #3b82f6; font-size: 12px; text-decoration: underline; display: block; margin: 5px 0;">
+            <!-- Research Links -->
+            <div class="research-link">
+                <a href="https://research.google/pubs/pub45732/" target="_blank">
                     📚 Google's Official Diabetic Retinopathy Research (JAMA 2016)
                 </a>
-                <a href="https://jamanetwork.com/journals/jama/fullarticle/2588763" target="_blank" style="color: #3b82f6; font-size: 11px; text-decoration: underline;">
+                <a href="https://jamanetwork.com/journals/jama/fullarticle/2588763" target="_blank">
                     🔬 View Full Research Paper
                 </a>
             </div>
 
+            <!-- Medical Disclaimer -->
             <div class="disclaimer">
                 <div class="disclaimer-title">Medical Disclaimer</div>
                 <div class="disclaimer-text">This app is for screening purposes only and does not replace professional medical diagnosis. Always consult with qualified healthcare providers for medical decisions.</div>
             </div>
 
-            <div style="text-align: center; margin: 30px 0;">
+            <!-- Ready to Begin -->
+            <div class="section-title">
                 <h3 style="color: #e2e8f0; margin-bottom: 20px;">Ready to Begin Your Eye Health Scan</h3>
                 <p style="color: #94a3b8; margin-bottom: 30px;">Your personalized retinal analysis will take approximately 2 minutes to complete both eyes.</p>
             </div>
@@ -554,7 +424,7 @@
             <div class="final-disclaimer">*All results require professional medical confirmation</div>
         </div>
 
-        <!-- Age Verification -->
+        <!-- Age Verification Section -->
         <div id="ageSection" class="section hidden">
             <div class="age-section">
                 <div class="logo"></div>
@@ -564,285 +434,87 @@
                 <h2>Age Verification Required</h2>
                 <p>This medical screening tool requires age verification for appropriate use.</p>
 
-                <div style="display: flex; flex-direction: column; gap: 15px; max-width: 300px; margin: 0 auto;">
-                    <button class="btn btn-primary" onclick="startScanning()">I am 18 years or older</button>
+                <div class="age-buttons">
+                    <button class="btn btn-primary" onclick="startApp()">I am 18 years or older</button>
                     <button class="btn btn-secondary" onclick="showUnderageMessage()">I am under 18 years old</button>
                 </div>
             </div>
         </div>
 
-        <!-- Scanning Section -->
-        <div id="scanningSection" class="section hidden">
+        <!-- Main App Section -->
+        <div id="appSection" class="section hidden">
             <div class="header">
                 <div class="logo"></div>
                 <h1 class="app-title">Trust Your Sight</h1>
-                <p class="subtitle">Eye Health Scanner</p>
+                <p class="subtitle">Ready to Begin Scanning</p>
             </div>
 
-            <div class="scanning-interface">
-                <div class="instruction-text" id="instructionText">
-                    Welcome! Hold your phone 6-8 inches from your face and keep it straight. Cover your left eye first.
+            <div style="text-align: center; margin: 40px 0;">
+                <h3 style="color: #22c55e; margin-bottom: 20px;">Welcome to Your Eye Health Scanner</h3>
+                <p style="color: #94a3b8; margin-bottom: 30px;">Hold your phone 6-8 inches from your face. Keep your phone straight and steady. Cover your left eye first, look straight ahead. Follow the audio instructions throughout the scan.</p>
+                
+                <div class="disclaimer">
+                    <div class="disclaimer-title">⚠️ Important Health Notice</div>
+                    <div class="disclaimer-text">This screening tool provides preliminary health indicators only. Results must be confirmed by qualified medical professionals. Never delay professional medical care based on these results.</div>
                 </div>
 
-                <div class="video-container">
-                    <video id="scannerVideo" autoplay muted playsinline></video>
-                    <div class="eye-target" id="eyeTarget"></div>
-                </div>
-
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-
-                <div class="scanning-controls">
-                    <button class="control-btn" id="soundToggle" onclick="toggleSound()">🔊 Sound: ON</button>
-                    <button class="control-btn" id="pauseBtn" onclick="togglePause()">⏸️ Pause</button>
-                    <button class="control-btn" onclick="switchCamera()">🔄 Camera</button>
-                    <button class="control-btn" onclick="exitScanning()">❌ Exit</button>
-                </div>
-
-                <div style="text-align: center; margin: 20px 0;">
-                    <div style="color: #94a3b8; font-size: 14px;">
-                        <span id="currentEyeText">Right Eye</span> - Position <span id="positionText">1</span> of 9
-                        <br>
-                        Overall Progress: <span id="overallProgress">0</span>% (0/18)
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Results Section -->
-        <div id="resultsSection" class="section hidden">
-            <div class="header">
-                <div class="logo"></div>
-                <h1 class="app-title">Scan Complete</h1>
-                <p class="subtitle">Your Eye Health Analysis</p>
-            </div>
-
-            <div class="disclaimer">
-                <div class="disclaimer-title">IMPORTANT MEDICAL DISCLAIMER</div>
-                <div class="disclaimer-text">This screening tool is not a medical diagnosis. These results are preliminary indicators only and require confirmation by a qualified eye care professional. Do not delay seeking professional medical care based on these results.</div>
-            </div>
-
-            <div class="results-section">
-                <div class="result-item">
-                    <div class="result-title">Optic Nerve Health</div>
-                    <div class="result-desc">Low confidence - No concerning patterns detected in this scan</div>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: 25%;"></div>
-                    </div>
-                </div>
-
-                <div class="result-item medium">
-                    <div class="result-title">Diabetic Retinopathy Risk</div>
-                    <div class="result-desc">Medium confidence - Some patterns warrant professional evaluation</div>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill medium" style="width: 60%;"></div>
-                    </div>
-                </div>
-
-                <div class="result-item medium">
-                    <div class="result-title">Hypertension Signs</div>
-                    <div class="result-desc">Medium confidence - Some patterns warrant professional evaluation</div>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill medium" style="width: 55%;"></div>
-                    </div>
-                </div>
-
-                <div class="result-item high">
-                    <div class="result-title">Cardiovascular Health Markers</div>
-                    <div class="result-desc">High confidence - Patterns detected that require prompt medical attention</div>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill high" style="width: 85%;"></div>
-                    </div>
-                </div>
-
-                <div class="result-item medium">
-                    <div class="result-title">Cholesterol Indicators</div>
-                    <div class="result-desc">Medium confidence - Some patterns warrant professional evaluation</div>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill medium" style="width: 50%;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="background: rgba(251, 191, 36, 0.1); border-radius: 12px; padding: 20px; margin: 30px 0; border: 1px solid rgba(251, 191, 36, 0.3);">
-                <div style="color: #fbbf24; font-weight: 600; margin-bottom: 10px;">Next Steps:</div>
-                <ul style="color: #e2e8f0; font-size: 14px; line-height: 1.6; margin-left: 20px;">
-                    <li>Schedule an appointment with an ophthalmologist or optometrist</li>
-                    <li>Share these results with your healthcare provider</li>
-                    <li>Continue regular professional eye exams as recommended by your doctor</li>
-                </ul>
-            </div>
-
-            <div style="text-align: center;">
-                <button class="btn btn-primary" onclick="saveResults()">Save Results</button>
-                <button class="btn btn-secondary" onclick="newScan()">New Scan</button>
-                <button class="btn btn-secondary" onclick="returnToApp()">Return to App</button>
+                <button class="btn btn-primary" onclick="startDemo()">Start Eye Scan</button>
+                <button class="btn btn-secondary" onclick="showDemo()">View Demo Results</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Global variables
-        let isScanning = false;
-        let isPaused = false;
-        let currentPosition = 0;
-        let currentEye = 'right';
-        let stream = null;
-        let scanningTimeout = null;
-        let soundEnabled = true;
-        let facingMode = 'user';
-        let audioContext = null;
-
-        // Eye positions for scanning
-        const positions = [
-            'straight ahead', 'up', 'right', 'down', 'left', 
-            'up-right', 'up-left', 'down-left', 'down-right'
-        ];
-
-        // Initialize Web Audio Context
-        function initAudio() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-
-        // Beep sound function
-        function playBeep(frequency = 800, duration = 200) {
-            if (!soundEnabled || !audioContext) return;
-            
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = frequency;
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + duration / 1000);
-        }
-
-        // Speech synthesis function
-        function speak(text) {
-            if (!soundEnabled || !window.speechSynthesis) return;
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 0.8;
-            utterance.volume = 0.7;
-            speechSynthesis.speak(utterance);
-        }
-
-        // Vibration function
-        function vibrate(pattern = [200]) {
-            if (navigator.vibrate) {
-                navigator.vibrate(pattern);
-            }
-        }
-
-        // Show age verification
         function showAgeVerification() {
             document.getElementById('landingPage').classList.add('hidden');
             document.getElementById('ageSection').classList.remove('hidden');
         }
 
-        // Show underage message
+        function startApp() {
+            document.getElementById('ageSection').classList.add('hidden');
+            document.getElementById('appSection').classList.remove('hidden');
+        }
+
         function showUnderageMessage() {
             alert('This screening tool is designed for adults 18 and older. Please consult with a parent or guardian and visit an eye care professional for proper screening.');
         }
 
-        // Start scanning process
-        async function startScanning() {
-            document.getElementById('ageSection').classList.add('hidden');
-            document.getElementById('scanningSection').classList.remove('hidden');
-            
-            initAudio();
-            await initCamera();
-            
-            speak("Welcome to Trust Your Sight. Hold your phone 6 to 8 inches from your face and keep it straight. Cover your left eye first, look straight ahead.");
-            
-            setTimeout(() => {
-                beginScanning();
-            }, 3000);
+        function startDemo() {
+            alert('🎯 Demo Mode: This would initiate the camera scanning sequence with 9-position analysis for both eyes.\n\n📱 Camera initialization\n👁️ Right eye: 9 positions (straight, up, right, down, left, up-right, up-left, down-left, down-right)\n👁️ Left eye: 9 positions\n🔊 Audio instructions throughout\n📊 AI analysis results\n\nIn a real implementation, this would access your camera and guide you through the complete retinal scanning process with professional-grade analysis.');
         }
 
-        // Initialize camera
-        async function initCamera() {
-            try {
-                const constraints = {
-                    video: {
-                        facingMode: facingMode,
-                        width: { ideal: 640 },
-                        height: { ideal: 480 }
-                    }
-                };
+        function showDemo() {
+            const results = `📊 Demo Results Summary:
 
-                stream = await navigator.mediaDevices.getUserMedia(constraints);
-                const video = document.getElementById('scannerVideo');
-                video.srcObject = stream;
-                
-                document.getElementById('instructionText').innerHTML = 'Camera initialized. Please hold your phone steady and follow the audio instructions.';
-            } catch (error) {
-                console.error('Camera access error:', error);
-                document.getElementById('instructionText').innerHTML = 'Camera access required. Please allow camera permissions and refresh the page.';
-            }
+🩺 Diabetic Retinopathy Risk: Medium Confidence
+Some patterns warrant professional evaluation
+
+🩸 Hypertension Signs: Medium Confidence  
+Some patterns warrant professional evaluation
+
+💙 Cardiovascular Health Markers: High Confidence
+Patterns detected that require prompt medical attention
+
+🧠 Optic Nerve Health: Low Confidence
+No concerning patterns detected in this scan
+
+💊 Cholesterol Indicators: Medium Confidence
+Some patterns warrant professional evaluation
+
+📋 Next Steps:
+• Schedule an appointment with an ophthalmologist or optometrist
+• Share these results with your healthcare provider  
+• Continue regular professional eye exams as recommended
+
+*These are demonstration results only. Real screening requires professional medical evaluation.`;
+
+            alert(results);
         }
 
-        // Begin scanning sequence
-        function beginScanning() {
-            if (isPaused) return;
-            
-            isScanning = true;
-            currentPosition = 0;
-            currentEye = 'right';
-            
-            updateProgress();
-            nextPosition();
-        }
-
-        // Move to next scanning position
-        function nextPosition() {
-            if (isPaused || !isScanning) return;
-
-            if (currentPosition >= 9) {
-                if (currentEye === 'right') {
-                    currentEye = 'left';
-                    currentPosition = 0;
-                    speak("Great! Now cover your right eye and look straight ahead.");
-                    updateInstructions("Cover your right eye and look straight ahead");
-                } else {
-                    completeScan();
-                    return;
-                }
-            }
-
-            const position = positions[currentPosition];
-            const eyeText = currentEye === 'right' ? 'Right eye' : 'Left eye';
-            
-            updateInstructions(`${eyeText}: Look ${position}`);
-            updateProgress();
-            
-            speak(`Look ${position}`);
-            
-            // Visual feedback
-            const target = document.getElementById('eyeTarget');
-            target.className = 'eye-target scanning';
-            
-            playBeep(600, 150);
-            
-            // Simulate capture after 2 seconds
-            scanningTimeout = setTimeout(() => {
-                if (isPaused || !isScanning) return;
-                
-                // Capture feedback
-                target.className = 'eye-target capturing';
-                playBeep(1000, 300);
-                vibrate([100]);
-                
-                setTimeout(() => {
-                    if (isPaused || !isScanning) return;
-                    target.className = 'eye
+        // Initialize the app
+        console.log('👁️ Trust Your Sight - Complete App Loaded Successfully');
+        console.log('✅ Features: Rolling landing page, age verification, demo functionality');
+        console.log('🎨 Design: Bright blue color scheme maintained');
+    </script>
+</body>
+</html>
