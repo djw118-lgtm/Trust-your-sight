@@ -1,262 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trust Your Sight – Education</title>
+  <meta charset="UTF-8">
+  <title>Eye Test</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #0f172a;
-      color: #f1f5f9;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    .step {
-      display: none;
-      animation: fadeIn 0.4s ease-in-out;
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 32px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
-
-    .step.active {
-      display: block;
-    }
-
-    .step h2 {
-      color: #38bdf8;
-      font-size: 22px;
-      margin-bottom: 12px;
-    }
-
-    .step p {
-      margin-bottom: 16px;
-      color: #e2e8f0;
-    }
-
-    .info-box {
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin: 12px 0;
-    }
-
-    .disclaimer {
-      background: #7f1d1d;
-      color: #fecaca;
-      border-radius: 8px;
-      padding: 16px;
-      margin: 16px 0;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .checkbox-group {
-      margin: 16px 0;
-    }
-
-    label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      cursor: pointer;
-    }
-
-    input[type="checkbox"], input[type="radio"] {
-      transform: scale(1.2);
-    }
-
-    .btn {
-      background: #22c55e;
-      border: none;
-      color: white;
-      padding: 14px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 8px 4px 0 0;
-      transition: background 0.3s ease;
-    }
-
-    .btn:disabled {
-      background: #334155;
-      cursor: not-allowed;
-    }
-
-    .btn.secondary {
-      background: #475569;
-    }
-
-    .btn:hover:not(:disabled) {
-      background: #16a34a;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(8px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    .completion {
-      text-align: center;
-      padding: 40px;
-    }
-
-    .completion h2 {
-      color: #22c55e;
-    }
+    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; background: #f5f5f5; }
+    .card { max-width: 650px; margin: auto; padding: 30px; border-radius: 20px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .instructions { font-size: 1.2em; margin-bottom: 30px; min-height: 120px; }
+    button { padding: 12px 24px; font-size: 1.1em; border: none; border-radius: 12px; background: #0078d7; color: white; cursor: pointer; }
+    button:disabled { background: gray; }
+    .hidden { display: none; }
+    video { width: 100%; max-width: 500px; margin-top: 20px; border-radius: 12px; }
+    label { display: block; margin: 10px 0; font-size: 1em; text-align: left; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Step 1 -->
-    <div class="step active" id="step1">
-      <h2>Step 1 of 7: Age Verification & Account Setup</h2>
-      <p>Please verify your age and choose your account type.</p>
-      <div class="info-box">
-        <p>Are you 18 years or older?</p>
-        <label><input type="radio" name="age" value="adult" onclick="setAge('adult')"> Yes, I am 18+</label>
-        <label><input type="radio" name="age" value="minor" onclick="setAge('minor')"> No, under 18</label>
-      </div>
 
-      <div id="accountOptions" style="display:none;">
-        <div class="info-box">
-          <p>Select Account Type:</p>
-          <label><input type="radio" name="acct" value="individual" onclick="selectAccount('individual')"> Individual – $19.99/month</label>
-          <label><input type="radio" name="acct" value="family" onclick="selectAccount('family')"> Family – $29.99/month</label>
-          <label><input type="radio" name="acct" value="senior" onclick="selectAccount('senior')"> Senior – $14.99/month</label>
-        </div>
-      </div>
+<!-- Consent / Education Checklist -->
+<div id="consent" class="card">
+  <h2>Before We Begin</h2>
+  <p>Please review and check all of the following:</p>
 
-      <div id="minorMsg" class="disclaimer" style="display:none;">
-        Users under 18 must have a parent/guardian complete this education.
-      </div>
+  <label><input type="checkbox" class="chk"> I am over 18 years old</label>
+  <label><input type="checkbox" class="chk"> I consent to continue</label>
+  <label><input type="checkbox" class="chk"> I will hold my phone 6–8 inches from my eyes</label>
+  <label><input type="checkbox" class="chk"> I will keep my head still and only move my eyes</label>
+  <label><input type="checkbox" class="chk"> I understand the test goes clockwise (12, 1, 3, 5, 6, 7, 9, 11)</label>
+  <label><input type="checkbox" class="chk"> I will follow each instruction and hold steady</label>
+  <label><input type="checkbox" class="chk"> I am ready to begin the eye test</label>
 
-      <button class="btn" id="next1" onclick="nextStep()" disabled>Continue</button>
-    </div>
+  <button id="consentBtn" disabled>Begin Eye Test</button>
+</div>
 
-    <!-- Step 2 -->
-    <div class="step" id="step2">
-      <h2>Step 2 of 7: Welcome</h2>
-      <p>Welcome to Trust Your Sight – an educational tool for eye health awareness.</p>
-      <div class="checkbox-group">
-        <label><input type="checkbox" id="check2" onchange="unlockNext(2)"> I understand.</label>
-      </div>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next2" onclick="nextStep()" disabled>Next</button>
-    </div>
+<!-- Eye Test -->
+<div id="test" class="card hidden">
+  <h2>Eye Test</h2>
+  <div class="instructions" id="step">Preparing the test…</div>
+  <video id="camera" autoplay playsinline></video>
+</div>
 
-    <!-- Step 3 -->
-    <div class="step" id="step3">
-      <h2>Step 3 of 7: Medical Disclaimers</h2>
-      <div class="disclaimer">
-        This app is for educational purposes only and does not diagnose medical conditions.
-      </div>
-      <label><input type="checkbox" id="check3" onchange="unlockNext(3)"> I acknowledge.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next3" onclick="nextStep()" disabled>Next</button>
-    </div>
+<!-- Completion -->
+<div id="complete" class="card hidden">
+  <h2>Eye Test Complete</h2>
+  <p>Thank you. Your eyes have been checked successfully.</p>
+</div>
 
-    <!-- Step 4 -->
-    <div class="step" id="step4">
-      <h2>Step 4 of 7: Diabetic Retinopathy</h2>
-      <p>Diabetic retinopathy affects people with diabetes. Screening by professionals is required.</p>
-      <label><input type="checkbox" id="check4" onchange="unlockNext(4)"> I understand.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next4" onclick="nextStep()" disabled>Next</button>
-    </div>
+<script>
+const synth = window.speechSynthesis;
+const camera = document.getElementById("camera");
+const checks = document.querySelectorAll(".chk");
+const btn = document.getElementById("consentBtn");
 
-    <!-- Step 5 -->
-    <div class="step" id="step5">
-      <h2>Step 5 of 7: Proper Usage</h2>
-      <p>Use this app as an educational resource and reminder, not a medical device.</p>
-      <label><input type="checkbox" id="check5" onchange="unlockNext(5)"> I agree.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next5" onclick="nextStep()" disabled>Next</button>
-    </div>
+// Enable button only when all boxes are checked
+checks.forEach(c => c.addEventListener("change", () => {
+  btn.disabled = ![...checks].every(chk => chk.checked);
+}));
 
-    <!-- Step 6 -->
-    <div class="step" id="step6">
-      <h2>Step 6 of 7: Professional Referrals</h2>
-      <p>This app helps connect you to qualified eye care professionals.</p>
-      <label><input type="checkbox" id="check6" onchange="unlockNext(6)"> I understand.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next6" onclick="nextStep()" disabled>Next</button>
-    </div>
+btn.addEventListener("click", () => {
+  document.getElementById("consent").classList.add("hidden");
+  document.getElementById("test").classList.remove("hidden");
+  startCamera();
+  speak(setupText, () => { runTest(); });
+});
 
-    <!-- Step 7 -->
-    <div class="step" id="step7">
-      <h2>Step 7 of 7: Legal Confirmation</h2>
-      <p>By completing this process, you confirm the accuracy of your information.</p>
-      <label><input type="checkbox" id="check7" onchange="unlockNext(7)"> I confirm.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next7" onclick="completeEducation()" disabled>Finish</button>
-    </div>
+// Setup narration
+const setupText = `Hold your phone six to eight inches in front of your eyes. 
+Keep your head still and move only your eyes. 
+We will guide you clockwise through the test. 
+We will start straight ahead, then one o'clock, three o'clock, five o'clock, six o'clock, seven o'clock, nine o'clock, eleven o'clock, and finally twelve o'clock. 
+Please hold steady at each point until told to move.`;
 
-    <!-- Completion -->
-    <div class="step" id="completion">
-      <div class="completion">
-        <h2>✅ Education Complete</h2>
-        <p>You may now enter the Trust Your Sight app experience.</p>
-        <button class="btn" onclick="window.location.href='Vision.html'">Enter App</button>
-      </div>
-    </div>
-  </div>
+// Test steps
+const steps = [
+  "Look straight ahead. Hold steady.",
+  "Look up, twelve o’clock. Hold steady.",
+  "Look up-right, one o’clock. Hold steady.",
+  "Look right, three o’clock. Hold steady.",
+  "Look down-right, five o’clock. Hold steady.",
+  "Look down, six o’clock. Hold steady.",
+  "Look down-left, seven o’clock. Hold steady.",
+  "Look left, nine o’clock. Hold steady.",
+  "Look up-left, eleven o’clock. Hold steady."
+];
 
-  <script>
-    let currentStep = 1;
-    let age = null;
-    let accountType = null;
+let stepIndex = 0;
 
-    function setAge(val) {
-      age = val;
-      if (val === 'adult') {
-        document.getElementById('accountOptions').style.display = 'block';
-        document.getElementById('minorMsg').style.display = 'none';
-      } else {
-        document.getElementById('accountOptions').style.display = 'none';
-        document.getElementById('minorMsg').style.display = 'block';
-        document.getElementById('next1').disabled = true;
-      }
-    }
+function runTest() {
+  if (stepIndex < steps.length) {
+    const text = steps[stepIndex];
+    document.getElementById("step").textContent = text;
+    speak(text, () => {
+      setTimeout(() => { stepIndex++; runTest(); }, 2500);
+    });
+  } else {
+    finishTest();
+  }
+}
 
-    function selectAccount(type) {
-      accountType = type;
-      document.getElementById('next1').disabled = false;
-    }
+function speak(text, callback) {
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.onend = callback;
+  synth.speak(utter);
+}
 
-    function unlockNext(step) {
-      document.getElementById('next' + step).disabled = !document.getElementById('check' + step).checked;
-    }
+function startCamera() {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => { camera.srcObject = stream; })
+    .catch(err => { console.error("Camera error:", err); });
+}
 
-    function nextStep() {
-      document.getElementById('step' + currentStep).classList.remove('active');
-      currentStep++;
-      document.getElementById('step' + currentStep).classList.add('active');
-    }
-
-    function prevStep() {
-      document.getElementById('step' + currentStep).classList.remove('active');
-      currentStep--;
-      document.getElementById('step' + currentStep).classList.add('active');
-    }
-
-    function completeEducation() {
-      document.getElementById('step7').classList.remove('active');
-      document.getElementById('completion').classList.add('active');
-    }
-  </script>
+function finishTest() {
+  const tracks = camera.srcObject ? camera.srcObject.getTracks() : [];
+  tracks.forEach(track => track.stop());
+  document.getElementById("test").classList.add("hidden");
+  document.getElementById("complete").classList.remove("hidden");
+  speak("Eye test complete. Thank you.");
+}
+</script>
 </body>
 </html>
