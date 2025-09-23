@@ -1,262 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trust Your Sight – Education</title>
+  <meta charset="UTF-8">
+  <title>Two-Eye Calibration</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #0f172a;
-      color: #f1f5f9;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    .step {
-      display: none;
-      animation: fadeIn 0.4s ease-in-out;
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 32px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
-
-    .step.active {
-      display: block;
-    }
-
-    .step h2 {
-      color: #38bdf8;
-      font-size: 22px;
-      margin-bottom: 12px;
-    }
-
-    .step p {
-      margin-bottom: 16px;
-      color: #e2e8f0;
-    }
-
-    .info-box {
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin: 12px 0;
-    }
-
-    .disclaimer {
-      background: #7f1d1d;
-      color: #fecaca;
-      border-radius: 8px;
-      padding: 16px;
-      margin: 16px 0;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .checkbox-group {
-      margin: 16px 0;
-    }
-
-    label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      cursor: pointer;
-    }
-
-    input[type="checkbox"], input[type="radio"] {
-      transform: scale(1.2);
-    }
-
-    .btn {
-      background: #22c55e;
-      border: none;
-      color: white;
-      padding: 14px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 8px 4px 0 0;
-      transition: background 0.3s ease;
-    }
-
-    .btn:disabled {
-      background: #334155;
-      cursor: not-allowed;
-    }
-
-    .btn.secondary {
-      background: #475569;
-    }
-
-    .btn:hover:not(:disabled) {
-      background: #16a34a;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(8px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    .completion {
-      text-align: center;
-      padding: 40px;
-    }
-
-    .completion h2 {
-      color: #22c55e;
-    }
+    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; }
+    .card { max-width: 600px; margin: auto; padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .instructions { font-size: 1.3em; margin-bottom: 30px; min-height: 100px; }
+    button { padding: 12px 24px; font-size: 1.2em; border: none; border-radius: 12px; background: #0078d7; color: white; cursor: pointer; }
+    button:disabled { background: gray; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Step 1 -->
-    <div class="step active" id="step1">
-      <h2>Step 1 of 7: Age Verification & Account Setup</h2>
-      <p>Please verify your age and choose your account type.</p>
-      <div class="info-box">
-        <p>Are you 18 years or older?</p>
-        <label><input type="radio" name="age" value="adult" onclick="setAge('adult')"> Yes, I am 18+</label>
-        <label><input type="radio" name="age" value="minor" onclick="setAge('minor')"> No, under 18</label>
-      </div>
 
-      <div id="accountOptions" style="display:none;">
-        <div class="info-box">
-          <p>Select Account Type:</p>
-          <label><input type="radio" name="acct" value="individual" onclick="selectAccount('individual')"> Individual – $19.99/month</label>
-          <label><input type="radio" name="acct" value="family" onclick="selectAccount('family')"> Family – $29.99/month</label>
-          <label><input type="radio" name="acct" value="senior" onclick="selectAccount('senior')"> Senior – $14.99/month</label>
-        </div>
-      </div>
-
-      <div id="minorMsg" class="disclaimer" style="display:none;">
-        Users under 18 must have a parent/guardian complete this education.
-      </div>
-
-      <button class="btn" id="next1" onclick="nextStep()" disabled>Continue</button>
-    </div>
-
-    <!-- Step 2 -->
-    <div class="step" id="step2">
-      <h2>Step 2 of 7: Welcome</h2>
-      <p>Welcome to Trust Your Sight – an educational tool for eye health awareness.</p>
-      <div class="checkbox-group">
-        <label><input type="checkbox" id="check2" onchange="unlockNext(2)"> I understand.</label>
-      </div>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next2" onclick="nextStep()" disabled>Next</button>
-    </div>
-
-    <!-- Step 3 -->
-    <div class="step" id="step3">
-      <h2>Step 3 of 7: Medical Disclaimers</h2>
-      <div class="disclaimer">
-        This app is for educational purposes only and does not diagnose medical conditions.
-      </div>
-      <label><input type="checkbox" id="check3" onchange="unlockNext(3)"> I acknowledge.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next3" onclick="nextStep()" disabled>Next</button>
-    </div>
-
-    <!-- Step 4 -->
-    <div class="step" id="step4">
-      <h2>Step 4 of 7: Diabetic Retinopathy</h2>
-      <p>Diabetic retinopathy affects people with diabetes. Screening by professionals is required.</p>
-      <label><input type="checkbox" id="check4" onchange="unlockNext(4)"> I understand.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next4" onclick="nextStep()" disabled>Next</button>
-    </div>
-
-    <!-- Step 5 -->
-    <div class="step" id="step5">
-      <h2>Step 5 of 7: Proper Usage</h2>
-      <p>Use this app as an educational resource and reminder, not a medical device.</p>
-      <label><input type="checkbox" id="check5" onchange="unlockNext(5)"> I agree.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next5" onclick="nextStep()" disabled>Next</button>
-    </div>
-
-    <!-- Step 6 -->
-    <div class="step" id="step6">
-      <h2>Step 6 of 7: Professional Referrals</h2>
-      <p>This app helps connect you to qualified eye care professionals.</p>
-      <label><input type="checkbox" id="check6" onchange="unlockNext(6)"> I understand.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next6" onclick="nextStep()" disabled>Next</button>
-    </div>
-
-    <!-- Step 7 -->
-    <div class="step" id="step7">
-      <h2>Step 7 of 7: Legal Confirmation</h2>
-      <p>By completing this process, you confirm the accuracy of your information.</p>
-      <label><input type="checkbox" id="check7" onchange="unlockNext(7)"> I confirm.</label>
-      <button class="btn secondary" onclick="prevStep()">Back</button>
-      <button class="btn" id="next7" onclick="completeEducation()" disabled>Finish</button>
-    </div>
-
-    <!-- Completion -->
-    <div class="step" id="completion">
-      <div class="completion">
-        <h2>✅ Education Complete</h2>
-        <p>You may now enter the Trust Your Sight app experience.</p>
-        <button class="btn" onclick="window.location.href='Vision.html'">Enter App</button>
-      </div>
-    </div>
+<div class="card">
+  <div id="step" class="instructions">
+    Hold your phone six to eight inches in front of your testing eye.
+    Cover the other eye gently with your hand.
+    Keep your head still and move only your eyes.
+    We will guide you clockwise through the test.
   </div>
+  <button id="nextBtn">Begin Calibration</button>
+</div>
 
-  <script>
-    let currentStep = 1;
-    let age = null;
-    let accountType = null;
+<script>
+const synth = window.speechSynthesis;
 
-    function setAge(val) {
-      age = val;
-      if (val === 'adult') {
-        document.getElementById('accountOptions').style.display = 'block';
-        document.getElementById('minorMsg').style.display = 'none';
-      } else {
-        document.getElementById('accountOptions').style.display = 'none';
-        document.getElementById('minorMsg').style.display = 'block';
-        document.getElementById('next1').disabled = true;
-      }
+// Narration text
+const setupText = `Hold your phone six to eight inches in front of your testing eye. 
+Cover the other eye gently with your hand. 
+Keep your head still and move only your eyes. 
+We will guide you clockwise through the test — starting straight ahead, then one o'clock, three o'clock, five o'clock, six o'clock, seven o'clock, nine o'clock, eleven o'clock, and twelve o'clock. 
+Tap Begin Calibration to start.`;
+
+const calibrationSteps = [
+  "Look straight ahead. Hold steady.",
+  "Look up-right, one o'clock. Hold steady.",
+  "Look right, three o'clock. Hold steady.",
+  "Look down-right, five o'clock. Hold steady.",
+  "Look down, six o'clock. Hold steady.",
+  "Look down-left, seven o'clock. Hold steady.",
+  "Look left, nine o'clock. Hold steady.",
+  "Look up-left, eleven o'clock. Hold steady.",
+  "Look up, twelve o'clock. Hold steady."
+];
+
+let stepIndex = -1;
+let currentEye = "right"; // start with right eye
+
+function speak(text, callback) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.onend = callback;
+  synth.speak(utterance);
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (stepIndex === -1) {
+    // Play setup narration
+    speak(setupText, () => {
+      document.getElementById("nextBtn").textContent = "Start Right Eye";
+    });
+    stepIndex = -2; // setup done
+  } else if (stepIndex === -2) {
+    // Start right eye calibration
+    stepIndex = 0;
+    runStep();
+  } else {
+    // Manual advance fallback
+    stepIndex++;
+    runStep();
+  }
+});
+
+function runStep() {
+  if (stepIndex < calibrationSteps.length) {
+    const text = calibrationSteps[stepIndex];
+    document.getElementById("step").textContent = `(${currentEye.toUpperCase()} EYE) ${text}`;
+    speak(text, () => {
+      setTimeout(() => {
+        stepIndex++;
+        runStep();
+      }, 2000);
+    });
+  } else {
+    if (currentEye === "right") {
+      // Switch to left eye
+      const switchText = `Now cover your right eye gently with your hand. Hold your phone six to eight inches in front of your left eye. Keep your head still and tap Next to continue.`;
+      document.getElementById("step").textContent = switchText;
+      speak(switchText);
+      document.getElementById("nextBtn").textContent = "Start Left Eye";
+      stepIndex = -3; // marker for left eye start
+      currentEye = "left";
+    } else if (stepIndex === -3) {
+      // Start left eye calibration
+      stepIndex = 0;
+      runStep();
+    } else {
+      // Both eyes done
+      const doneText = "Calibration complete. Thank you.";
+      document.getElementById("step").textContent = doneText;
+      speak(doneText);
+      document.getElementById("nextBtn").style.display = "none";
     }
+  }
+}
+</script>
 
-    function selectAccount(type) {
-      accountType = type;
-      document.getElementById('next1').disabled = false;
-    }
-
-    function unlockNext(step) {
-      document.getElementById('next' + step).disabled = !document.getElementById('check' + step).checked;
-    }
-
-    function nextStep() {
-      document.getElementById('step' + currentStep).classList.remove('active');
-      currentStep++;
-      document.getElementById('step' + currentStep).classList.add('active');
-    }
-
-    function prevStep() {
-      document.getElementById('step' + currentStep).classList.remove('active');
-      currentStep--;
-      document.getElementById('step' + currentStep).classList.add('active');
-    }
-
-    function completeEducation() {
-      document.getElementById('step7').classList.remove('active');
-      document.getElementById('completion').classList.add('active');
-    }
-  </script>
 </body>
 </html>
