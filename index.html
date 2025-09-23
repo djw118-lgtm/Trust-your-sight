@@ -1,308 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trust Your Sight - Scanner</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trust Your Sight</title>
   <style>
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #000;
-      color: #fff;
-      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      line-height: 1.6;
     }
-
-    .scanner-container {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
+    section {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-
-    #scannerVideo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-    }
-
-    .eye-target {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 120px; height: 120px;
-      border: 3px solid #22c55e;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: all 0.3s ease;
-    }
-    .eye-target.positioned { box-shadow: 0 0 15px rgba(34,197,94,0.5); }
-    .eye-target.capturing {
-      border-color: #ef4444;
-      background: rgba(239, 68, 68, 0.2);
-      animation: pulse 0.5s ease-in-out;
-    }
-    .eye-target.captured {
-      border-color: #22c55e;
-      background: rgba(34, 197, 94, 0.2);
-    }
-
-    @keyframes pulse {
-      0% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.1); }
-      100% { transform: translate(-50%, -50%) scale(1); }
-    }
-
-    .instruction-text {
-      position: absolute;
-      top: 10px; left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.7);
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-weight: bold;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      scroll-snap-align: start;
       text-align: center;
     }
-
-    .control-panel {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      display: flex;
-      justify-content: space-around;
-    }
-    .control-btn {
-      background: rgba(255, 255, 255, 0.2);
+    .hero { background: linear-gradient(#000, #111); }
+    .hero h1 { font-size: 2.5em; color: #28a745; }
+    .hero h2 { font-size: 1.2em; color: #f0c040; margin-bottom: 20px; }
+    button, .plan {
+      background: #28a745;
+      color: #fff;
       border: none;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .control-btn:hover { background: rgba(255,255,255,0.3); }
-
-    .scan-complete {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.9);
-      padding: 30px;
-      border-radius: 12px;
-      display: none;
-      text-align: center;
-    }
-    .scan-complete.show { display: block; }
-
-    .results-btn {
+      padding: 12px 24px;
       margin: 10px;
-      background: #22c55e;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
+      border-radius: 6px;
       cursor: pointer;
-      font-weight: bold;
+      font-size: 1em;
     }
-
-    footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 13px;
-      color: #aaa;
-      background: rgba(0,0,0,0.8);
-      padding: 5px;
-    }
+    button:disabled { background: #444; cursor: not-allowed; }
+    .warning { color: #ff5555; font-weight: bold; margin-top: 15px; }
+    .plans { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .plan { flex: 1 1 200px; text-align: center; }
+    .checkboxes label { display: block; margin: 8px 0; }
+    .footer { font-size: 0.9em; color: #bbb; text-align: center; padding: 20px; }
+    .progress { font-size: 0.9em; color: #aaa; margin-bottom: 15px; }
+    html { scroll-snap-type: y mandatory; overflow-y: scroll; }
   </style>
 </head>
 <body>
-  <div class="scanner-container">
-    <video id="scannerVideo" autoplay muted playsinline></video>
-    <div class="overlay">
-      <div id="eyeTarget" class="eye-target"></div>
-      <div class="instruction-text" id="instructionText">Preparing scan...</div>
-    </div>
 
-    <!-- Controls -->
-    <div class="control-panel">
-      <button class="control-btn" onclick="toggleAudio()" id="audioBtn">🔊 Audio On</button>
-      <button class="control-btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
-      <button class="control-btn" onclick="switchCamera()">🔄 Switch Camera</button>
-      <button class="control-btn" onclick="exitScan()">❌ Exit</button>
-    </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Trust Your Sight</h1>
+    <h2>Trust Your Future</h2>
+    <button onclick="scrollToSection('age')">Get Started</button>
+    <div class="footer">⚠ Demo only — not medical grade. Please consult your doctor.</div>
+  </section>
 
-    <!-- Results -->
-    <div class="scan-complete" id="scanComplete">
-      <h2>✅ Demo Results</h2>
-      <div id="resultText"></div>
-      <button class="results-btn" onclick="startOver()">🔄 New Scan</button>
-      <button class="results-btn" onclick="window.print()">🖨 Print / Save PDF</button>
-      <button class="results-btn" onclick="alert('Sharing demo...')">📤 Share</button>
-      <button class="results-btn" onclick="window.location.href='index.html'">🏠 Back to Start</button>
-    </div>
-  </div>
+  <!-- Age Verification -->
+  <section id="age">
+    <div class="progress">Step 1 of 4</div>
+    <h2>Age Verification</h2>
+    <p>Are you 18 or older?</p>
+    <button onclick="selectAge(true)">Yes</button>
+    <button onclick="selectAge(false)">No</button>
+    <div id="ageWarning" class="warning" style="display:none;">You must be 18 or older to use this demo.</div>
+  </section>
 
-  <footer>
-    ⚠️ Demo only — not medical grade. Please consult your doctor. Timestamped results are for demonstration purposes.
-  </footer>
+  <!-- Plan Selection -->
+  <section id="plans" style="display:none;">
+    <div class="progress">Step 2 of 4</div>
+    <h2>Select Your Plan</h2>
+    <div class="plans">
+      <div class="plan" onclick="selectPlan('Individual')">Individual<br>$19.99</div>
+      <div class="plan" onclick="selectPlan('Family')">Family<br>$29.99</div>
+      <div class="plan" onclick="selectPlan('Senior')">Senior<br>$12.99</div>
+    </div>
+  </section>
+
+  <!-- Disclaimers -->
+  <section id="disclaimers" style="display:none;">
+    <div class="progress">Step 3 of 4</div>
+    <h2>Before You Continue</h2>
+    <div class="checkboxes">
+      <label><input type="checkbox" class="disclaimer"> I understand this is a demo only.</label>
+      <label><input type="checkbox" class="disclaimer"> No medical diagnosis is provided.</label>
+      <label><input type="checkbox" class="disclaimer"> I should consult a doctor for medical advice.</label>
+      <label><input type="checkbox" class="disclaimer"> Data is for demonstration purposes only.</label>
+    </div>
+    <button id="disclaimerBtn" disabled onclick="scrollToSection('instructions')">Continue</button>
+  </section>
+
+  <!-- Instructions -->
+  <section id="instructions" style="display:none;">
+    <div class="progress">Step 4 of 4</div>
+    <h2>Scan Instructions</h2>
+    <ul style="text-align:left; max-width:500px;">
+      <li>Find good lighting and hold your phone steady.</li>
+      <li>Cover one eye at a time when prompted.</li>
+      <li>Follow the voice and on-screen directions (look up, down, left, right).</li>
+      <li>You can pause or stop the scan anytime.</li>
+    </ul>
+    <button onclick="startScanner()">Start Scan</button>
+  </section>
 
   <script>
-    let audioEnabled = true;
-    let isPaused = false;
-    let usingFront = true;
-    let currentStream;
-
-    let currentEye = "right";
-    let currentPosition = 0;
-    let totalPositions = 9;
-    let isScanning = false;
-
-    const video = document.getElementById('scannerVideo');
-    const instructionEl = document.getElementById('instructionText');
-    const target = document.getElementById('eyeTarget');
-
-    const scanPositions = [
-      { name: 'center', instruction: 'Look straight ahead', arrow: '👁️' },
-      { name: 'up', instruction: 'Look up', arrow: '⬆️' },
-      { name: 'up-right', instruction: 'Look up and right', arrow: '↗️' },
-      { name: 'right', instruction: 'Look right', arrow: '➡️' },
-      { name: 'down-right', instruction: 'Look down and right', arrow: '↘️' },
-      { name: 'down', instruction: 'Look down', arrow: '⬇️' },
-      { name: 'down-left', instruction: 'Look down and left', arrow: '↙️' },
-      { name: 'left', instruction: 'Look left', arrow: '⬅️' },
-      { name: 'up-left', instruction: 'Look up and left', arrow: '↖️' }
-    ];
-
-    async function initCamera() {
-      if (currentStream) currentStream.getTracks().forEach(track => track.stop());
-      try {
-        const constraints = { video: { facingMode: usingFront ? "user" : "environment" } };
-        currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-        video.srcObject = currentStream;
-      } catch (err) {
-        console.error("Camera error:", err);
-        instructionEl.textContent = "Camera access required.";
-      }
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
-
-    function speak(text) {
-      if (!audioEnabled) return;
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(utterance);
-      }
-    }
-
-    function toggleAudio() {
-      audioEnabled = !audioEnabled;
-      document.getElementById('audioBtn').textContent = audioEnabled ? "🔊 Audio On" : "🔇 Audio Off";
-      speak(audioEnabled ? "Audio enabled" : "Audio muted");
-    }
-
-    function togglePause() {
-      isPaused = !isPaused;
-      document.getElementById('pauseBtn').textContent = isPaused ? "▶ Resume" : "⏸ Pause";
-      speak(isPaused ? "Scan paused" : "Scan resumed");
-      if (!isPaused) performPositionScan();
-    }
-
-    function switchCamera() {
-      usingFront = !usingFront;
-      initCamera();
-      speak(usingFront ? "Front camera" : "Rear camera");
-    }
-
-    function exitScan() {
-      if (confirm("Exit scan? Progress will be lost.")) {
-        window.location.href = "index.html";
-      }
-    }
-
-    function performPositionScan() {
-      if (isPaused || !isScanning) return;
-
-      const pos = scanPositions[currentPosition];
-      instructionEl.textContent = `${currentEye.toUpperCase()} eye: ${pos.instruction} ${pos.arrow}`;
-      speak(pos.instruction);
-
-      target.className = "eye-target positioned";
-
-      setTimeout(() => {
-        if (!isPaused && isScanning) capturePosition();
-      }, 3000);
-    }
-
-    function capturePosition() {
-      if (isPaused || !isScanning) return;
-      target.className = "eye-target capturing";
-      speak("Hold steady");
-
-      setTimeout(() => {
-        if (!isPaused && isScanning) {
-          target.className = "eye-target captured";
-          speak("Captured");
-
-          setTimeout(() => {
-            nextPosition();
-          }, 1500);
-        }
-      }, 1500);
-    }
-
-    function nextPosition() {
-      currentPosition++;
-      if (currentPosition >= totalPositions) {
-        if (currentEye === "right") {
-          currentEye = "left";
-          currentPosition = 0;
-          speak("Right eye complete. Cover your right eye, scanning left eye.");
-          setTimeout(() => performPositionScan(), 3000);
-        } else {
-          completeScan();
-        }
+    function selectAge(isAdult) {
+      if (isAdult) {
+        document.getElementById('plans').style.display = 'flex';
+        scrollToSection('plans');
       } else {
-        performPositionScan();
+        document.getElementById('ageWarning').style.display = 'block';
       }
     }
-
-    function completeScan() {
-      isScanning = false;
-      document.getElementById('scanComplete').classList.add('show');
-      const ts = new Date().toLocaleString();
-      const demoResults = [
-        "Cardiovascular Health: Moderate risk — consult doctor",
-        "Blood Pressure Indicators: Normal range",
-        "Retinal Blood Vessels: Signs of leakage detected",
-        "Neurological Patterns: Healthy",
-        "Diabetes Risk: Possible early signs — professional check advised"
-      ];
-      const result = demoResults[Math.floor(Math.random() * demoResults.length)];
-      document.getElementById('resultText').innerHTML = `<p><strong>${result}</strong></p><p><em>Generated: ${ts}</em></p>`;
-      speak("Scan complete. Results displayed.");
+    function selectPlan(plan) {
+      document.getElementById('disclaimers').style.display = 'block';
+      scrollToSection('disclaimers');
     }
-
-    function startOver() {
+    // Enable disclaimer button only if all are checked
+    const checkboxes = document.querySelectorAll('.disclaimer');
+    const disclaimerBtn = document.getElementById('disclaimerBtn');
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const allChecked = Array.from(checkboxes).every(c => c.checked);
+        disclaimerBtn.disabled = !allChecked;
+      });
+    });
+    function startScanner() {
       window.location.href = "Vision.html";
     }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      initCamera();
-      speak("Starting scan. Cover your left eye and face the camera.");
-      setTimeout(() => {
-        isScanning = true;
-        performPositionScan();
-      }, 3000);
-    });
   </script>
 </body>
 </html>
