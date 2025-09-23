@@ -5,243 +5,181 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trust Your Sight - Scanner</title>
   <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #000;
-      color: #fff;
-      overflow: hidden;
-    }
-    .scanner-container { width: 100vw; height: 100vh; position: relative; }
-    #scannerVideo { width: 100%; height: 100%; object-fit: cover; }
-    .overlay { position: absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; }
-    .eye-target {
-      position: absolute; top:50%; left:50%; width:120px; height:120px;
-      border:3px solid #22c55e; border-radius:50%;
-      transform: translate(-50%,-50%); transition:all 0.3s ease;
-    }
+    body { margin:0; font-family:Arial,sans-serif; background:#000; color:#fff; overflow:hidden; }
+    .scanner-container { width:100vw; height:100vh; position:relative; }
+    #scannerVideo { width:100%; height:100%; object-fit:cover; }
+    .overlay { position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; }
+    .eye-target { position:absolute; top:50%; left:50%; width:120px; height:120px;
+      border:3px solid #22c55e; border-radius:50%; transform:translate(-50%,-50%); }
     .eye-target.capturing { border-color:#ef4444; background:rgba(239,68,68,0.2); animation:pulse 0.5s ease-in-out; }
-    .eye-target.captured { border-color:#22c55e; background:rgba(34,197,94,0.2); }
-    @keyframes pulse { 0%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.1);}100%{transform:translate(-50%,-50%) scale(1);} }
-    .instruction-text {
-      position: absolute; top:10px; left:50%; transform:translateX(-50%);
-      background:rgba(0,0,0,0.7); padding:10px 20px; border-radius:20px;
-      font-weight:bold; text-align:center;
-    }
-    .control-panel {
-      position: absolute; bottom:0; left:0; right:0;
-      background:rgba(0,0,0,0.7); padding:10px;
-      display:flex; justify-content:space-around;
-    }
-    .control-btn {
-      background:rgba(255,255,255,0.2); border:none; color:white;
-      padding:10px 15px; border-radius:8px; font-size:16px; cursor:pointer;
-    }
-    .scan-complete {
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      background:rgba(0,0,0,0.9); padding:30px; border-radius:12px;
-      display:none; text-align:center;
-    }
-    .scan-complete.show { display:block; }
-    .results-btn {
-      margin:10px; background:#22c55e; border:none;
-      padding:10px 20px; border-radius:20px; cursor:pointer; font-weight:bold;
-    }
-    footer {
-      position:absolute; bottom:0; width:100%; text-align:center;
-      font-size:13px; color:#aaa; background:rgba(0,0,0,0.8); padding:5px;
-    }
+    @keyframes pulse {0%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.1);}100%{transform:translate(-50%,-50%) scale(1);} }
+    .control-panel { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.7);
+      padding:10px; display:flex; justify-content:center; gap:10px; }
+    .control-btn { background:rgba(255,255,255,0.2); border:none; color:#fff; width:50px; height:50px;
+      border-radius:50%; font-size:20px; cursor:pointer; }
+    .instruction { position:absolute; top:20px; left:50%; transform:translateX(-50%);
+      background:rgba(0,0,0,0.6); padding:10px 20px; border-radius:10px; font-size:16px; font-weight:bold; text-align:center; }
+    .progress { position:absolute; top:60px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.6);
+      padding:6px 12px; border-radius:8px; font-size:14px; }
+    .results { display:none; position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.95);
+      text-align:center; padding:40px 20px; overflow-y:auto; }
+    .results h2 { color:#22c55e; }
+    .results .timestamp { font-size:0.9em; margin-bottom:20px; color:#ccc; }
+    .results ul { list-style:none; padding:0; max-width:500px; margin:0 auto; text-align:left; }
+    .results li { margin:10px 0; padding:10px; border-radius:6px; }
+    .green { background:rgba(34,197,94,0.2); border:1px solid #22c55e; }
+    .yellow { background:rgba(234,179,8,0.2); border:1px solid #eab308; }
+    .red { background:rgba(239,68,68,0.2); border:1px solid #ef4444; }
+    .results .actions { margin-top:30px; }
+    .results button { margin:8px; padding:12px 20px; border:none; border-radius:6px; font-size:1em; cursor:pointer; }
+    .back { background:#444; color:#fff; }
+    .new { background:#22c55e; color:#fff; }
+    .share { background:#2563eb; color:#fff; }
+    .print { background:#f97316; color:#fff; }
   </style>
 </head>
 <body>
   <div class="scanner-container">
     <video id="scannerVideo" autoplay muted playsinline></video>
     <div class="overlay">
-      <div id="eyeTarget" class="eye-target"></div>
-      <div class="instruction-text" id="instructionText">Preparing scan...</div>
+      <div class="eye-target" id="eyeTarget"></div>
+      <div class="instruction" id="instructionText">Preparing scanner…</div>
+      <div class="progress" id="progressText"></div>
     </div>
-
-    <!-- Controls -->
     <div class="control-panel">
-      <button class="control-btn" onclick="toggleAudio()" id="audioBtn">🔊 Audio On</button>
-      <button class="control-btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
-      <button class="control-btn" onclick="switchCamera()">🔄 Switch Camera</button>
-      <button class="control-btn" onclick="exitScan()">❌ Exit</button>
+      <button class="control-btn" id="switchCamBtn" title="Switch Camera">🔄</button>
+      <button class="control-btn" id="muteBtn" title="Mute/Unmute">🔊</button>
+      <button class="control-btn" id="pauseBtn" title="Pause/Resume">⏸️</button>
+      <button class="control-btn" id="exitBtn" title="Exit">❌</button>
     </div>
-
-    <!-- Results -->
-    <div class="scan-complete" id="scanComplete">
-      <h2>✅ Demo Results</h2>
-      <div id="resultText"></div>
-      <button class="results-btn" onclick="startOver()">🔄 New Scan</button>
-      <button class="results-btn" onclick="window.print()">🖨 Print / Save PDF</button>
-      <button class="results-btn" onclick="alert('Sharing demo...')">📤 Share</button>
-      <button class="results-btn" onclick="window.location.href='index.html'">🏠 Back to Start</button>
+    <div class="results" id="results">
+      <h2>Demo Scan Results</h2>
+      <div class="timestamp" id="timestamp"></div>
+      <ul id="resultsList"></ul>
+      <div class="actions">
+        <button class="back" onclick="window.location.href='index.html'">Back to Start</button>
+        <button class="new" onclick="restartScan()">Start Again</button>
+        <button class="share" onclick="alert('Share feature coming soon')">Share</button>
+        <button class="print" onclick="window.print()">Print / Save PDF</button>
+      </div>
+      <p style="margin-top:20px; font-size:0.9em; color:#aaa;">
+        ⚠ This demo is not a medical diagnosis. Consult a doctor for real medical advice.<br>
+        In the future, medical-grade results will be available here.
+      </p>
     </div>
   </div>
 
-  <footer>
-    ⚠️ Demo only — not medical grade. Please consult your doctor. Timestamped results are for demonstration purposes.
-  </footer>
-
   <script>
-    let audioEnabled = true;
-    let isPaused = false;
-    let usingFront = true;
-    let currentStream;
-
-    let currentEye = "right";
     let currentPosition = 0;
-    let totalPositions = 9;
-    let isScanning = false;
-
-    const video = document.getElementById('scannerVideo');
-    const instructionEl = document.getElementById('instructionText');
-    const target = document.getElementById('eyeTarget');
-
-    const scanPositions = [
-      { instruction: 'Look straight ahead', arrow: '👁️' },
-      { instruction: 'Look up', arrow: '⬆️' },
-      { instruction: 'Look up and right', arrow: '↗️' },
-      { instruction: 'Look right', arrow: '➡️' },
-      { instruction: 'Look down and right', arrow: '↘️' },
-      { instruction: 'Look down', arrow: '⬇️' },
-      { instruction: 'Look down and left', arrow: '↙️' },
-      { instruction: 'Look left', arrow: '⬅️' },
-      { instruction: 'Look up and left', arrow: '↖️' }
-    ];
-
-    const demoResults = [
-      "🟢 Retinal Vessels: Healthy",
-      "🟢 Neurological Patterns: Normal",
-      "🟢 Blood Pressure Indicators: Normal",
-      "🟢 Optic Nerve: No abnormalities",
-      "🟡 Cardiovascular Health: Moderate risk markers",
-      "🟡 Retinal Vessels: Mild irregularities",
-      "🟡 Diabetes Risk: Possible early signs — consult doctor",
-      "🟡 Blood Pressure Indicators: Slightly elevated",
-      "🔴 Retinal Vessels: Leakage detected",
-      "🔴 Cardiovascular Health: High-risk markers",
-      "🔴 Neurological Patterns: Abnormal activity",
-      "🔴 Diabetes Risk: Strong indicators — professional check advised"
+    let isPaused = false;
+    let audioEnabled = true;
+    let useFrontCamera = true;
+    const positions = [
+      "Look straight ahead",
+      "Look up",
+      "Look up-right",
+      "Look right",
+      "Look down-right",
+      "Look down",
+      "Look down-left",
+      "Look left",
+      "Look up-left"
     ];
 
     async function initCamera() {
-      if (currentStream) currentStream.getTracks().forEach(track => track.stop());
       try {
-        const constraints = { video: { facingMode: usingFront ? "user" : "environment" } };
-        currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-        video.srcObject = currentStream;
-      } catch (err) {
-        console.error("Camera error:", err);
-        instructionEl.textContent = "Camera access required.";
+        const constraints = {
+          video: { facingMode: useFrontCamera ? "user" : "environment" }
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        document.getElementById("scannerVideo").srcObject = stream;
+      } catch (e) {
+        alert("Camera access denied or unavailable.");
       }
     }
 
     function speak(text) {
       if (!audioEnabled) return;
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(utterance);
+      const synth = window.speechSynthesis;
+      if (synth) {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.rate = 0.9;
+        synth.speak(utter);
       }
     }
 
-    function toggleAudio() {
-      audioEnabled = !audioEnabled;
-      document.getElementById('audioBtn').textContent = audioEnabled ? "🔊 Audio On" : "🔇 Audio Off";
-      speak(audioEnabled ? "Audio enabled" : "Audio muted");
-    }
-
-    function togglePause() {
-      isPaused = !isPaused;
-      document.getElementById('pauseBtn').textContent = isPaused ? "▶ Resume" : "⏸ Pause";
-      speak(isPaused ? "Scan paused" : "Scan resumed");
-      if (!isPaused) performPositionScan();
-    }
-
-    function switchCamera() {
-      usingFront = !usingFront;
-      initCamera();
-      speak(usingFront ? "Front camera" : "Rear camera");
-    }
-
-    function exitScan() {
-      if (confirm("Exit scan? Progress will be lost.")) {
-        window.location.href = "index.html";
-      }
-    }
-
-    function performPositionScan() {
-      if (isPaused || !isScanning) return;
-      const pos = scanPositions[currentPosition];
-      instructionEl.textContent = `${currentEye.toUpperCase()} eye: ${pos.instruction} ${pos.arrow}`;
-      speak(pos.instruction);
-      target.className = "eye-target positioned";
-      setTimeout(() => { if (!isPaused && isScanning) capturePosition(); }, 3000);
-    }
-
-    function capturePosition() {
-      if (isPaused || !isScanning) return;
-      target.className = "eye-target capturing";
-      speak("Hold steady");
+    function nextStep() {
+      if (isPaused) return;
+      if (currentPosition >= positions.length) { finishScan(); return; }
+      const text = positions[currentPosition];
+      document.getElementById("instructionText").textContent = text;
+      document.getElementById("progressText").textContent = "Position " + (currentPosition+1) + " of " + positions.length;
+      speak(text);
+      const target = document.getElementById("eyeTarget");
+      target.classList.add("capturing");
       setTimeout(() => {
-        if (!isPaused && isScanning) {
-          target.className = "eye-target captured";
-          speak("Captured");
-          setTimeout(() => { nextPosition(); }, 1500);
-        }
-      }, 1500);
+        target.classList.remove("capturing");
+        currentPosition++;
+        setTimeout(nextStep, 2000);
+      }, 2000);
     }
 
-    function nextPosition() {
-      currentPosition++;
-      if (currentPosition >= totalPositions) {
-        if (currentEye === "right") {
-          currentEye = "left";
-          currentPosition = 0;
-          speak("Right eye complete. Cover your right eye, scanning left eye.");
-          setTimeout(() => performPositionScan(), 3000);
-        } else {
-          completeScan();
-        }
-      } else {
-        performPositionScan();
+    function finishScan() {
+      document.querySelector(".overlay").style.display = "none";
+      document.querySelector(".control-panel").style.display = "none";
+      showResults();
+    }
+
+    function showResults() {
+      const resultsEl = document.getElementById("results");
+      const list = document.getElementById("resultsList");
+      list.innerHTML = "";
+      const demoResults = [
+        { text:"Retinal vessels appear healthy", class:"green" },
+        { text:"Neurological patterns normal", class:"green" },
+        { text:"Blood pressure indicators normal", class:"green" },
+        { text:"Cardiovascular markers: moderate risk", class:"yellow" },
+        { text:"Retinal vessels: mild changes detected", class:"yellow" },
+        { text:"Diabetes markers: early signs, consult doctor", class:"yellow" },
+        { text:"Retinal vessels: leakage detected", class:"red" },
+        { text:"Cardiovascular: high-risk markers", class:"red" },
+        { text:"Neurological patterns irregular", class:"red" },
+        { text:"Signs of hypertensive retinopathy", class:"yellow" },
+        { text:"Glaucoma risk markers detected", class:"yellow" },
+        { text:"Macular degeneration indicators", class:"red" }
+      ];
+      let shuffled = demoResults.sort(() => 0.5 - Math.random());
+      let selected = shuffled.slice(0, 6);
+      if (selected.filter(r => r.class==="green").length < 2) {
+        selected[0] = demoResults[0];
+        selected[1] = demoResults[1];
       }
-    }
-
-    function completeScan() {
-      isScanning = false;
-      document.getElementById('scanComplete').classList.add('show');
+      selected.forEach(r => {
+        const li = document.createElement("li");
+        li.textContent = r.text;
+        li.className = r.class;
+        list.appendChild(li);
+      });
       const ts = new Date().toLocaleString();
-
-      // pick 6 unique results, make sure at least 2 are green
-      const greens = demoResults.filter(r => r.startsWith("🟢"));
-      const others = demoResults.filter(r => !r.startsWith("🟢"));
-      const selected = [];
-
-      // add 2 greens
-      selected.push(greens[Math.floor(Math.random() * greens.length)]);
-      selected.push(greens[Math.floor(Math.random() * greens.length)]);
-
-      // add 4 others
-      while (selected.length < 6) {
-        const choice = others[Math.floor(Math.random() * others.length)];
-        if (!selected.includes(choice)) selected.push(choice);
-      }
-
-      document.getElementById('resultText').innerHTML =
-        `<ul style="text-align:left;max-width:400px;margin:0 auto;">${selected.map(r => `<li>${r}</li>`).join("")}</ul><p><em>Generated: ${ts}</em></p>`;
-      speak("Scan complete. Results displayed.");
+      document.getElementById("timestamp").textContent = "Scan completed: " + ts;
+      resultsEl.style.display = "block";
     }
 
-    function startOver() { window.location.href = "Vision.html"; }
+    function restartScan() { window.location.reload(); }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      initCamera();
-      speak("Starting scan. Cover your left eye and face the camera.");
-      setTimeout(() => { isScanning = true; performPositionScan(); }, 3000);
-    });
+    document.getElementById("switchCamBtn").onclick = () => { useFrontCamera=!useFrontCamera; initCamera(); };
+    document.getElementById("muteBtn").onclick = () => {
+      audioEnabled=!audioEnabled;
+      document.getElementById("muteBtn").textContent = audioEnabled ? "🔊" : "🔇";
+    };
+    document.getElementById("pauseBtn").onclick = () => {
+      isPaused=!isPaused;
+      document.getElementById("pauseBtn").textContent = isPaused ? "▶️" : "⏸️";
+      if (!isPaused) nextStep();
+    };
+    document.getElementById("exitBtn").onclick = () => { window.location.href="index.html"; };
+
+    window.onload = () => { initCamera(); speak("Starting scan. Please hold steady."); setTimeout(nextStep,2000); };
   </script>
 </body>
 </html>
