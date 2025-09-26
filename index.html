@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trust Your Sight</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trust Your Eyes</title>
   <style>
     body {
       margin: 0;
@@ -14,127 +14,312 @@
     }
     section {
       padding: 60px 20px;
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
-    }
-    h1, h2, h3 {
       text-align: center;
-      margin-bottom: 20px;
     }
-    .feature-grid, .detect-grid, .example-grid, .pricing-grid {
+    h1, h2 { margin-bottom: 20px; }
+    .grid {
       display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
       gap: 20px;
       margin-top: 20px;
     }
-    .feature-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
-    .detect-grid { grid-template-columns: 1fr; }
-    .example-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-    .pricing-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-
     .card {
       background: #1e293b;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 20px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-    .card h3 { margin: 10px 0; }
-    .price {
-      font-size: 22px;
-      color: #22c55e;
-      font-weight: bold;
-    }
-    .disclaimer {
-      background: #7f1d1d;
-      color: #fca5a5;
-      padding: 20px;
-      border-radius: 8px;
-      margin-top: 40px;
-      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,.3);
     }
     .btn {
-      display: block;
-      margin: 40px auto;
-      padding: 16px 32px;
-      background: #22c55e;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
+      display:inline-block;
+      margin:10px;
+      padding:12px 24px;
+      border:none;
+      border-radius:8px;
+      background:#22c55e;
+      color:white;
+      font-weight:bold;
+      cursor:pointer;
+      text-decoration:none;
     }
-    .btn:hover { background: #16a34a; }
-    .hidden { display: none; }
+    .btn:hover { background:#16a34a; }
+    .disclaimer {
+      background:#b91c1c;
+      padding:20px;
+      border-radius:8px;
+      margin-top:40px;
+    }
+    ul.checklist {
+      text-align:left;
+      list-style:none;
+      padding:0;
+      max-width:500px;
+      margin:auto;
+    }
+    ul.checklist li {
+      background:#1e293b;
+      margin:10px 0;
+      padding:10px;
+      border-radius:8px;
+    }
+    .result-card {
+      background:#f1f5f9;
+      color:#0f172a;
+      border-radius:8px;
+      padding:12px;
+      margin:12px 0;
+      text-align:left;
+    }
+    .progress {
+      height:12px;
+      border-radius:6px;
+      background:#e2e8f0;
+      margin-top:6px;
+    }
+    .bar { height:100%; border-radius:6px; }
+    .bar.green { background:#22c55e; width:30%; }
+    .bar.yellow { background:#eab308; width:60%; }
+    .bar.red { background:#dc2626; width:90%; }
+    .yellow-box {
+      background:#facc15;
+      color:#0f172a;
+      padding:12px;
+      border-radius:8px;
+      margin-top:20px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- LANDING PAGE -->
-  <div id="landingPage">
-    <section>
-      <h1>👁 Trust Your Sight</h1>
-      <p style="text-align:center;">AI-Powered Eye Health Screening<br>Trust Your Future</p>
-    </section>
+  <!-- Hero -->
+  <section>
+    <h1>👁️ Trust Your Eyes</h1>
+    <p><em>Trust your future.</em></p>
+    <p>AI-powered health insights through vision</p>
+  </section>
 
-    <section>
-      <h2>Features</h2>
-      <div class="feature-grid">
-        <div class="card"><h3>🔬 Advanced AI Analysis</h3><p>Detect early signs of diabetic retinopathy and other eye conditions.</p></div>
-        <div class="card"><h3>📱 Smartphone Powered</h3><p>Professional-grade scanning using your phone’s camera.</p></div>
-        <div class="card"><h3>⚡ Instant Results</h3><p>Get comprehensive health insights in under 2 minutes.</p></div>
-        <div class="card"><h3>🏥 Medical Integration</h3><p>Share results directly with your healthcare provider.</p></div>
-      </div>
-    </section>
+  <!-- Features -->
+  <section>
+    <h2>Features</h2>
+    <div class="grid">
+      <div class="card"><h3>⚡ Fast & Non-Invasive</h3><p>Quick checks without discomfort.</p></div>
+      <div class="card"><h3>🤖 AI-Powered</h3><p>Smart analysis at your fingertips.</p></div>
+      <div class="card"><h3>⏱️ Early Risk Indicators</h3><p>Detect health concerns sooner.</p></div>
+    </div>
+  </section>
 
-    <section>
-      <h2>What We Can Detect</h2>
-      <div class="detect-grid">
-        <div class="card" style="background:#052e16;"><h3>💙 Cardiovascular Health</h3><p>Blood vessel changes may indicate heart health concerns.</p></div>
-        <div class="card" style="background:#78350f;"><h3>💛 Diabetes Screening</h3><p>Early detection of diabetic retinopathy risk indicators.</p></div>
-        <div class="card" style="background:#7f1d1d;"><h3>❤️ Blood Pressure Signs</h3><p>Retinal patterns associated with hypertension.</p></div>
-        <div class="card" style="background:#312e81;"><h3>💜 Neurological Health</h3><p>Optic nerve health and potential neurological indicators.</p></div>
-      </div>
-    </section>
+  <!-- What We Detect -->
+  <section>
+    <h2>What We Detect</h2>
+    <div class="grid">
+      <div class="card"><h3>💙 Prediabetes</h3><p>Early vessel changes linked to diabetes risk.</p></div>
+      <div class="card"><h3>❤️ Hypertension</h3><p>Thickened or narrowed vessels linked to blood pressure.</p></div>
+      <div class="card"><h3>💜 Cardiovascular Risk</h3><p>Patterns that may signal heart health concerns.</p></div>
+    </div>
+  </section>
 
-    <section>
-      <h2>Retinal Health Examples</h2>
-      <div class="example-grid">
-        <div class="card" style="background:#064e3b;"><h3>Healthy Retina</h3><p>Clear blood vessels, normal optic disc.</p></div>
-        <div class="card" style="background:#92400e;"><h3>Early Diabetic Signs</h3><p>Small hemorrhages, microaneurysms.</p></div>
-        <div class="card" style="background:#7f1d1d;"><h3>Hypertensive Changes</h3><p>Arterial narrowing, vessel changes.</p></div>
-      </div>
-    </section>
+  <!-- Retina Examples -->
+  <section>
+    <h2>Retina Health Examples</h2>
+    <div class="grid">
+      <div class="card" style="background:#166534"><h3>Healthy Retina</h3><p>Clear vessels, normal optic disc.</p></div>
+      <div class="card" style="background:#92400e"><h3>Early Diabetic Signs</h3><p>Microaneurysms, small hemorrhages.</p></div>
+      <div class="card" style="background:#7f1d1d"><h3>Hypertensive Changes</h3><p>Vessel narrowing and stress changes.</p></div>
+    </div>
+  </section>
 
-    <section>
-      <h2>Pricing</h2>
-      <div class="pricing-grid">
-        <div class="card"><h3>👤 Single Plan</h3><p>$19.99/month</p></div>
-        <div class="card"><h3>👨‍👩‍👧 Family Plan</h3><p>$29.99/month</p></div>
-        <div class="card"><h3>👵 Senior Plan</h3><p>$14.99/month</p></div>
-      </div>
-    </section>
+  <!-- Research Highlights -->
+  <section>
+    <h2>Research Highlights</h2>
+    <div class="grid">
+      <div class="card"><h3>🔬 AI & Eye Health</h3><p>Fast, non-invasive, predictive potential.</p></div>
+      <div class="card"><h3>❤️ Cardio Risk</h3><p>Early signs of heart disease from vessel scans.</p></div>
+      <div class="card"><h3>🧠 Brain Health</h3><p>Links to Alzheimer’s, Parkinson’s & dementia.</p></div>
+      <div class="card"><h3>👶 Autism Research</h3><p>Promising early findings (>90% accuracy).</p></div>
+      <div class="card"><h3>🌍 Why It Matters</h3><p>Affordable, non-invasive, accessible.</p></div>
+    </div>
+  </section>
 
-    <section class="disclaimer">
-      <h3>⚠ Medical Disclaimer</h3>
-      <p>This app is for screening purposes only and does not replace professional medical diagnosis.  
-      Always consult qualified healthcare providers for medical decisions.</p>
-    </section>
+  <!-- Pricing -->
+  <section>
+    <h2>Pricing</h2>
+    <div class="grid">
+      <div class="card"><h3>👤 Single Plan</h3><p>$19.99/month</p></div>
+      <div class="card"><h3>👨‍👩‍👧 Family Plan</h3><p>$29.99/month</p></div>
+      <div class="card"><h3>👵 Senior Plan</h3><p>$14.99/month</p></div>
+    </div>
+  </section>
 
-    <button class="btn" onclick="startEducation()">Begin Education</button>
-  </div>
+  <!-- Disclaimer -->
+  <section>
+    <div class="disclaimer">
+      <h3>⚠️ Medical Disclaimer</h3>
+      <p>This app is for educational and demo screening only. It cannot diagnose conditions. Always consult a healthcare provider.</p>
+    </div>
+    <a href="#education" class="btn">Begin Education</a>
+  </section>
 
-  <!-- EDUCATION FLOW -->
-  <div id="educationFlow" class="hidden">
-    <iframe src="education.html" style="width:100%;height:100vh;border:none;"></iframe>
-  </div>
+  <!-- Education Checklist -->
+  <section id="education">
+    <h2>Education & Consent</h2>
+    <ul class="checklist">
+      <li>✔️ I am 18+ or have parental consent.</li>
+      <li>✔️ I consent to continue.</li>
+      <li>✔️ I understand this demo records both images and short videos of the eyes only. Any other face or background will be blurred.</li>
+      <li>✔️ I will hold my phone 6–8 inches away.</li>
+      <li>✔️ I will keep my head steady.</li>
+      <li>✔️ I understand the test follows a clockwise flow.</li>
+      <li>✔️ I am ready to begin.</li>
+    </ul>
+    <a href="#scan" class="btn">Start Eye Scan</a>
+  </section>
+
+  <!-- Scan Flow -->
+  <section id="scan">
+    <h2>Eye Scan Flow</h2>
+    <p id="scan-instructions">Press Start to begin the demo scan.</p>
+    <div>
+      <button class="btn" onclick="startScan()">▶️ Start Scan</button>
+      <button class="btn" onclick="pauseScan()">⏸️ Pause</button>
+      <button class="btn" onclick="resumeScan()">▶️ Resume</button>
+      <button class="btn" onclick="restartScan()">🔄 Restart</button>
+      <button class="btn" onclick="exitScan()">❌ Exit</button>
+      <button class="btn" onclick="toggleSound()">🔊 Sound On/Off</button>
+    </div>
+  </section>
 
   <script>
-    function startEducation() {
-      document.getElementById('landingPage').classList.add('hidden');
-      document.getElementById('educationFlow').classList.remove('hidden');
+    let steps = [
+      "Look straight ahead. Hold. Capturing.",
+      "Look left, 9 o’clock. Hold. Capturing.",
+      "Look up left, 11 o’clock. Hold. Capturing.",
+      "Look up, 12 o’clock. Hold. Capturing.",
+      "Look up right, 1 o’clock. Hold. Capturing.",
+      "Look right, 3 o’clock. Hold. Capturing.",
+      "Look down right, 5 o’clock. Hold. Capturing.",
+      "Look down, 6 o’clock. Hold. Capturing.",
+      "Look down left, 7 o’clock. Hold. Capturing."
+    ];
+
+    let eyeCount = 1;
+    let stepIndex = 0;
+    let paused = false;
+    let soundOn = true;
+    let scanInterval;
+
+    function speak(text) {
+      if (!soundOn) return;
+      let utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function startScan() {
+      eyeCount = 1;
+      stepIndex = 0;
+      document.getElementById("scan-instructions").innerText =
+        "Please hold your phone 6 to 8 inches from your eye. Keep your head steady and cover your other eye with your hand. We’ll begin shortly.";
+      speak("Please hold your phone 6 to 8 inches from your eye. Keep your head steady and cover your other eye with your hand. We’ll begin shortly.");
+      clearInterval(scanInterval);
+      setTimeout(runSteps, 5000);
+    }
+
+    function runSteps() {
+      scanInterval = setInterval(() => {
+        if (paused) return;
+        if (stepIndex < steps.length) {
+          let instruction = steps[stepIndex];
+          document.getElementById("scan-instructions").innerText = instruction;
+          speak(instruction);
+          stepIndex++;
+        } else {
+          clearInterval(scanInterval);
+          if (eyeCount === 1) {
+            document.getElementById("scan-instructions").innerText =
+              "Now switch eyes. Cover your other eye with your hand. We’ll repeat the same steps.";
+            speak("Now switch eyes. Cover your other eye with your hand. We’ll repeat the same steps.");
+            eyeCount++;
+            stepIndex = 0;
+            setTimeout(runSteps, 5000);
+          } else {
+            document.getElementById("scan-instructions").innerText =
+              "Demo scan complete. View your results below.";
+            speak("Demo scan complete. View your results below.");
+            window.location.hash = "results";
+          }
+        }
+      }, 3000);
+    }
+
+    function pauseScan() {
+      paused = true;
+      document.getElementById("scan-instructions").innerText = "Scan paused.";
+      speak("Scan paused.");
+    }
+
+    function resumeScan() {
+      paused = false;
+      document.getElementById("scan-instructions").innerText = "Resuming scan...";
+      speak("Resuming scan.");
+    }
+
+    function restartScan() {
+      clearInterval(scanInterval);
+      startScan();
+    }
+
+    function exitScan() {
+      clearInterval(scanInterval);
+      document.getElementById("scan-instructions").innerText = "Scan cancelled.";
+      speak("Scan cancelled.");
+    }
+
+    function toggleSound() {
+      soundOn = !soundOn;
+      document.getElementById("scan-instructions").innerText =
+        soundOn ? "Sound enabled." : "Sound muted.";
     }
   </script>
+
+  <!-- Results -->
+  <section id="results">
+    <h2>Retinal Scan Results (Demo)</h2>
+    <p><em>This is a demo test. The live version of the app will provide comparative results from Google Vision Studies and ophthalmology research institutions. Real clinical results require medical-grade AI testing, which will be available later for an additional fee.</em></p>
+
+    <div class="disclaimer">⚠️ These are not medical results. Demo only.</div>
+
+    <div class="result-card">
+      <strong>Diabetic Retinopathy Risk Indicators</strong><br>
+      Confidence: Medium
+      <div class="progress"><div class="bar yellow"></div></div>
+    </div>
+
+    <div class="result-card">
+      <strong>Hypertension-Related Changes</strong><br>
+      Confidence: Low
+      <div class="progress"><div class="bar green"></div></div>
+    </div>
+
+    <div class="result-card">
+      <strong>Cardiovascular Risk Markers</strong><br>
+      Confidence: High
+      <div class="progress"><div class="bar red"></div></div>
+    </div>
+
+    <div class="yellow-box">
+      <strong>Next Steps:</strong><br>
+      • Schedule professional eye exam<br>
+      • Share results with provider<br>
+      • Continue regular screenings
+    </div>
+
+    <div style="margin-top:20px;">
+      <button class="btn">💾 Save Results</button>
+      <button class="btn">🔄 New Scan</button>
+      <button class="btn">⬅️ Return to App</button>
+      <button class="btn">📤 Share</button>
+    </div>
+  </section>
+
 </body>
 </html>
