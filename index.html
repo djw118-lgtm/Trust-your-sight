@@ -19,6 +19,7 @@
       text-align: center;
     }
     h1, h2 { margin-bottom: 20px; }
+    h1, h2.blue { color: #3b82f6; } /* blue headings */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
@@ -54,14 +55,11 @@
       text-align:left;
       list-style:none;
       padding:0;
-      max-width:500px;
+      max-width:600px;
       margin:auto;
     }
     ul.checklist li {
-      background:#1e293b;
       margin:10px 0;
-      padding:10px;
-      border-radius:8px;
     }
     .result-card {
       background:#f1f5f9;
@@ -78,9 +76,9 @@
       margin-top:6px;
     }
     .bar { height:100%; border-radius:6px; }
-    .bar.green { background:#22c55e; width:30%; }
-    .bar.yellow { background:#eab308; width:60%; }
-    .bar.red { background:#dc2626; width:90%; }
+    .bar.green { background:#22c55e; }
+    .bar.yellow { background:#eab308; }
+    .bar.red { background:#dc2626; }
     .yellow-box {
       background:#facc15;
       color:#0f172a;
@@ -88,20 +86,29 @@
       border-radius:8px;
       margin-top:20px;
     }
+    #camera {
+      background:#000;
+      width:320px;
+      height:240px;
+      margin:20px auto;
+      position:relative;
+      border-radius:12px;
+      overflow:hidden;
+    }
   </style>
 </head>
 <body>
 
   <!-- Hero -->
   <section>
-    <h1>👁️ Trust Your Eyes</h1>
+    <h1 class="blue">👁️ Trust Your Eyes</h1>
     <p><em>Trust your future.</em></p>
     <p>AI-powered health insights through vision</p>
   </section>
 
   <!-- Features -->
   <section>
-    <h2>Features</h2>
+    <h2 class="blue">Features</h2>
     <div class="grid">
       <div class="card"><h3>⚡ Fast & Non-Invasive</h3><p>Quick checks without discomfort.</p></div>
       <div class="card"><h3>🤖 AI-Powered</h3><p>Smart analysis at your fingertips.</p></div>
@@ -111,7 +118,7 @@
 
   <!-- What We Detect -->
   <section>
-    <h2>What We Detect</h2>
+    <h2 class="blue">What We Detect</h2>
     <div class="grid">
       <div class="card"><h3>💙 Prediabetes</h3><p>Early vessel changes linked to diabetes risk.</p></div>
       <div class="card"><h3>❤️ Hypertension</h3><p>Thickened or narrowed vessels linked to blood pressure.</p></div>
@@ -121,7 +128,7 @@
 
   <!-- Retina Examples -->
   <section>
-    <h2>Retina Health Examples</h2>
+    <h2 class="blue">Retina Health Examples</h2>
     <div class="grid">
       <div class="card" style="background:#166534"><h3>Healthy Retina</h3><p>Clear vessels, normal optic disc.</p></div>
       <div class="card" style="background:#92400e"><h3>Early Diabetic Signs</h3><p>Microaneurysms, small hemorrhages.</p></div>
@@ -131,19 +138,18 @@
 
   <!-- Research Highlights -->
   <section>
-    <h2>Research Highlights</h2>
+    <h2 class="blue">Research Highlights</h2>
     <div class="grid">
       <div class="card"><h3>🔬 AI & Eye Health</h3><p>Fast, non-invasive, predictive potential.</p></div>
       <div class="card"><h3>❤️ Cardio Risk</h3><p>Early signs of heart disease from vessel scans.</p></div>
       <div class="card"><h3>🧠 Brain Health</h3><p>Links to Alzheimer’s, Parkinson’s & dementia.</p></div>
-      <div class="card"><h3>👶 Autism Research</h3><p>Promising early findings (>90% accuracy).</p></div>
       <div class="card"><h3>🌍 Why It Matters</h3><p>Affordable, non-invasive, accessible.</p></div>
     </div>
   </section>
 
   <!-- Pricing -->
   <section>
-    <h2>Pricing</h2>
+    <h2 class="blue">Pricing</h2>
     <div class="grid">
       <div class="card"><h3>👤 Single Plan</h3><p>$19.99/month</p></div>
       <div class="card"><h3>👨‍👩‍👧 Family Plan</h3><p>$29.99/month</p></div>
@@ -155,7 +161,7 @@
   <section>
     <div class="disclaimer">
       <h3>⚠️ Medical Disclaimer</h3>
-      <p>This app is for educational and demo screening only. It cannot diagnose conditions. Always consult a healthcare provider.</p>
+      <p>This app is for educational and demo screening only. It cannot diagnose conditions, including flu, COVID, or other medical conditions. Always consult a healthcare provider.</p>
     </div>
     <a href="#education" class="btn">Begin Education</a>
   </section>
@@ -163,21 +169,25 @@
   <!-- Education Checklist -->
   <section id="education">
     <h2>Education & Consent</h2>
-    <ul class="checklist">
-      <li>✔️ I am 18+ or have parental consent.</li>
-      <li>✔️ I consent to continue.</li>
-      <li>✔️ I understand this demo records both images and short videos of the eyes only. Any other face or background will be blurred.</li>
-      <li>✔️ I will hold my phone 6–8 inches away.</li>
-      <li>✔️ I will keep my head steady.</li>
-      <li>✔️ I understand the test follows a clockwise flow.</li>
-      <li>✔️ I am ready to begin.</li>
-    </ul>
-    <a href="#scan" class="btn">Start Eye Scan</a>
+    <form id="consentForm">
+      <ul class="checklist">
+        <li><input type="checkbox" required> I am 18+ and the actual person completing this education.</li>
+        <li><input type="checkbox" required> I understand this app is for educational purposes and general wellness only.</li>
+        <li><input type="checkbox" required> I understand this app cannot diagnose medical conditions or replace professional eye care.</li>
+        <li><input type="checkbox" required> I understand this app cannot detect flu, COVID, acute illnesses, or any medical conditions.</li>
+        <li><input type="checkbox" required> I understand I should see qualified professionals for eye health concerns and regular screening.</li>
+        <li><input type="checkbox" required> I have read and understand the limitations and proper use of this educational tool.</li>
+      </ul>
+      <p>Electronic Signature:</p>
+      <p id="signature"></p>
+      <button type="submit" class="btn">Complete Education & Begin Test</button>
+    </form>
   </section>
 
   <!-- Scan Flow -->
-  <section id="scan">
+  <section id="scan" style="display:none;">
     <h2>Eye Scan Flow</h2>
+    <div id="camera"></div>
     <p id="scan-instructions">Press Start to begin the demo scan.</p>
     <div>
       <button class="btn" onclick="startScan()">▶️ Start Scan</button>
@@ -189,122 +199,14 @@
     </div>
   </section>
 
-  <script>
-    let steps = [
-      "Look straight ahead. Hold. Capturing.",
-      "Look left, 9 o’clock. Hold. Capturing.",
-      "Look up left, 11 o’clock. Hold. Capturing.",
-      "Look up, 12 o’clock. Hold. Capturing.",
-      "Look up right, 1 o’clock. Hold. Capturing.",
-      "Look right, 3 o’clock. Hold. Capturing.",
-      "Look down right, 5 o’clock. Hold. Capturing.",
-      "Look down, 6 o’clock. Hold. Capturing.",
-      "Look down left, 7 o’clock. Hold. Capturing."
-    ];
-
-    let eyeCount = 1;
-    let stepIndex = 0;
-    let paused = false;
-    let soundOn = true;
-    let scanInterval;
-
-    function speak(text) {
-      if (!soundOn) return;
-      let utterance = new SpeechSynthesisUtterance(text);
-      window.speechSynthesis.speak(utterance);
-    }
-
-    function startScan() {
-      eyeCount = 1;
-      stepIndex = 0;
-      document.getElementById("scan-instructions").innerText =
-        "Please hold your phone 6 to 8 inches from your eye. Keep your head steady and cover your other eye with your hand. We’ll begin shortly.";
-      speak("Please hold your phone 6 to 8 inches from your eye. Keep your head steady and cover your other eye with your hand. We’ll begin shortly.");
-      clearInterval(scanInterval);
-      setTimeout(runSteps, 5000);
-    }
-
-    function runSteps() {
-      scanInterval = setInterval(() => {
-        if (paused) return;
-        if (stepIndex < steps.length) {
-          let instruction = steps[stepIndex];
-          document.getElementById("scan-instructions").innerText = instruction;
-          speak(instruction);
-          stepIndex++;
-        } else {
-          clearInterval(scanInterval);
-          if (eyeCount === 1) {
-            document.getElementById("scan-instructions").innerText =
-              "Now switch eyes. Cover your other eye with your hand. We’ll repeat the same steps.";
-            speak("Now switch eyes. Cover your other eye with your hand. We’ll repeat the same steps.");
-            eyeCount++;
-            stepIndex = 0;
-            setTimeout(runSteps, 5000);
-          } else {
-            document.getElementById("scan-instructions").innerText =
-              "Demo scan complete. View your results below.";
-            speak("Demo scan complete. View your results below.");
-            window.location.hash = "results";
-          }
-        }
-      }, 3000);
-    }
-
-    function pauseScan() {
-      paused = true;
-      document.getElementById("scan-instructions").innerText = "Scan paused.";
-      speak("Scan paused.");
-    }
-
-    function resumeScan() {
-      paused = false;
-      document.getElementById("scan-instructions").innerText = "Resuming scan...";
-      speak("Resuming scan.");
-    }
-
-    function restartScan() {
-      clearInterval(scanInterval);
-      startScan();
-    }
-
-    function exitScan() {
-      clearInterval(scanInterval);
-      document.getElementById("scan-instructions").innerText = "Scan cancelled.";
-      speak("Scan cancelled.");
-    }
-
-    function toggleSound() {
-      soundOn = !soundOn;
-      document.getElementById("scan-instructions").innerText =
-        soundOn ? "Sound enabled." : "Sound muted.";
-    }
-  </script>
-
   <!-- Results -->
-  <section id="results">
+  <section id="results" style="display:none;">
     <h2>Retinal Scan Results (Demo)</h2>
-    <p><em>This is a demo test. The live version of the app will provide comparative results from Google Vision Studies and ophthalmology research institutions. Real clinical results require medical-grade AI testing, which will be available later for an additional fee.</em></p>
+    <p><em>This is a demo test. The live version will provide comparative results from Google Vision and ophthalmology research. Real clinical results require medical-grade AI testing (additional fee).</em></p>
 
     <div class="disclaimer">⚠️ These are not medical results. Demo only.</div>
 
-    <div class="result-card">
-      <strong>Diabetic Retinopathy Risk Indicators</strong><br>
-      Confidence: Medium
-      <div class="progress"><div class="bar yellow"></div></div>
-    </div>
-
-    <div class="result-card">
-      <strong>Hypertension-Related Changes</strong><br>
-      Confidence: Low
-      <div class="progress"><div class="bar green"></div></div>
-    </div>
-
-    <div class="result-card">
-      <strong>Cardiovascular Risk Markers</strong><br>
-      Confidence: High
-      <div class="progress"><div class="bar red"></div></div>
-    </div>
+    <div id="resultsContainer"></div>
 
     <div class="yellow-box">
       <strong>Next Steps:</strong><br>
@@ -314,12 +216,117 @@
     </div>
 
     <div style="margin-top:20px;">
-      <button class="btn">💾 Save Results</button>
-      <button class="btn">🔄 New Scan</button>
-      <button class="btn">⬅️ Return to App</button>
-      <button class="btn">📤 Share</button>
+      <button class="btn" onclick="saveResults()">💾 Save Results</button>
+      <button class="btn" onclick="restartScan()">🔄 New Scan</button>
+      <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬅️ Return to App</button>
+      <button class="btn" onclick="shareResults()">📤 Share</button>
     </div>
   </section>
+
+<script>
+  // Fill electronic signature
+  document.getElementById("signature").innerText =
+    "Signed on " + new Date().toLocaleString() + " | Account Type: Individual";
+
+  // Education submit
+  document.getElementById("consentForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("education").style.display="none";
+    document.getElementById("scan").style.display="block";
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  // Scan simulation
+  let steps = [
+    "Look straight ahead. Hold. Capturing.",
+    "Look left, 9 o’clock. Hold. Capturing.",
+    "Look up left, 11 o’clock. Hold. Capturing.",
+    "Look up, 12 o’clock. Hold. Capturing.",
+    "Look up right, 1 o’clock. Hold. Capturing.",
+    "Look right, 3 o’clock. Hold. Capturing.",
+    "Look down right, 5 o’clock. Hold. Capturing.",
+    "Look down, 6 o’clock. Hold. Capturing.",
+    "Look down left, 7 o’clock. Hold. Capturing."
+  ];
+  let eyeCount=1, stepIndex=0, paused=false, soundOn=true, scanInterval;
+  function speak(text){ if(!soundOn) return; let u=new SpeechSynthesisUtterance(text); speechSynthesis.speak(u); }
+  function startScan(){
+    eyeCount=1;stepIndex=0;
+    document.getElementById("scan-instructions").innerText="Please hold your phone 6 to 8 inches from your eye. Keep your head steady. We’ll begin shortly.";
+    speak("Please hold your phone 6 to 8 inches from your eye. Keep your head steady. We’ll begin shortly.");
+    setTimeout(runSteps,4000);
+  }
+  function runSteps(){
+    scanInterval=setInterval(()=>{
+      if(paused) return;
+      if(stepIndex<steps.length){
+        let instruction=steps[stepIndex];
+        document.getElementById("scan-instructions").innerText=instruction;
+        speak(instruction);
+        stepIndex++;
+      } else {
+        clearInterval(scanInterval);
+        if(eyeCount===1){
+          document.getElementById("scan-instructions").innerText="Now switch eyes. Cover your other eye. We’ll repeat.";
+          speak("Now switch eyes. Cover your other eye. We’ll repeat.");
+          eyeCount++;stepIndex=0;setTimeout(runSteps,5000);
+        } else {
+          document.getElementById("scan-instructions").innerText="Demo scan complete. View your results below.";
+          speak("Demo scan complete. View your results below.");
+          document.getElementById("scan").style.display="none";
+          document.getElementById("results").style.display="block";
+          generateResults();
+          window.scrollTo({top:document.getElementById("results").offsetTop,behavior:'smooth'});
+        }
+      }
+    },3000);
+  }
+  function pauseScan(){paused=true;document.getElementById("scan-instructions").innerText="Scan paused.";speak("Scan paused.");}
+  function resumeScan(){paused=false;document.getElementById("scan-instructions").innerText="Resuming scan...";speak("Resuming scan.");}
+  function restartScan(){clearInterval(scanInterval);document.getElementById("results").style.display="none";document.getElementById("scan").style.display="block";startScan();}
+  function exitScan(){clearInterval(scanInterval);document.getElementById("scan-instructions").innerText="Scan cancelled.";speak("Scan cancelled.");}
+  function toggleSound(){soundOn=!soundOn;document.getElementById("scan-instructions").innerText=soundOn?"Sound enabled.":"Sound muted.";}
+
+  // Results generator
+  let categories=[
+    "Diabetic Retinopathy Risk Indicators",
+    "Hypertension-Related Changes",
+    "Cardiovascular Risk Markers",
+    "Optic Nerve / Neurological Health",
+    "Brain Health",
+    "Retinal Vessel Changes"
+  ];
+  function generateResults(){
+    let container=document.getElementById("resultsContainer");
+    container.innerHTML="";
+    let shuffled=categories.sort(()=>0.5-Math.random()).slice(0,4);
+    shuffled.forEach(cat=>{
+      let conf=["Low","Medium","High"][Math.floor(Math.random()*3)];
+      let color=conf==="Low"?"green":conf==="Medium"?"yellow":"red";
+      let width=conf==="Low"?30:conf==="Medium"?60:90;
+      container.innerHTML+=`
+        <div class="result-card">
+          <strong>${cat}</strong><br>
+          Confidence: ${conf}
+          <div class="progress"><div class="bar ${color}" style="width:${width}%"></div></div>
+        </div>`;
+    });
+  }
+
+  // Save + Share
+  function saveResults(){
+    let text=document.getElementById("resultsContainer").innerText;
+    let blob=new Blob([text],{type:"text/plain"});
+    let link=document.createElement("a");
+    link.href=URL.createObjectURL(blob);
+    link.download="demo_results.txt";
+    link.click();
+  }
+  function shareResults(){
+    let text="Trust Your Eyes - Demo Results\n\n"+document.getElementById("resultsContainer").innerText;
+    window.location.href="mailto:?subject=Trust Your Eyes Demo Results&body="+encodeURIComponent(text);
+  }
+</script>
 
 </body>
 </html>
