@@ -12,95 +12,32 @@
       color: #f1f5f9;
       line-height: 1.6;
     }
-    section {
-      padding: 60px 20px;
-      max-width: 900px;
-      margin: auto;
-      text-align: center;
-    }
-    h1, h2 { margin-bottom: 20px; }
-    h1, h2.blue { color: #3b82f6; } /* blue headings */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .card {
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,.3);
-    }
-    .btn {
-      display:inline-block;
-      margin:10px;
-      padding:12px 24px;
-      border:none;
-      border-radius:8px;
-      background:#22c55e;
-      color:white;
-      font-weight:bold;
-      cursor:pointer;
-      text-decoration:none;
-    }
+    section { padding: 60px 20px; max-width: 900px; margin: auto; text-align: center; }
+    h1,h2 { margin-bottom:20px; }
+    h1, h2.blue { color:#3b82f6; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:20px;}
+    .card { background:#1e293b; border-radius:12px; padding:20px; box-shadow:0 4px 8px rgba(0,0,0,.3);}
+    .btn { display:inline-block; margin:6px; padding:12px 20px; border:none; border-radius:8px; background:#22c55e; color:white; font-weight:bold; cursor:pointer; text-decoration:none;}
     .btn:hover { background:#16a34a; }
-    .disclaimer {
-      background:#b91c1c;
-      padding:20px;
-      border-radius:8px;
-      margin-top:40px;
-    }
-    ul.checklist {
-      text-align:left;
-      list-style:none;
-      padding:0;
-      max-width:600px;
-      margin:auto;
-    }
-    ul.checklist li {
-      margin:10px 0;
-    }
-    .result-card {
-      background:#f1f5f9;
-      color:#0f172a;
-      border-radius:8px;
-      padding:12px;
-      margin:12px 0;
-      text-align:left;
-    }
-    .progress {
-      height:12px;
-      border-radius:6px;
-      background:#e2e8f0;
-      margin-top:6px;
-    }
+    .disclaimer { background:#b91c1c; padding:20px; border-radius:8px; margin-top:40px;}
+    ul.checklist { text-align:left; list-style:none; padding:0; max-width:600px; margin:auto;}
+    ul.checklist li { margin:10px 0;}
+    .result-card { background:#f1f5f9; color:#0f172a; border-radius:8px; padding:12px; margin:12px 0; text-align:left;}
+    .progress { height:12px; border-radius:6px; background:#e2e8f0; margin-top:6px;}
     .bar { height:100%; border-radius:6px; }
     .bar.green { background:#22c55e; }
     .bar.yellow { background:#eab308; }
     .bar.red { background:#dc2626; }
-    .yellow-box {
-      background:#facc15;
-      color:#0f172a;
-      padding:12px;
-      border-radius:8px;
-      margin-top:20px;
-    }
-    #camera {
-      background:#000;
-      width:320px;
-      height:240px;
-      margin:20px auto;
-      position:relative;
-      border-radius:12px;
-      overflow:hidden;
-    }
+    .yellow-box { background:#facc15; color:#0f172a; padding:12px; border-radius:8px; margin-top:20px; }
+    #camera { background:#000; width:100%; height:100vh; display:flex; flex-direction:column; justify-content:space-between; position:relative;}
+    #camera video { width:100%; height:auto; }
+    #scan-controls { position:absolute; bottom:10px; width:100%; display:flex; justify-content:center; flex-wrap:wrap;}
   </style>
 </head>
 <body>
 
   <!-- Hero -->
-  <section>
+  <section id="home">
     <h1 class="blue">👁️ Trust Your Eyes</h1>
     <p><em>Trust your future.</em></p>
     <p>AI-powered health insights through vision</p>
@@ -126,17 +63,7 @@
     </div>
   </section>
 
-  <!-- Retina Examples -->
-  <section>
-    <h2 class="blue">Retina Health Examples</h2>
-    <div class="grid">
-      <div class="card" style="background:#166534"><h3>Healthy Retina</h3><p>Clear vessels, normal optic disc.</p></div>
-      <div class="card" style="background:#92400e"><h3>Early Diabetic Signs</h3><p>Microaneurysms, small hemorrhages.</p></div>
-      <div class="card" style="background:#7f1d1d"><h3>Hypertensive Changes</h3><p>Vessel narrowing and stress changes.</p></div>
-    </div>
-  </section>
-
-  <!-- Research Highlights -->
+  <!-- Research -->
   <section>
     <h2 class="blue">Research Highlights</h2>
     <div class="grid">
@@ -166,8 +93,8 @@
     <a href="#education" class="btn">Begin Education</a>
   </section>
 
-  <!-- Education Checklist -->
-  <section id="education">
+  <!-- Education -->
+  <section id="education" style="display:none;">
     <h2>Education & Consent</h2>
     <form id="consentForm">
       <ul class="checklist">
@@ -175,48 +102,37 @@
         <li><input type="checkbox" required> I understand this app is for educational purposes and general wellness only.</li>
         <li><input type="checkbox" required> I understand this app cannot diagnose medical conditions or replace professional eye care.</li>
         <li><input type="checkbox" required> I understand this app cannot detect flu, COVID, acute illnesses, or any medical conditions.</li>
-        <li><input type="checkbox" required> I understand I should see qualified professionals for eye health concerns and regular screening.</li>
-        <li><input type="checkbox" required> I have read and understand the limitations and proper use of this educational tool.</li>
+        <li><input type="checkbox" required> I should see qualified professionals for eye concerns and regular screening.</li>
       </ul>
       <p>Electronic Signature:</p>
       <p id="signature"></p>
-      <button type="submit" class="btn">Complete Education & Begin Test</button>
+      <button type="submit" class="btn">Complete Education & Begin Scan</button>
     </form>
   </section>
 
-  <!-- Scan Flow -->
+  <!-- Camera + Scan -->
   <section id="scan" style="display:none;">
-    <h2>Eye Scan Flow</h2>
-    <div id="camera"></div>
-    <p id="scan-instructions">Press Start to begin the demo scan.</p>
-    <div>
-      <button class="btn" onclick="startScan()">▶️ Start Scan</button>
-      <button class="btn" onclick="pauseScan()">⏸️ Pause</button>
-      <button class="btn" onclick="resumeScan()">▶️ Resume</button>
-      <button class="btn" onclick="restartScan()">🔄 Restart</button>
-      <button class="btn" onclick="exitScan()">❌ Exit</button>
-      <button class="btn" onclick="toggleSound()">🔊 Sound On/Off</button>
+    <div id="camera">
+      <video id="video" autoplay playsinline></video>
+      <p id="scan-instructions" style="padding:10px;">Press Start to begin the demo scan.</p>
+      <div id="scan-controls">
+        <button class="btn" onclick="startScan()">▶️ Start</button>
+        <button class="btn" onclick="togglePause()">⏸️ Pause/Resume</button>
+        <button class="btn" onclick="toggleCamera()">📷 Front/Back</button>
+        <button class="btn" onclick="restartScan()">🔄 Restart</button>
+        <button class="btn" onclick="exitScan()">❌ Exit</button>
+        <button class="btn" onclick="toggleSound()">🔊 Sound On/Off</button>
+      </div>
     </div>
   </section>
 
   <!-- Results -->
   <section id="results" style="display:none;">
     <h2>Retinal Scan Results (Demo)</h2>
-    <p><em>This is a demo test. The live version will provide comparative results from Google Vision and ophthalmology research. Real clinical results require medical-grade AI testing (additional fee).</em></p>
-
-    <div class="disclaimer">⚠️ These are not medical results. Demo only.</div>
-
+    <p><em>This is a demo test. Real clinical results require medical-grade AI testing.</em></p>
     <div id="resultsContainer"></div>
-
-    <div class="yellow-box">
-      <strong>Next Steps:</strong><br>
-      • Schedule professional eye exam<br>
-      • Share results with provider<br>
-      • Continue regular screenings
-    </div>
-
+    <div class="yellow-box">Next Steps: Schedule professional exam • Share results • Continue screenings</div>
     <div style="margin-top:20px;">
-      <button class="btn" onclick="saveResults()">💾 Save Results</button>
       <button class="btn" onclick="restartScan()">🔄 New Scan</button>
       <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬅️ Return to App</button>
       <button class="btn" onclick="shareResults()">📤 Share</button>
@@ -224,108 +140,93 @@
   </section>
 
 <script>
-  // Fill electronic signature
+  // Signature
   document.getElementById("signature").innerText =
     "Signed on " + new Date().toLocaleString() + " | Account Type: Individual";
 
-  // Education submit
-  document.getElementById("consentForm").addEventListener("submit", function(e){
+  // Show education
+  document.querySelector("a[href='#education']").addEventListener("click",()=>{
+    document.getElementById("home").style.display="none";
+    document.getElementById("education").style.display="block";
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+
+  // After consent
+  document.getElementById("consentForm").addEventListener("submit",function(e){
     e.preventDefault();
     document.getElementById("education").style.display="none";
     document.getElementById("scan").style.display="block";
-    window.scrollTo({top:0,behavior:'smooth'});
+    startCamera();
   });
 
-  // Scan simulation
-  let steps = [
-    "Look straight ahead. Hold. Capturing.",
-    "Look left, 9 o’clock. Hold. Capturing.",
-    "Look up left, 11 o’clock. Hold. Capturing.",
-    "Look up, 12 o’clock. Hold. Capturing.",
-    "Look up right, 1 o’clock. Hold. Capturing.",
-    "Look right, 3 o’clock. Hold. Capturing.",
-    "Look down right, 5 o’clock. Hold. Capturing.",
-    "Look down, 6 o’clock. Hold. Capturing.",
-    "Look down left, 7 o’clock. Hold. Capturing."
+  // Camera setup
+  let video=document.getElementById("video");
+  let useFront=true;
+  async function startCamera(){
+    let stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:useFront?"user":"environment"}});
+    video.srcObject=stream;
+  }
+  function toggleCamera(){useFront=!useFront;startCamera();}
+
+  // Scan logic
+  let steps=[
+    "Look straight ahead. Hold.",
+    "Look left, 9 o’clock. Hold.",
+    "Look up left, 11 o’clock. Hold.",
+    "Look up, 12 o’clock. Hold.",
+    "Look up right, 1 o’clock. Hold.",
+    "Look right, 3 o’clock. Hold.",
+    "Look down right, 5 o’clock. Hold.",
+    "Look down, 6 o’clock. Hold.",
+    "Look down left, 7 o’clock. Hold."
   ];
   let eyeCount=1, stepIndex=0, paused=false, soundOn=true, scanInterval;
-  function speak(text){ if(!soundOn) return; let u=new SpeechSynthesisUtterance(text); speechSynthesis.speak(u); }
+  function speak(text){if(!soundOn) return;let u=new SpeechSynthesisUtterance(text);speechSynthesis.speak(u);}
   function startScan(){
-    eyeCount=1;stepIndex=0;
-    document.getElementById("scan-instructions").innerText="Please hold your phone 6 to 8 inches from your eye. Keep your head steady. We’ll begin shortly.";
-    speak("Please hold your phone 6 to 8 inches from your eye. Keep your head steady. We’ll begin shortly.");
-    setTimeout(runSteps,4000);
+    stepIndex=0;eyeCount=1;
+    document.getElementById("scan-instructions").innerText="This is how the scan will take place: straight ahead, then clockwise around the clock. We’ll begin shortly.";
+    speak("This is how the scan will take place. Straight ahead, then clockwise around the clock. We’ll begin shortly.");
+    setTimeout(runSteps,6000);
   }
   function runSteps(){
     scanInterval=setInterval(()=>{
       if(paused) return;
       if(stepIndex<steps.length){
-        let instruction=steps[stepIndex];
-        document.getElementById("scan-instructions").innerText=instruction;
-        speak(instruction);
+        let inst=steps[stepIndex];
+        document.getElementById("scan-instructions").innerText=inst;
+        speak(inst);
         stepIndex++;
       } else {
         clearInterval(scanInterval);
         if(eyeCount===1){
-          document.getElementById("scan-instructions").innerText="Now switch eyes. Cover your other eye. We’ll repeat.";
-          speak("Now switch eyes. Cover your other eye. We’ll repeat.");
-          eyeCount++;stepIndex=0;setTimeout(runSteps,5000);
+          document.getElementById("scan-instructions").innerText="Now switch eyes.";
+          speak("Now switch eyes.");
+          eyeCount++;stepIndex=0;setTimeout(runSteps,6000);
         } else {
-          document.getElementById("scan-instructions").innerText="Demo scan complete. View your results below.";
-          speak("Demo scan complete. View your results below.");
-          document.getElementById("scan").style.display="none";
-          document.getElementById("results").style.display="block";
-          generateResults();
-          window.scrollTo({top:document.getElementById("results").offsetTop,behavior:'smooth'});
+          document.getElementById("scan-instructions").innerText="Please wait a few seconds while we prepare your results.";
+          speak("Please wait a few seconds while we prepare your results.");
+          setTimeout(()=>{document.getElementById("scan").style.display="none";document.getElementById("results").style.display="block";generateResults();},4000);
         }
       }
-    },3000);
+    },5000); // 5 sec per step
   }
-  function pauseScan(){paused=true;document.getElementById("scan-instructions").innerText="Scan paused.";speak("Scan paused.");}
-  function resumeScan(){paused=false;document.getElementById("scan-instructions").innerText="Resuming scan...";speak("Resuming scan.");}
+  function togglePause(){paused=!paused;document.getElementById("scan-instructions").innerText=paused?"Scan paused.":"Resuming scan...";speak(paused?"Scan paused.":"Resuming scan.");}
   function restartScan(){clearInterval(scanInterval);document.getElementById("results").style.display="none";document.getElementById("scan").style.display="block";startScan();}
   function exitScan(){clearInterval(scanInterval);document.getElementById("scan-instructions").innerText="Scan cancelled.";speak("Scan cancelled.");}
-  function toggleSound(){soundOn=!soundOn;document.getElementById("scan-instructions").innerText=soundOn?"Sound enabled.":"Sound muted.";}
+  function toggleSound(){soundOn=!soundOn;document.getElementById("scan-instructions").innerText=soundOn?"Sound on.":"Sound off.";}
 
-  // Results generator
-  let categories=[
-    "Diabetic Retinopathy Risk Indicators",
-    "Hypertension-Related Changes",
-    "Cardiovascular Risk Markers",
-    "Optic Nerve / Neurological Health",
-    "Brain Health",
-    "Retinal Vessel Changes"
-  ];
+  // Results
+  let categories=["Diabetic Retinopathy","Hypertension Signs","Cardiovascular Markers","Neurological Health","Brain Health","Retinal Vessel Changes"];
   function generateResults(){
-    let container=document.getElementById("resultsContainer");
-    container.innerHTML="";
-    let shuffled=categories.sort(()=>0.5-Math.random()).slice(0,4);
-    shuffled.forEach(cat=>{
+    let c=document.getElementById("resultsContainer");c.innerHTML="";
+    categories.sort(()=>0.5-Math.random()).slice(0,4).forEach(cat=>{
       let conf=["Low","Medium","High"][Math.floor(Math.random()*3)];
       let color=conf==="Low"?"green":conf==="Medium"?"yellow":"red";
       let width=conf==="Low"?30:conf==="Medium"?60:90;
-      container.innerHTML+=`
-        <div class="result-card">
-          <strong>${cat}</strong><br>
-          Confidence: ${conf}
-          <div class="progress"><div class="bar ${color}" style="width:${width}%"></div></div>
-        </div>`;
+      c.innerHTML+=`<div class="result-card"><strong>${cat}</strong><br>Confidence: ${conf}<div class="progress"><div class="bar ${color}" style="width:${width}%"></div></div></div>`;
     });
   }
-
-  // Save + Share
-  function saveResults(){
-    let text=document.getElementById("resultsContainer").innerText;
-    let blob=new Blob([text],{type:"text/plain"});
-    let link=document.createElement("a");
-    link.href=URL.createObjectURL(blob);
-    link.download="demo_results.txt";
-    link.click();
-  }
-  function shareResults(){
-    let text="Trust Your Eyes - Demo Results\n\n"+document.getElementById("resultsContainer").innerText;
-    window.location.href="mailto:?subject=Trust Your Eyes Demo Results&body="+encodeURIComponent(text);
-  }
+  function shareResults(){let text="Trust Your Eyes - Demo Results\n\n"+document.getElementById("resultsContainer").innerText;window.location.href="mailto:?subject=Demo Results&body="+encodeURIComponent(text);}
 </script>
 
 </body>
